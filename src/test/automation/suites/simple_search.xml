@@ -1,7 +1,7 @@
 <suite name="Suite" parallel="methods" thread-count="5">
     <test name="Test">
         <classes>
-            <class name="google.GoogleSearchTest" />
+            <class name="salesforce.SimpleSearchTest" />
         </classes>
     </test> <!-- test -->
 </suite> <!-- suite -->

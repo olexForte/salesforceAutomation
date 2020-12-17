@@ -1,25 +1,22 @@
 package pages;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import configuration.ProjectConfiguration;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
 import reporting.ReporterManager;
 
-/**
- * Created by odiachuk on 07.07.17.
- */
-public class BasePage {
+import java.util.ArrayList;
+import java.util.List;
 
-    static ReporterManager reporter = ReporterManager.Instance;
+/**
+ * Represents active component of Web page
+ */
+public class BasePageComponent {
+
+    public final static ReporterManager reporter = ReporterManager.Instance;
 
     public final static String BASE_URL = (ProjectConfiguration.getConfigProperty("Environment"));
-
-    public String pageURL = "";
-    public String pageTitle = "";
 
     public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 
@@ -54,66 +51,38 @@ public class BasePage {
         return Integer.parseInt(timeout);
     }
 
-    public BasePage() {
-       // waitForPageToLoad();
-    }
-
+    /**
+     * Get driver from current thread
+     * @return
+     */
     public static WebDriver driver(){
         return driver.get();
     }
 
-    public boolean isPageLoaded() {
-        boolean result = false;
-        reporter.info("Page title is: " + driver().getTitle());
-        reporter.info("Page URL is: " + driver().getCurrentUrl());
-        if (driver().getTitle().contains(pageTitle))
-            result = true;
-        else {
-            reporter.info("Expected title: " + pageTitle);
-            result = false;
-        }
-
-        if (driver().getCurrentUrl().contains(pageURL))
-            result = true;
-        else {
-            reporter.info("Expected URL: " + pageURL);
-            result = false;
-        }
-
-        return result;
-    }
-
-    public void reloadPage() {
+    /**
+     * Reload page
+     */
+    public static void reloadPage() {
         driver().navigate().refresh();
     }
 
-    public void open() {
-
-        reporter.info("Opening the page: " + "\"" + BASE_URL + pageURL + "\"");
-        driver().get(BASE_URL + pageURL);
-        driver().manage().window().maximize();
-    }
-
-    public void open(String url) {
+    /**
+     * open URL
+     * @param url
+     */
+    public static void open(String url) {
 
         reporter.info("Opening the page: " + "\"" + url + "\"");
         driver().get(url);
         driver().manage().window().maximize();
     }
 
-    public void close() {
+    /**
+     * Close Driver
+     */
+    public static void close() {
         reporter.info("Closing the browser");
         driver().close();
-    }
-
-    public String getTitle() {
-        reporter.info("The page title is: " + "\"" + pageTitle + "\"");
-        return pageTitle;
-    }
-
-    public String getURL() {
-        reporter.info("The requested URL is: " + BASE_URL + pageURL);
-        return BASE_URL + pageURL;
     }
 
     /**
@@ -128,18 +97,14 @@ public class BasePage {
         }
     }
 
-    protected void sendText(String cssSelector, String text) {
-        findElement(By.cssSelector(cssSelector)).sendKeys(text);
-    }
-
-    public void setText(By element, String value){
+    public static void setText(By element, String value){
         if (value != null) {
             findElement(element).clear();
             findElement(element).sendKeys(value);
         }
     }
 
-    public boolean isTextPresent(String text) {
+    public static boolean isTextPresent(String text) {
         reporter.info("Validate text present: " + text);
         return driver().getPageSource().contains(text);
     }

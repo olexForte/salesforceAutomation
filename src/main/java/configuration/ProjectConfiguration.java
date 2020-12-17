@@ -24,8 +24,6 @@ public class ProjectConfiguration {
 
     static public ThreadLocal<Properties> threadProperties = new ThreadLocal<Properties>();
 
-    public static boolean isPerformanceProfilingRequired = isPropertySet("ProfilingRequired");
-
     /**
      * Load main config file
      * @return

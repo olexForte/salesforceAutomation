@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.BasePage;
+import pages.BasePageComponent;
 import reporting.ReporterManager;
 import web.DriverProvider;
 
@@ -24,7 +25,7 @@ public class BaseTest{
         //init threadlocal driver
         try {
             reporter.info("Driver creation");
-            BasePage.driver.set(DriverProvider.getDriver(reporter.TEST_NAME.get()));
+            BasePageComponent.driver.set(DriverProvider.getDriver(reporter.TEST_NAME.get()));
             //reporter.info("Driver created " + BasePage.driver.get().hashCode());
         }catch (Exception e){
             reporter.fail("Before test failure during Driver creation", e);

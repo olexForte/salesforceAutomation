@@ -1,11 +1,11 @@
 package google;
 
+import datasources.RandomDataGenerator;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.*;
 import utils.BaseTest;
-import utils.Tools;
 
 /**
  * Created by Kos on 7/17/17.
@@ -16,7 +16,7 @@ public class GoogleSearchTest extends BaseTest {
     public Object[][] provider () throws Exception {
         return new String[][]{
                 {"Answer to the Ultimate Question of Life, the Universe, and Everything", "42"},
-                {"time in kiev", Tools.getTime()}};
+                {"time in kiev", RandomDataGenerator.getCurDateTime()}};
     }
 
 

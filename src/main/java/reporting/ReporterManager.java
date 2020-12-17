@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import entities.TestFile;
 import pages.BasePage;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
