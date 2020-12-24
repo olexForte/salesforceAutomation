@@ -1,10 +1,12 @@
 package utils;
 
+import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.BasePage;
 import pages.BasePageComponent;
+import pages.salesforce.LoginComponent;
 import reporting.ReporterManager;
 import web.DriverProvider;
 
@@ -34,18 +36,30 @@ public class BaseTest{
             Assert.fail();
         }
 
+        LogIn();
         //BasePage.driver().manage().window().maximize();
 
     }
+
+public  void LogIn(){
+
+    BasePageComponent.open(ProjectConfiguration.getConfigProperty("URL"));
+    LoginComponent login = new LoginComponent();
+    login.loginAs(ProjectConfiguration.getConfigProperty("DefaultUserName"),ProjectConfiguration.getConfigProperty("DefaultUserPassword"));
+
+
+
+    // Assert.assertEquals(BasePageComponent.getTitle(),"Home");
+}
 
     @AfterMethod
     public void endTest(ITestResult testResult) throws Exception {
 
         // close reporter
         reporter.stopReporting(testResult);
-
+       // BasePage BasePage = new BasePage();
         //close driver
-        BasePage.driver().quit();
+        BasePageComponent.driver().quit();
         DriverProvider.closeDriver();
 
     }
