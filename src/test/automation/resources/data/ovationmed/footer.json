@@ -1,0 +1,12 @@
+[
+  {
+    "linkOfElement": "https://www.facebook.com/VHTStudios/",
+    "textOfXpath": "//img[@data-link='facebook']",
+    "openInNewTab": true
+  },
+  {
+    "linkOfElement": "https://twitter.com/vht_studios",
+    "textOfXpath": "//img[@data-link='twitter']",
+    "openInNewTab": true
+  }
+]

@@ -9,8 +9,6 @@ import pages.BasePageComponent;
 
 import java.util.ArrayList;
 
-import static configuration.LocatorsRepository.get;
-
 public class FooterComponent extends BasePageComponent
 {
    // String name = "VHTloginComponent";

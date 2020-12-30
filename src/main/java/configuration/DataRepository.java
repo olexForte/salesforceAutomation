@@ -21,9 +21,14 @@ import java.util.Properties;
 import java.util.stream.Stream;
 
 import com.google.gson.Gson;
+import pages.LocatorsRepository;
 
 public class DataRepository
 {
+
+    private static DataRepository instance;
+    public static DataRepository Instance = (instance != null) ? instance : new DataRepository();
+
 //    public List<Object[]> getListOfObjectFromJson(String dataName, Class t ){
 //        List<Object[]> result = null;
 //        String path = "src/test/automation/resources/data/" + ProjectConfiguration.getConfigProperty("DataDir") + "/" + dataName + ".json";

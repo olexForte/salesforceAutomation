@@ -1,11 +1,13 @@
 package utils;
 
+import configuration.DataRepository;
 import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.BasePage;
 import pages.BasePageComponent;
+import pages.LocatorsRepository;
 import pages.salesforce.LoginComponent;
 import reporting.ReporterManager;
 import web.DriverProvider;
@@ -15,7 +17,9 @@ import java.lang.reflect.Method;
 
 public class BaseTest{
 
-    ReporterManager reporter;
+    public ReporterManager reporter;
+    public LocatorsRepository locatorsRepository;
+    public DataRepository dataRepository;
 
     @BeforeMethod
     public void beforeWithData(Object[] data, Method method) {
@@ -23,6 +27,11 @@ public class BaseTest{
         //init reporter
         reporter = ReporterManager.Instance;
         reporter.startReporting(method, data);
+
+        //init locators
+        locatorsRepository = LocatorsRepository.Instance;
+        //init data
+        dataRepository = DataRepository.Instance;
 
         //init threadlocal driver
         try {
@@ -36,7 +45,7 @@ public class BaseTest{
             Assert.fail();
         }
 
-        LogIn();
+        //LogIn();
         //BasePage.driver().manage().window().maximize();
 
     }
