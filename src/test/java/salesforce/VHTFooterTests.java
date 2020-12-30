@@ -18,6 +18,7 @@ import pages.BasePageComponent;
 import pages.salesforce.FooterComponent;
 import pages.salesforce.LoginComponent;
 import utils.BaseTest;
+import utils.BaseUITest;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -25,19 +26,18 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class VHTFooterTests extends BaseTest {
+public class VHTFooterTests extends BaseUITest {
 
 
     @DataProvider(name="Scripts to run")
    Iterator<Object[]> getScriptsToRun(){
 
-        DataRepository dataRepository = new DataRepository();
-        Object[] result = dataRepository.getListOfObjectFromJson("footer", FooterEntity[].class);
-        FooterEntity[] a = Arrays.asList(result).stream().toArray(FooterEntity[]::new);
-        List<Object[]> res = new ArrayList<Object[]>();
-        for(FooterEntity f : a)
-            res.add(new FooterEntity[]{f});
-      return res.iterator() ;// MainDataProvider.getTestObjects(INDEX_OF_TESTS);
+        DataRepository dataRepository = DataRepository.Instance;
+        FooterEntity[] res = (FooterEntity[])dataRepository.getObjectFromJson("footer", FooterEntity[].class);
+        List<Object[]> result = new ArrayList<Object[]>();
+        for(FooterEntity item : res)
+            result.add(new FooterEntity[]{item});
+      return result.iterator() ;// MainDataProvider.getTestObjects(INDEX_OF_TESTS);
    }
 
 

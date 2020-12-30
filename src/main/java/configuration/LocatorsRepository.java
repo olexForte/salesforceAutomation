@@ -1,8 +1,8 @@
-package pages;
+package configuration;
 
-import configuration.ProjectConfiguration;
 import org.openqa.selenium.By;
-import reporting.ReporterManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Properties;
 
 public class LocatorsRepository {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocatorsRepository.class);
 
     private static LocatorsRepository instance;
     public static LocatorsRepository Instance = (instance != null) ? instance : new LocatorsRepository();

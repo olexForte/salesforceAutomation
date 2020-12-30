@@ -1,7 +1,8 @@
 <suite name="Suite" parallel="methods" thread-count="5">
     <test name="Test">
         <classes>
-            <class name="salesforce.SimpleSearchTest" />
+            <class name="salesforce.VHT_APITest" />
+<!--            <class name="salesforce.VHTFooterTests" />-->
         </classes>
     </test> <!-- test -->
 </suite> <!-- suite -->

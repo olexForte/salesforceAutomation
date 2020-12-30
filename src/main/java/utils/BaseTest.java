@@ -5,9 +5,8 @@ import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import pages.BasePage;
 import pages.BasePageComponent;
-import pages.LocatorsRepository;
+import configuration.LocatorsRepository;
 import pages.salesforce.LoginComponent;
 import reporting.ReporterManager;
 import web.DriverProvider;
@@ -18,7 +17,6 @@ import java.lang.reflect.Method;
 public class BaseTest{
 
     public ReporterManager reporter;
-    public LocatorsRepository locatorsRepository;
     public DataRepository dataRepository;
 
     @BeforeMethod
@@ -28,48 +26,15 @@ public class BaseTest{
         reporter = ReporterManager.Instance;
         reporter.startReporting(method, data);
 
-        //init locators
-        locatorsRepository = LocatorsRepository.Instance;
         //init data
         dataRepository = DataRepository.Instance;
-
-        //init threadlocal driver
-        try {
-            reporter.info("Driver creation");
-            BasePageComponent.driver.set(DriverProvider.getDriver(reporter.TEST_NAME.get()));
-            //reporter.info("Driver created " + BasePage.driver.get().hashCode());
-        }catch (Exception e){
-            reporter.fail("Before test failure during Driver creation", e);
-            reporter.stopReporting();
-            reporter.closeReporter();
-            Assert.fail();
-        }
-
-        //LogIn();
-        //BasePage.driver().manage().window().maximize();
-
     }
-
-public  void LogIn(){
-
-    BasePageComponent.open(ProjectConfiguration.getConfigProperty("URL"));
-    LoginComponent login = new LoginComponent();
-    login.loginAs(ProjectConfiguration.getConfigProperty("DefaultUserName"),ProjectConfiguration.getConfigProperty("DefaultUserPassword"));
-
-
-
-    // Assert.assertEquals(BasePageComponent.getTitle(),"Home");
-}
 
     @AfterMethod
     public void endTest(ITestResult testResult) throws Exception {
 
         // close reporter
         reporter.stopReporting(testResult);
-       // BasePage BasePage = new BasePage();
-        //close driver
-        BasePageComponent.driver().quit();
-        DriverProvider.closeDriver();
 
     }
 

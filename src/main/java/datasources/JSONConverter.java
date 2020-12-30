@@ -41,7 +41,19 @@ public class JSONConverter {
     }
 
     /**
-     * Transform Object ot JSON string
+     * Create Object from JSON String
+     * @param classOfT
+     * @param jsonString
+     * @param <T>
+     * @return
+     */
+    public static Object toObjectFromJson(String jsonString, Class classOfT) {
+        return gson.fromJson(jsonString, classOfT);
+    }
+
+
+    /**
+     * Object to JSON
      * @param objects
      * @return
      */
@@ -52,6 +64,7 @@ public class JSONConverter {
 
         return returnString;
     }
+
 
     /**
      * Get List of Maps from JSON File

@@ -1,5 +1,6 @@
 package pages;
 
+import configuration.LocatorsRepository;
 import configuration.ProjectConfiguration;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -15,8 +16,7 @@ import java.util.List;
 public class BasePageComponent {
 
     public final static ReporterManager reporter = ReporterManager.Instance;
-
-    public final static String BASE_URL = (ProjectConfiguration.getConfigProperty("Environment"));
+    public final static LocatorsRepository locatorsRepository = LocatorsRepository.Instance;
 
     public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 

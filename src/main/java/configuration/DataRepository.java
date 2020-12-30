@@ -2,63 +2,41 @@ package configuration;
 
 import com.google.gson.GsonBuilder;
 
-import entities.FooterEntity;
-import io.restassured.internal.mapping.GsonMapper;
-import org.openqa.selenium.By;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Stream;
 
 import com.google.gson.Gson;
-import pages.LocatorsRepository;
+import datasources.FileManager;
+import datasources.JSONConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class DataRepository
-{
+public class DataRepository {
+
+    // main logger
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataRepository.class);
 
     private static DataRepository instance;
     public static DataRepository Instance = (instance != null) ? instance : new DataRepository();
 
-//    public List<Object[]> getListOfObjectFromJson(String dataName, Class t ){
-//        List<Object[]> result = null;
-//        String path = "src/test/automation/resources/data/" + ProjectConfiguration.getConfigProperty("DataDir") + "/" + dataName + ".json";
-//        try {
-//
-//            String jsonFromFile= readFile(path);
-//            Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-//
-//
-//            result = new ArrayList(Arrays.asList(gson.fromJson(jsonFromFile, t)));
-//
-//            return result;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return  result;
-//    }
+    String DATA_DIR = "src/test/automation/resources/data/" + ProjectConfiguration.getConfigProperty("DataDir");
 
-    public Object[] getListOfObjectFromJson(String dataName, Class t ){
-        Object[] result = null;
-        String path = "src/test/automation/resources/data/" + ProjectConfiguration.getConfigProperty("DataDir") + "/" + dataName + ".json";
+    public Object getObjectFromJson(String dataName, Class t ){
+        Object result = null;
         try {
 
-            String jsonFromFile= readFile(path);
-            Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+            String jsonFromFile= FileManager.getFileContent(FileManager.getFileFromDir(dataName, DATA_DIR));
+//            Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+//            result = gson.fromJson(jsonFromFile, t);
 
-
-            result = (Object[]) gson.fromJson(jsonFromFile, t);
-
+            result = JSONConverter.toObjectFromJson(jsonFromFile, t);
             return result;
 
         } catch (Exception e) {
@@ -67,17 +45,46 @@ public class DataRepository
         return  result;
     }
 
-    private static String readFile(String filePath)
-    {
-        String content="";
-        try
-        {
-            content = new String ( Files.readAllBytes( Paths.get(filePath) ) );
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        return content;
+    public HashMap<String, String> getParametersForTest(String testName) {
+        File file = FileManager.getFileFromDir(testName, DATA_DIR);
+        if(file.getName().contains(".properties"))
+            return getParamsFromProperties(file);
+        if(file.getName().contains(".json"))
+            return getParamsFromJSON(file);
+
+
+        return null;
     }
+
+    private HashMap<String,String> getParamsFromProperties(File file){
+
+        HashMap<String,String> results = new HashMap<>();
+        Properties props = new Properties();
+        FileInputStream fileInput = null;
+        try {
+            fileInput = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            LOGGER.error("File was not found " + file.getAbsolutePath(), e);
+        }
+        try {
+            props.load(fileInput);
+        } catch (IOException e) {
+            e.printStackTrace();
+            LOGGER.error("Problems with properties loading " + file.getAbsolutePath(), e);
+        }
+
+        for (Map.Entry property: props.entrySet()) {
+            results.put((String)property.getKey(), (String) property.getValue());
+        }
+
+        return results;
+    }
+
+    private HashMap<String,String> getParamsFromJSON(File file){
+        String jsonFromFile= FileManager.getFileContent(file);
+        HashMap<String, String> result = JSONConverter.toHashMapFromJsonString(jsonFromFile);
+        return result;
+    }
+
 }

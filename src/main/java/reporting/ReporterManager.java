@@ -223,6 +223,8 @@ public class ReporterManager {
         String testName = null;
         String address = null;
 
+        //TODO leave as reference
+
         // if groups specified check that Group name () contains link to ticket
         //        String[] testGroups = m.getAnnotation(Test.class).groups();
         //        for (int i = 0; i < testGroups.length; i++) {
@@ -233,26 +235,26 @@ public class ReporterManager {
         // if Group name contains web address - "hide" this address in Link <br>
         //testName = @Test testName()
 
-        String description = m.getAnnotation(Test.class).description();
-        if(description.matches(".*(C\\d\\d\\d\\d).*"))
-            address = description.replaceAll(".*(C\\d\\d\\d\\d).*", ProjectConfiguration.getConfigProperty("TestRailUrl") + "/index.php?/cases/view/$1");
+        //String description = m.getAnnotation(Test.class).description();
+        //if(description.matches(".*(C\\d\\d\\d\\d).*"))
+        //    address = description.replaceAll(".*(C\\d\\d\\d\\d).*", ProjectConfiguration.getConfigProperty("TestRailUrl") + "/index.php?/cases/view/$1");
 
-        if (address != null) {
-            testName = "<a href=" + "\"" + address + "\""
-                    + "target=_blank alt=This test is linked to test case. Click to open it>"
-                    + m.getAnnotation(Test.class).testName() + "</a>";
-        } else {
+//        if (address != null) {
+//            testName = "<a href=" + "\"" + address + "\""
+//                    + "target=_blank alt=This test is linked to test case. Click to open it>"
+//                    + m.getAnnotation(Test.class).testName() + "</a>";
+//        } else {
 
             if(!m.getAnnotation(Test.class).testName().equals(""))
                 testName = m.getAnnotation(Test.class).testName();
             else
                 testName = m.getName();
+
             if(data != null && data.length != 0)
-                testName =  Arrays.asList(data)
+                testName =  testName + Arrays.asList(data)
                         .stream()
-                        .map(o -> String.valueOf(o))
+                        .map(o -> o.toString())
                         .collect(Collectors.joining(", ", "[","]"));
-        }
 
         // default behaviour - use method name as test name
         if (testName == null || testName.equals("")) {
@@ -297,7 +299,7 @@ public class ReporterManager {
      * @param data
      */
     public void startReporting(Method m, Object[] data) {
-        TEST_NAME.set(m.getName());
+        TEST_NAME.set(getTestName(m,data));
         startTest(m, TEST_NAME.get(), getTestDescription(m));
         String testGroups = "";
 
