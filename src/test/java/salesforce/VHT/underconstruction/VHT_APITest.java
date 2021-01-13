@@ -1,4 +1,4 @@
-package salesforce;
+package salesforce.VHT.underconstruction;
 
 import api.BaseAPIClient;
 import configuration.LocatorsRepository;

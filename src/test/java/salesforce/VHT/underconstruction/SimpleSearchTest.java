@@ -1,4 +1,4 @@
-package salesforce;
+package salesforce.VHT.underconstruction;
 
 import configuration.ProjectConfiguration;
 import org.testng.Assert;

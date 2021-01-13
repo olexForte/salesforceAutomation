@@ -11,16 +11,11 @@ import java.util.ArrayList;
 
 public class FooterComponent extends BasePageComponent
 {
-   // String name = "VHTloginComponent";
+   static String name = "FooterComponent";
 
-    FooterComponent()
-    {
-
-
-
-
+    static public void check(){
+        System.out.println("check");
     }
-
 
 
 

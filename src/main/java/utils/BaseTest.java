@@ -1,5 +1,6 @@
 package utils;
 
+import annotations.TestName;
 import configuration.DataRepository;
 import configuration.ProjectConfiguration;
 import org.testng.Assert;
@@ -12,12 +13,15 @@ import reporting.ReporterManager;
 import web.DriverProvider;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 
 public class BaseTest{
 
     public ReporterManager reporter;
     public DataRepository dataRepository;
+
+    public HashMap<String, String> params;
 
     @BeforeMethod
     public void beforeWithData(Object[] data, Method method) {
@@ -28,6 +32,9 @@ public class BaseTest{
 
         //init data
         dataRepository = DataRepository.Instance;
+
+        //TODO
+        //params = dataRepository.getParametersForTest();
     }
 
     @AfterMethod

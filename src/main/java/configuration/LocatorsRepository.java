@@ -24,9 +24,9 @@ public class LocatorsRepository {
 
     HashMap<String, String> processedParameters = new HashMap<>();
 
-    public String get(String componentName, String locator){
+    public String get(String componentName, String locator, String... parameters){
         if (processedParameters.containsKey(componentName + "." + locator))
-            return processedParameters.get(componentName + "." + locator);
+            return String.format(processedParameters.get(componentName + "." + locator), parameters);
 
         String path =  LOCATORS_DIR + componentName + ".properties";
         Properties locators = new Properties();
@@ -46,7 +46,7 @@ public class LocatorsRepository {
         }
 
         if (processedParameters.containsKey(componentName + "." + locator))
-            return processedParameters.get(componentName + "." + locator);
+            return String.format(processedParameters.get(componentName + "." + locator), parameters);
 
         String generalPath = GENERAL_LOCATORS_DIR  + componentName + ".properties";
         locators = new Properties();
@@ -65,16 +65,16 @@ public class LocatorsRepository {
         }
 
         if (processedParameters.containsKey(componentName + "." + locator))
-            return processedParameters.get(componentName + "." + locator);
+            return String.format(processedParameters.get(componentName + "." + locator), parameters);
 
         return null;
     }
 
-    public By getBy(String componentName, String locator) {
-        return By.xpath(get(componentName, locator));
+    public By getBy(String componentName, String locator, String... parameters) {
+        return By.xpath(get(componentName, locator, parameters));
     }
 
-    public String getURL(String componentName, String locator){
-        return get(componentName, locator);
+    public String getURL(String componentName, String locator, String... parameters){
+        return get(componentName, locator, parameters);
     }
 }

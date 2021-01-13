@@ -13,10 +13,10 @@ import reporting.ReporterManager;
 import web.DriverProvider;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 
 public class BaseUITest extends BaseTest{
-
 
     @BeforeMethod
     public void beforeWithData(Object[] data, Method method) {
@@ -40,13 +40,28 @@ public class BaseUITest extends BaseTest{
 
     }
 
-    public  void LogIn(){
+    /**
+     * Login to application with default credentials
+     */
+    public  void logInApplication() {
 
-        BasePageComponent.open(ProjectConfiguration.getConfigProperty("URL"));
-        LoginComponent login = new LoginComponent();
-        login.loginAs(ProjectConfiguration.getConfigProperty("DefaultUserName"),ProjectConfiguration.getConfigProperty("DefaultUserPassword"));
+        LoginComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
+        LoginComponent
+                .loginAs(ProjectConfiguration.getConfigProperty("DefaultUserName"),
+                        ProjectConfiguration.getConfigProperty("DefaultUserPassword"));
 
-        // Assert.assertEquals(BasePageComponent.getTitle(),"Home");
+    }
+
+    /**
+     * Login to application with default credentials
+     */
+    public  void logInSalesforce() {
+
+        LoginComponent.open(ProjectConfiguration.getConfigProperty("SalesforceURL"));
+        LoginComponent
+                .loginAs(ProjectConfiguration.getConfigProperty("DefaultSalesforceUserName"),
+                        ProjectConfiguration.getConfigProperty("DefaultSalesforceUserPassword"));
+
     }
 
     @AfterMethod

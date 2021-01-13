@@ -8,14 +8,14 @@ import static pages.BasePageComponent.*;
 
 public class LoginComponent extends BasePageComponent {
 
-    String name = "loginComponent";
-    //LocatorsRepository
+    static String name = "loginComponent";
 
-    By inputUsername    = locatorsRepository.getBy(name, "LOGIN_INPUT"); // By.xpath("//input[@id='username']");
-    By inputPassword    = locatorsRepository.getBy(name, "PASSWORD_INPUT");//By.xpath("//input[@id='password']");
-    By buttonLogin      = locatorsRepository.getBy(name, "LOGIN_BUTTON");//By.xpath("//input[@id='Login']");
+    static By inputUsername    = locatorsRepository.getBy(name, "LOGIN_INPUT"); // By.xpath("//input[@id='username']");
+    static By inputPassword    = locatorsRepository.getBy(name, "PASSWORD_INPUT");//By.xpath("//input[@id='password']");
+    static By buttonLogin      = locatorsRepository.getBy(name, "LOGIN_BUTTON");//By.xpath("//input[@id='Login']");
 
-    public void loginAs(String... params){ //} username, String password){
+    public static void loginAs(String... params){ //} username, String password){
+
         String username = params[0];
         String password = params[1];
         String domain = null;
