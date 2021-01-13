@@ -2,4 +2,4 @@
   "query" : "Select id from Account",
   "expected_json_path": "totalSize",
   "expected_value": "4"
-}
+ }

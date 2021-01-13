@@ -8,6 +8,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
 import reporting.ReporterManager;
+//import utils.Tools;
 
 /**
  * Created by odiachuk on 07.07.17.
@@ -86,20 +87,20 @@ public class BasePage {
     public void reloadPage() {
         driver().navigate().refresh();
     }
-
-    public void open() {
-
-        reporter.info("Opening the page: " + "\"" + BASE_URL + pageURL + "\"");
-        driver().get(BASE_URL + pageURL);
-        driver().manage().window().maximize();
-    }
-
-    public void open(String url) {
-
-        reporter.info("Opening the page: " + "\"" + url + "\"");
-        driver().get(url);
-        driver().manage().window().maximize();
-    }
+//
+//    public void open() {
+//
+//        reporter.info("Opening the page: " + "\"" + BASE_URL + pageURL + "\"");
+//        driver().get(BASE_URL + pageURL);
+//        driver().manage().window().maximize();
+//    }
+//
+//    public void open(String url) {
+//
+//        reporter.info("Opening the page: " + "\"" + url + "\"");
+//        driver().get(url);
+//        driver().manage().window().maximize();
+//    }
 
     public void close() {
         reporter.info("Closing the browser");
@@ -181,6 +182,7 @@ public class BasePage {
     public boolean isElementDisplayedRightNow(By by) {
         try {
             return findElementIgnoreException(by, SHORT_TIMEOUT).isDisplayed();
+
         } catch (Exception e) {
             return false;
         }
@@ -246,7 +248,7 @@ public class BasePage {
                     .until(ExpectedConditions.visibilityOfElementLocated(element));
             driver().findElement(element).click();
         } catch (Exception e) {
-            reporter.fail("Failure clicking on element",  e);
+            //reporter.fail(Tools.getStackTrace(e));
             throw new RuntimeException("Failure clicking on element" );
         }
         waitForPageToLoad();
@@ -261,7 +263,7 @@ public class BasePage {
                     .until(ExpectedConditions.visibilityOfElementLocated(element));
             return driver().findElement(element);
         } catch (Exception e) {
-            reporter.fail("Failure finding element",  e);
+           // reporter.fail(Tools.getStackTrace(e));
             throw new RuntimeException("Failure finding element");
         }
     }
@@ -275,7 +277,7 @@ public class BasePage {
                     .until(ExpectedConditions.presenceOfElementLocated(element));
             return driver().findElements(element);
         } catch (Exception e) {
-            reporter.fail("Failure finding element",  e);
+            //reporter.fail(Tools.getStackTrace(e));
             throw new RuntimeException("Failure finding elements");
         }
     }

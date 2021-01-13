@@ -1,5 +1,6 @@
 package configuration;
 
+import api.BaseAPIClient;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
@@ -8,13 +9,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import com.google.gson.Gson;
 import datasources.FileManager;
 import datasources.JSONConverter;
+import io.restassured.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +44,24 @@ public class DataRepository {
         }
         return  result;
     }
+    //YuraMethod
+    public Object getObjectFromAPI(String query, Class t ){
+        Object result = null;
+        try {
+            BaseAPIClient apiClient = new BaseAPIClient();
+            Response response = apiClient.runQuery(query);
+            String jsonFromResponce =response.jsonPath().get("records");
+
+            result=  JSONConverter.toObjectFromJson(jsonFromResponce,t);
+            return  result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("Error in get object from API "+e);
+        }
+            return null;
+    }
+
 
     public HashMap<String, String> getParametersForTest(String testName) {
         File file = FileManager.getFileFromDir(testName, DATA_DIR);
@@ -85,6 +103,12 @@ public class DataRepository {
         String jsonFromFile= FileManager.getFileContent(file);
         HashMap<String, String> result = JSONConverter.toHashMapFromJsonString(jsonFromFile);
         return result;
+    }
+
+    //YuraMethod
+    public String getParameter(String key){
+        HashMap<String, String> params = getParametersForTest("some_query");
+        return params.get(key);
     }
 
 }

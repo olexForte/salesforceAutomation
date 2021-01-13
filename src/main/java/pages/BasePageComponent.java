@@ -8,6 +8,9 @@ import org.openqa.selenium.support.ui.*;
 import reporting.ReporterManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,7 +75,7 @@ public class BasePageComponent {
      */
     public static void open(String url) {
 
-        reporter.info("Opening the page: " + "\"" + url + "\"");
+//        reporter.info("Opening the page: " + "\"" + url + "\"");
         driver().get(url);
         driver().manage().window().maximize();
     }
@@ -107,6 +110,10 @@ public class BasePageComponent {
     public static boolean isTextPresent(String text) {
         reporter.info("Validate text present: " + text);
         return driver().getPageSource().contains(text);
+    }
+
+    public static void clickAnyWhere() {
+        Actions a = new Actions(BasePageComponent.driver()); a.sendKeys(Keys.TAB).build().perform();
     }
 
     public boolean isElementPresent(By by) {
@@ -230,6 +237,11 @@ public class BasePageComponent {
             throw new RuntimeException("Failure finding element");
         }
     }
+
+    public static WebElement findElement(String byString, int... timeout){
+        return findElement(By.xpath(byString) ,timeout);
+    }
+
 
     public static List<WebElement> findElements(By element, int... timeout) {
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
@@ -378,5 +390,47 @@ public class BasePageComponent {
         reporter.info("Switch to default content");
         driver().switchTo().defaultContent();
     }
+        //custom method from Yura
+        public static String getLinkFromNewTab(By by, int... timeout){
+            try {
+                String link;
+                String oldTab= driver().getWindowHandle();
+                ArrayList<String> tabs1 = new ArrayList<String> (driver().getWindowHandles());
+                clickOnElementIgnoreException(by);
+                ArrayList<String> tabs2 = new ArrayList<String> (driver().getWindowHandles());
+
+                if(tabs1.size()==tabs2.size()||tabs2.size()>tabs1.size()+1)
+                        throw new Exception("link didn`t open in new tab, or count of link from this button more than one");
+
+                for(int i=0;i<tabs2.size();i++){
+                    for(int j=0;j<tabs1.size();j++){
+                      if(tabs2.get(i).equals(tabs1.get(j)))
+                          tabs2.remove(i);
+                    }
+                }
+
+                driver().switchTo().window(tabs2.get(0)).getCurrentUrl();
+                link=driver().getCurrentUrl();
+                driver().close();
+                driver().switchTo().window(oldTab);
+                return link;
+
+            } catch (Exception e) {
+                reporter.fail("Failure getting link from button ",  e);
+                throw new RuntimeException("Failure getting link from button " );
+            }
+        }
+
+        public static String getlinkFromElement(By by, int... timeout){
+            try {
+                clickOnElementIgnoreException(by);
+                return driver().getCurrentUrl();
+            }
+            catch (Exception e) {
+                    reporter.fail("Failure getting link from button ",  e);
+                    throw new RuntimeException("Failure getting link from button " );
+            }
+    }
+
 
 }

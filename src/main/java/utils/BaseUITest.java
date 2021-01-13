@@ -35,7 +35,7 @@ public class BaseUITest extends BaseTest{
             Assert.fail();
         }
 
-        //LogIn();
+       // LogIn();
         //BasePage.driver().manage().window().maximize();
 
     }
@@ -47,7 +47,7 @@ public class BaseUITest extends BaseTest{
 
         LoginComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
         LoginComponent
-                .loginAs(ProjectConfiguration.getConfigProperty("DefaultUserName"),
+                .loginAs(ProjectConfiguration.getConfigProperty("DefaultUsername"),
                         ProjectConfiguration.getConfigProperty("DefaultUserPassword"));
 
     }

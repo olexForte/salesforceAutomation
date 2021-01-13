@@ -8,5 +8,30 @@
     "linkOfElement": "https://twitter.com/vht_studios",
     "textOfXpath": "//img[@data-link='twitter']",
     "openInNewTab": true
+  },
+  {
+    "linkOfElement": "https://www.linkedin.com/company/vht",
+    "textOfXpath": "//img[@data-link='linkedin']",
+    "openInNewTab": true
+  },
+  {
+    "linkOfElement": "https://www.instagram.com/vhtstudios/",
+    "textOfXpath": "//img[@data-link='instagram']",
+    "openInNewTab": true
+  },
+  {
+    "linkOfElement": "https://vht.com/sitemap",
+    "textOfXpath": "//*[@data-link='siteMap']",
+    "openInNewTab": true
+  },
+  {
+    "linkOfElement": "https://forteb2b-vht-support.cs41.force.com/vhtb2bstorre/s/privacy-policy",
+    "textOfXpath": "//*[@data-link='privacyPolicy']",
+    "openInNewTab": false
+  },
+  {
+    "linkOfElement": "https://forteb2b-vht-support.cs41.force.com/vhtb2bstorre/s/terms-of-use",
+    "textOfXpath": "//*[@data-link='termsOfUse']",
+    "openInNewTab": false
   }
 ]
