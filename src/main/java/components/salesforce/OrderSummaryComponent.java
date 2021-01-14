@@ -11,7 +11,7 @@ public class OrderSummaryComponent extends BasePageComponent {
     }
 
     public static void startReorder(){
-
+        reporter.info("Start reorder");
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"START_REORDER_BUTTON"));
         waitForPageToLoad();
     }

@@ -19,11 +19,13 @@ public class AddressListingComponent extends BasePageComponent {
     }
 
     public static void openTab(String tab_name) {
+        reporter.info("Open tab "+tab_name);
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"HEADER_TAB_BY_NAME",tab_name));
     }
 
-    public static void clickOnOrderTitle(String OrderSumaryId){
-        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ORDER_SUMMARY_LINK_BY_TEXT",OrderSumaryId));
+    public static void clickOnOrderTitle(String orderSumaryId){
+        reporter.info("Click on order summary "+orderSumaryId);
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ORDER_SUMMARY_LINK_BY_TEXT",orderSumaryId));
         waitForPageToLoad();
     }
 
@@ -39,6 +41,7 @@ public class AddressListingComponent extends BasePageComponent {
     }
 
     public static void openOrderSummary(String orderNumber, String filter){
+        reporter.info("Open order summary by title "+" with "+filter);
         openTab(ORDER_SUMMARY_TAB);
         applyFilter(filter);
         clickOnOrderTitle(orderNumber);
