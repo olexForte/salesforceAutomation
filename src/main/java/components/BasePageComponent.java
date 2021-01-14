@@ -1,16 +1,16 @@
-package pages;
+package components;
 
 import configuration.LocatorsRepository;
 import configuration.ProjectConfiguration;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reporting.ReporterManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,8 +18,11 @@ import java.util.List;
  */
 public class BasePageComponent {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BasePageComponent.class);
+
     public final static ReporterManager reporter = ReporterManager.Instance;
-    public final static LocatorsRepository locatorsRepository = LocatorsRepository.Instance;
+
+    public final static LocatorsRepository LOCATORS = LocatorsRepository.Instance;
 
     public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 
@@ -30,7 +33,7 @@ public class BasePageComponent {
     private static int getTimeout() {
         String timeout = ProjectConfiguration.getConfigProperty("DefaultTimeoutInSeconds");
         if (timeout == null ) {
-            reporter.fail("DefaultTimeoutInSeconds parameter was not found");
+            reporter.warn("DefaultTimeoutInSeconds parameter was not found");
             timeout = "15";
         };
 
@@ -75,7 +78,7 @@ public class BasePageComponent {
      */
     public static void open(String url) {
 
-//        reporter.info("Opening the page: " + "\"" + url + "\"");
+        reporter.info("Opening the page: " + "\"" + url + "\"");
         driver().get(url);
         driver().manage().window().maximize();
     }
@@ -100,66 +103,79 @@ public class BasePageComponent {
         }
     }
 
+    /**
+     * Set text to element
+     * @param element
+     * @param value
+     */
     public static void setText(By element, String value){
+        findElement(element).clear();
         if (value != null) {
-            findElement(element).clear();
             findElement(element).sendKeys(value);
         }
     }
 
+    /**
+     * Check that text is present in Page source
+     * @param text
+     * @return
+     */
     public static boolean isTextPresent(String text) {
         reporter.info("Validate text present: " + text);
         return driver().getPageSource().contains(text);
     }
 
-    public static void clickAnyWhere() {
+    /**
+     * Get text of element
+     * @param by
+     * @param timeout
+     * @return
+     */
+    public static String getElementText(By by, int... timeout) {
+        String result = "";
+        int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+        for (int attemptNumber = 0; attemptNumber < timeoutForFindElement; attemptNumber++) {
+            try {
+                WebElement elem = findElement(by, 1);
+                if (elem == null)
+                    continue;
+                result = elem.getText();
+                //get value if text = ""
+                if (result.equals("") && (elem.getAttribute("value") != null && !elem.getAttribute("value").equals("")))
+                    result = elem.getAttribute("value"); //TODO add type validation
+            }catch (Exception e){
+                LOGGER.warn("getElementText " + by.toString() + " " +  e.getMessage());
+                result = "";
+            }
+            if (!result.equals(""))
+                break;
+            sleepFor(1000);
+        }
+        return result;
+    }
+
+    /**
+     * Press TAB using Actions
+     */
+    public static void pressTab() {
         Actions a = new Actions(BasePageComponent.driver()); a.sendKeys(Keys.TAB).build().perform();
     }
 
-    public boolean isElementPresent(By by) {
+    /**
+     * Check if element is displayed
+     * @param by
+     * @return
+     */
+    public static boolean isElementDisplayed(By by) {
         try {
-            WebElement element = findElementIgnoreException(by);
+            WebElement element = findElement(by);
+            if (element == null)
+                return true;
             return element.isDisplayed();
-        } catch (RuntimeException e) {
-            return false;
-        }
-    }
-
-    public boolean isElementPresent(WebElement element) {
-        try {
-            return element.isDisplayed();
-        } catch (RuntimeException e) {
-            return false;
-        }
-    }
-
-    public boolean isElementPresent(String _cssSelector) {
-        try {
-            findElementIgnoreException(By.cssSelector(_cssSelector));
-            return true;
-        } catch (RuntimeException e) {
-            return false;
-        }
-    }
-
-    public boolean isElementPresentAndDisplay(By by) {
-        try {
-            return findElementIgnoreException(by).isDisplayed();
         } catch (Exception e) {
+            LOGGER.warn("isElementDisplayed Error", e);
             return false;
         }
-    }
-
-    public boolean isElementDisplayedRightNow(By by) {
-        try {
-            return findElementIgnoreException(by, SHORT_TIMEOUT).isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public WebElement getWebElement(By by) {
-        return findElement(by);
     }
 
 
@@ -213,13 +229,18 @@ public class BasePageComponent {
     public static void clickOnElement(By element, int... timeout) {
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
         waitForPageToLoad();
-        try {
-            (new WebDriverWait(driver(), timeoutForFindElement))
-                    .until(ExpectedConditions.visibilityOfElementLocated(element));
-            driver().findElement(element).click();
-        } catch (Exception e) {
-            reporter.fail("Failure clicking on element",  e);
-            throw new RuntimeException("Failure clicking on element" );
+        for (int attemptNumber = 0; attemptNumber < timeoutForFindElement; attemptNumber++) {
+            try {
+                findElement(element, 1).click();
+                break;
+            } catch (Exception e) {
+                LOGGER.warn("Failure clicking on element " + element.toString() + " " + e.getMessage());
+                if (attemptNumber >= timeoutForFindElement) {
+                    reporter.fail("Failure clicking on element",  e);
+                    throw e;
+                }
+                sleepFor(1000);
+            }
         }
         waitForPageToLoad();
     }
@@ -230,11 +251,10 @@ public class BasePageComponent {
         try {
             //synchronize();
             (new WebDriverWait(driver(), timeoutForFindElement))
-                    .until(ExpectedConditions.visibilityOfElementLocated(element));
+                    .until(ExpectedConditions.presenceOfElementLocated(element));
             return driver().findElement(element);
         } catch (Exception e) {
-            reporter.fail("Failure finding element",  e);
-            throw new RuntimeException("Failure finding element");
+            throw e;
         }
     }
 

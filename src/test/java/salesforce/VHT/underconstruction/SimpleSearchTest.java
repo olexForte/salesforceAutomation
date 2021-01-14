@@ -3,8 +3,8 @@ package salesforce.VHT.underconstruction;
 import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.BasePageComponent;
-import pages.salesforce.LoginComponent;
+import components.BasePageComponent;
+import components.salesforce.LoginComponent;
 import utils.BaseTest;
 
 /**

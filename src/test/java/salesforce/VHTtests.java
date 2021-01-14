@@ -2,8 +2,8 @@ package salesforce;
 
 import configuration.ProjectConfiguration;
 import org.testng.Assert;
-import pages.BasePageComponent;
-import pages.salesforce.LoginComponent;
+import components.BasePageComponent;
+import components.salesforce.LoginComponent;
 import utils.BaseTest;
 import org.testng.annotations.Test;
 

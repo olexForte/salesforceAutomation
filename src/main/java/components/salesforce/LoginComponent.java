@@ -1,18 +1,15 @@
-package pages.salesforce;
+package components.salesforce;
 
-import configuration.LocatorsRepository;
 import org.openqa.selenium.By;
-import pages.BasePageComponent;
-
-import static pages.BasePageComponent.*;
+import components.BasePageComponent;
 
 public class LoginComponent extends BasePageComponent {
 
     static String name = "loginComponent";
 
-    static By inputUsername    = locatorsRepository.getBy(name, "LOGIN_INPUT"); // By.xpath("//input[@id='username']");
-    static By inputPassword    = locatorsRepository.getBy(name, "PASSWORD_INPUT");//By.xpath("//input[@id='password']");
-    static By buttonLogin      = locatorsRepository.getBy(name, "LOGIN_BUTTON");//By.xpath("//input[@id='Login']");
+    static By inputUsername    = LOCATORS.getBy(name, "LOGIN_INPUT"); // By.xpath("//input[@id='username']");
+    static By inputPassword    = LOCATORS.getBy(name, "PASSWORD_INPUT");//By.xpath("//input[@id='password']");
+    static By buttonLogin      = LOCATORS.getBy(name, "LOGIN_BUTTON");//By.xpath("//input[@id='Login']");
 
     public static void loginAs(String... params){ //} username, String password){
 

@@ -1,19 +1,15 @@
 package utils;
 
-import configuration.DataRepository;
 import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import pages.BasePageComponent;
-import pages.salesforce.LoginComponent;
-import reporting.ReporterManager;
+import components.BasePageComponent;
+import components.salesforce.LoginComponent;
 import web.DriverProvider;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 
 
 public class BaseUITest extends BaseTest{
@@ -47,7 +43,7 @@ public class BaseUITest extends BaseTest{
 
         LoginComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
         LoginComponent
-                .loginAs(ProjectConfiguration.getConfigProperty("DefaultUsername"),
+                .loginAs(ProjectConfiguration.getConfigProperty("DefaultUserName"),
                         ProjectConfiguration.getConfigProperty("DefaultUserPassword"));
 
     }

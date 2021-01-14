@@ -1,28 +1,12 @@
 package salesforce.VHT.underconstruction;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import configuration.DataRepository;
-import configuration.ProjectConfiguration;
-import datasources.JSONConverter;
-import datasources.RandomDataGenerator;
 import entities.FooterEntity;
-import org.openqa.selenium.By;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.BasePageComponent;
-import pages.salesforce.FooterComponent;
-import pages.salesforce.LoginComponent;
-import utils.BaseTest;
 import utils.BaseUITest;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 

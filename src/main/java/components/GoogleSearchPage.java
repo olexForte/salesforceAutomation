@@ -1,4 +1,4 @@
-package pages;
+package components;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

@@ -1,16 +1,9 @@
 package utils;
 
-import annotations.TestName;
 import configuration.DataRepository;
-import configuration.ProjectConfiguration;
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import pages.BasePageComponent;
-import configuration.LocatorsRepository;
-import pages.salesforce.LoginComponent;
 import reporting.ReporterManager;
-import web.DriverProvider;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
