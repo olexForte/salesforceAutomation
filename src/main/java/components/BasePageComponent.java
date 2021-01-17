@@ -126,7 +126,7 @@ public class BasePageComponent {
     }
 
     /**
-     * Get text of element
+     * Get text of element with sleep=timeout if element don`t find
      * @param by
      * @param timeout
      * @return
@@ -184,7 +184,12 @@ public class BasePageComponent {
         dropdown.selectByVisibleText(value);
     }
 
-
+    /**
+     * Click on Element ignore Exception with timeout
+     * @param element By
+     * @param timeout int
+     * @return
+     */
     public static void clickOnElementIgnoreException(By element, int... timeout) {
         waitForPageToLoad();
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
@@ -198,6 +203,12 @@ public class BasePageComponent {
         waitForPageToLoad();
     }
 
+    /**
+     * Find Element ignore Exception with timeout
+     * @param element By
+     * @param timeout int
+     * @return WebElement
+     */
     public static WebElement findElementIgnoreException(By element, int... timeout) {
         waitForPageToLoad();
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
@@ -211,7 +222,12 @@ public class BasePageComponent {
             return null;
         }
     }
-
+    /**
+     * Find Element ignore Exception with timeout
+     * @param element By
+     * @param timeout int
+     * @return List<WebElement> list of element
+     */
     public static List<WebElement> findElementsIgnoreException(By element, int... timeout) {
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
         waitForPageToLoad();
@@ -225,7 +241,12 @@ public class BasePageComponent {
             return new ArrayList<WebElement>();
         }
     }
-
+    /**
+     * Click on Element ignore Exception with sleep=timeout if element don`t find
+     * @param element By
+     * @param timeout int
+     * @return
+     */
     public static void clickOnElement(By element, int... timeout) {
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
         waitForPageToLoad();
@@ -244,7 +265,12 @@ public class BasePageComponent {
         }
         waitForPageToLoad();
     }
-
+    /**
+     * Find Element
+     * @param element By
+     * @param timeout int
+     * @return WebElement
+     */
     public static WebElement findElement(By element, int... timeout) {
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
         waitForPageToLoad();
@@ -258,11 +284,22 @@ public class BasePageComponent {
         }
     }
 
+    /**
+     * Find Element by text Xpath
+     * @param byString text of Xpath
+     * @param timeout int
+     * @return WebElement
+     */
     public static WebElement findElement(String byString, int... timeout){
         return findElement(By.xpath(byString) ,timeout);
     }
 
-
+    /**
+     * Find Elements
+     * @param element By
+     * @param timeout int
+     * @return List<WebElement> list of web element
+     */
     public static List<WebElement> findElements(By element, int... timeout) {
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
         waitForPageToLoad();

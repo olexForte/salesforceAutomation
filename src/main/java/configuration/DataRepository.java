@@ -28,6 +28,12 @@ public class DataRepository {
 
     String DATA_DIR = "src/test/automation/resources/data/" + ProjectConfiguration.getConfigProperty("DataDir");
 
+    /**
+     * get object from json file
+     * @param dataName file name of file
+     * @param t class of object
+     * @return Object what was get
+     */
     public Object getObjectFromJson(String dataName, Class t ){
         Object result = null;
         try {
@@ -38,13 +44,18 @@ public class DataRepository {
 
             result = JSONConverter.toObjectFromJson(jsonFromFile, t);
             return result;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return  result;
     }
-    //YuraMethod
+
+    /**
+     * get object from API
+     * @param query search text
+     * @param t class of object
+     * @return Object what was get
+     */
     public Object getObjectFromAPI(String query, Class t ){
         Object result = null;
         try {
@@ -62,7 +73,11 @@ public class DataRepository {
             return null;
     }
 
-
+    /**
+     * get HashMap from properties
+     * @param testName file name
+     * @return HashMap parameters from file
+     */
     public HashMap<String, String> getParametersForTest(String testName) {
         File file = FileManager.getFileFromDir(testName, DATA_DIR);
         if(file.getName().contains(".properties"))
@@ -70,10 +85,24 @@ public class DataRepository {
         if(file.getName().contains(".json"))
             return getParamsFromJSON(file);
 
-
         return null;
     }
 
+    /**
+     * get String from file
+     * @param fileName file name
+     * @return String text from file
+     */
+    public String getContentFromFile(String fileName){
+        String filePath = DATA_DIR+"/"+fileName;
+        return FileManager.getFileContent(filePath);
+    }
+
+    /**
+     * get HashMap parameters from file
+     * @param file
+     * @return HashMap parameters from file
+     */
     private HashMap<String,String> getParamsFromProperties(File file){
 
         HashMap<String,String> results = new HashMap<>();
@@ -99,16 +128,15 @@ public class DataRepository {
         return results;
     }
 
+    /**
+     * get HashMap parameters from Json file
+     * @param file
+     * @return HashMap parameters from Json
+     */
     private HashMap<String,String> getParamsFromJSON(File file){
         String jsonFromFile= FileManager.getFileContent(file);
         HashMap<String, String> result = JSONConverter.toHashMapFromJsonString(jsonFromFile);
         return result;
-    }
-
-    //YuraMethod
-    public String getParameter(String key){
-        HashMap<String, String> params = getParametersForTest("some_query");
-        return params.get(key);
     }
 
 }
