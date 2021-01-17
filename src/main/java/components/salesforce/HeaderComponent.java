@@ -15,8 +15,8 @@ public class HeaderComponent extends BasePageComponent {
     // Remove this fear method
     public static boolean ifCountItemInCartEquals(int expected)
     {
-        if(findElement(LOCATORS.getBy(COMPONENT_NAME,"CART_COUNT_BY_NUMBER",
-                Integer.toString(expected)))!=null)
+        if(findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"CART_COUNT_BY_NUMBER",
+                Integer.toString(expected)),SHORT_TIMEOUT)!=null)
             return true;
 
         return false;

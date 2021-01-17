@@ -96,13 +96,13 @@ public class FilterComponent extends BasePageComponent {
 
     private static void useRangeOn(){
         reporter.info("Use Range on");
-        if(findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_FROM_INPUT"))==null)
+        if(findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_FROM_INPUT"),SHORT_TIMEOUT)==null)
             clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"TOGGLE_USE_RANGE"));
     }
 
     private static void useRangeOff(){
         reporter.info("Use Range off");
-        if(findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_FROM_INPUT"))!=null)
+        if(findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_FROM_INPUT"),SHORT_TIMEOUT)!=null)
             clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"TOGGLE_USE_RANGE"));
     }
 

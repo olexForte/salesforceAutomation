@@ -31,7 +31,6 @@ public class VHT_E2E extends BaseUITest {
 
         //count of item in cart
         int expectedNumberOfItemsInCart = HeaderComponent.getCountItemInCart() + Integer.valueOf(params.get("EXPECTED_QUANTITY_OF_ITEMS"));
-
         OrderSummaryComponent.startReorder(); // item/items add
         Assert.assertTrue(OrderCreatedPopUp.checkIfExist(), "No dialog displayed"); // check if pop-up open
 
