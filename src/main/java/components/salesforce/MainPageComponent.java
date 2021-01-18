@@ -7,18 +7,29 @@ public class MainPageComponent extends BasePageComponent {
 
     static String COMPONENT_NAME = "mainPage";
 
-//TODO
-// To do 2 methods second with parameter filter ?? --- " with filter"
+
+    public static void openAddressFromTable(String name){
+    reporter.info("Opening Listing address " + name);
+    clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "LISTING_ADDRESS_LINK_BY_NAME", name));
+    waitForPageToLoad();
+    }
+
     public static void openAddressFromTable(String name,String filter){
         reporter.info("Opening Listing address " + name+" with filter");
         FilterComponent.applyFilter(filter);
-        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "LISTING_ADDRESS_ADDRESS_LINK", name));
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "LISTING_ADDRESS_LINK_BY_NAME", name));
         waitForPageToLoad();
     }
 
-    public static void openProofPhotograpsFromTable(String name, String filter){
-        reporter.info("Opening Listing address " + name+" with filter");
+    public static void openProofPhotographsFromTable(String name, String filter){
+        reporter.info("Opening proof photographs by Listing address " + name+" with filter");
         FilterComponent.applyFilter(filter);
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "LISTING_ADDRESS_PROOF_PHOTOS_LINK", name));
+        waitForPageToLoad();
+    }
+
+    public static void openProofPhotographsFromTable(String name){
+        reporter.info("Opening proof photographs by Listing address "+ name);
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "LISTING_ADDRESS_PROOF_PHOTOS_LINK", name));
         waitForPageToLoad();
     }

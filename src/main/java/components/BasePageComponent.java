@@ -263,7 +263,7 @@ public class BasePageComponent {
                 }
                 sleepFor(1000);
             }
-        }
+        } 
         waitForPageToLoad();
     }
     /**
@@ -471,6 +471,7 @@ public class BasePageComponent {
         reporter.info("Switch to default content");
         driver().switchTo().defaultContent();
     }
+    //TODO
         //custom method from Yura
         public static String getLinkFromNewTab(By by, int... timeout){
             try {
