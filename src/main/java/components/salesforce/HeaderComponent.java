@@ -22,4 +22,7 @@ public class HeaderComponent extends BasePageComponent {
         return false;
     }
 
+    public static void waitForNumberOfItemsInCart(int expectedNumberOfItemsInCart) {
+        waitForElementText(LOCATORS.getBy(COMPONENT_NAME,"CART_ICON"), String.valueOf(expectedNumberOfItemsInCart));
+    }
 }

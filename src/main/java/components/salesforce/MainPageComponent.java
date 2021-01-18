@@ -15,4 +15,11 @@ public class MainPageComponent extends BasePageComponent {
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "LISTING_ADDRESS_ADDRESS_LINK", name));
         waitForPageToLoad();
     }
+
+    public static void openProofPhotograpsFromTable(String name, String filter){
+        reporter.info("Opening Listing address " + name+" with filter");
+        FilterComponent.applyFilter(filter);
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "LISTING_ADDRESS_PROOF_PHOTOS_LINK", name));
+        waitForPageToLoad();
+    }
 }

@@ -35,8 +35,38 @@ public class VHT_E2E extends BaseUITest {
         Assert.assertTrue(OrderCreatedPopUp.checkIfExist(), "No dialog displayed"); // check if pop-up open
 
 
-        //TODO ( time for change count to long in page Side )
-       // Assert.assertEquals(HeaderComponent.getCountItemInCart(),expectedNumberOfItemsInCart, "Wrong number of items in cart");
-        Assert.assertTrue(HeaderComponent.ifCountItemInCartEquals(expectedNumberOfItemsInCart), "Wrong number of items in cart");
+       HeaderComponent.waitForNumberOfItemsInCart(expectedNumberOfItemsInCart);
+       Assert.assertEquals(HeaderComponent.getCountItemInCart(), expectedNumberOfItemsInCart, "Wrong number of items in cart");
+       //Assert.assertTrue(HeaderComponent.ifCountItemInCartEquals(expectedNumberOfItemsInCart), "Wrong number of items in cart");
+    }
+
+    @Test(testName = "E2E test 2")
+    public void test2(){
+
+        HashMap<String,String> params = dataRepository.getParametersForTest("VHT_E2E");
+
+        // login
+        logInApplication();
+
+
+      //  MainPageComponent.openAddressFromTable(params.get("NAME"),"");
+
+        MainPageComponent.hoverItem(By.xpath("//div[@class='image-container']"));
+        click ("//div[@class='image-container']//*[@title='Add To Cart']")
+
+//check message appeared
+        ("//span[@class='toastMessage slds-text-heading--small forceActionsText']")
+
+                // check item was added
+
+        //(optional)
+
+        //hover and click X
+
+        // check item was removed
+
+
+        //check if record open
+        System.out.println();
     }
 }

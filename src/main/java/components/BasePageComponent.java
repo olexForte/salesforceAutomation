@@ -218,6 +218,7 @@ public class BasePageComponent {
             (new WebDriverWait(driver(), timeoutForFindElement))
                     .until(ExpectedConditions.visibilityOfElementLocated(element));
             return driver().findElement(element);
+
         } catch (Exception e) {
             return null;
         }
@@ -281,6 +282,29 @@ public class BasePageComponent {
             return driver().findElement(element);
         } catch (Exception e) {
             throw e;
+        }
+    }
+
+    /**
+     * wait for text on element
+     * @param locator By
+     * @param timeout int
+     * @return WebElement
+     */
+    public static boolean waitForElementText(By locator, String expectedText, int... timeout) {
+        int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+        waitForPageToLoad();
+        try {
+            WebElement element = findElement(locator, timeout);
+            (new WebDriverWait(driver(), timeoutForFindElement))
+                    .until(ExpectedConditions.textToBePresentInElement(element, expectedText));
+            if (getElementText(locator, 1).contains(expectedText))
+                return true;
+            else
+                return false;
+
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -432,7 +456,7 @@ public class BasePageComponent {
 
 
     // Does not work because of geckodriver bug - https://stackoverflow.com/questions/40360223/webdriverexception-moveto-did-not-match-a-known-command
-    public void hoverItem(By element){
+    public static void hoverItem(By element){
         reporter.info("Put mouse pointer over element: " + element.toString());
         Actions action = new Actions(driver());
         action.moveToElement(findElement(element)).build().perform();
