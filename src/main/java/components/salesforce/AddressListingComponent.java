@@ -22,9 +22,9 @@ public class AddressListingComponent extends BasePageComponent {
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"HEADER_TAB_BY_NAME",tab_name));
     }
 
-    public static void clickOnOrderTitle(String orderSumaryId){
-        reporter.info("Click on order summary "+orderSumaryId);
-        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ORDER_SUMMARY_LINK_BY_TEXT",orderSumaryId));
+    public static void clickOnOrderTitle(String orderSummaryId){
+        reporter.info("Click on order summary "+orderSummaryId);
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ORDER_SUMMARY_LINK_BY_TEXT",orderSummaryId));
         waitForPageToLoad();
     }
 

@@ -26,8 +26,7 @@ public class BaseTest{
         //init data
         dataRepository = DataRepository.Instance;
 
-        //TODO
-        //params = dataRepository.getParametersForTest();
+        //TODO params = dataRepository.getParametersForTest();
     }
 
     @AfterMethod

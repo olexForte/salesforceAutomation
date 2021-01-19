@@ -299,7 +299,11 @@ public class FileManager {
         IOFileFilter fn = new NameFileFilter(fileName);
         IOFileFilter dn = new NameFileFilter(fileName);
         try {
-            return FileUtils.listFiles(new File(dir), new WildcardFileFilter(fileName + "*"), new WildcardFileFilter("*")).stream().findFirst().get();
+            //TODO I change this method, need to review
+            return FileUtils.listFiles(new File(dir), new WildcardFileFilter(fileName + ".*"), new WildcardFileFilter("*")).stream().findFirst().get();
+
+            //was
+           // return FileUtils.listFiles(new File(dir), new WildcardFileFilter(fileName + "*"), new WildcardFileFilter("*")).stream().findFirst().get();
         }catch (NoSuchElementException e){
             LOGGER.error("File was not found: " + fileName + " in " + dir);
         }

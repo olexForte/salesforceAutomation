@@ -13,10 +13,6 @@ import java.util.HashMap;
 // can to do this object to static ?
 public class FilterComponent extends BasePageComponent {
     static private String COMPONENT_NAME = "filterComponent";
-   private static LocalDate dateFrom = null;
-   private static LocalDate dateTo = null;
-   private static String search = null;
-   private static String status = null;
 
    private static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
@@ -24,54 +20,46 @@ public class FilterComponent extends BasePageComponent {
      *
      *
      */
-    private static void apply(){
-        if (dateFrom == null)
-            if (dateTo != null)
-                searchByDate(dateTo.format(dateFormatter));
-
-        else
-            if (dateTo != null)
-                searchByDateRange(dateFrom.format(dateFormatter), dateTo.format(dateFormatter));
-        if (search != null)
-            searchByText(search);
-        if (status != null)
-            searchByStatus(status);
-    }
 
     public static void applyFilter(String filter) {
         reporter.info("apply Filter "+ filter);
-        HashMap<String, String> fields = JSONConverter.toHashMapFromJsonString(filter);
         if (filter == null || filter.equals(""))
             return;
         else
         {
-            if(fields.containsKey("dateFrom") && !fields.get("dateFrom").isEmpty() && fields.get("dateFrom")!=null)
-                dateFrom = LocalDate.parse(fields.get("dateFrom"), dateFormatter);
-            else
-                dateFrom=null;
+            HashMap<String, String> fields = JSONConverter.toHashMapFromJsonString(filter);
+
             if(fields.containsKey("dateTo") && !fields.get("dateTo").isEmpty() && fields.get("dateTo")!=null)
-                dateTo = LocalDate.parse(fields.get("dateTo"), dateFormatter);
-            else
-                dateTo=null;
-            if(fields.containsKey("search"))
-                search = fields.get("search");
-            else
-                search=null;
-            if(fields.containsKey("status"))
-                status = fields.get("status");
-            else
-                status=null;
+                if(fields.containsKey("dateFrom") && !fields.get("dateFrom").isEmpty() && fields.get("dateFrom")!=null)
+                {
+                    //TODO
+                    //Why need to parse and after this to do String ?
+                    LocalDate dateFrom = LocalDate.parse(fields.get("dateFrom"), dateFormatter);
+                    LocalDate dateTo = LocalDate.parse(fields.get("dateTo"), dateFormatter);
+                    searchByDateRange(dateFrom.format(dateFormatter),dateTo.format(dateFormatter));
+                }
+                else
+                {
+                    LocalDate dateTo = LocalDate.parse(fields.get("dateTo"), dateFormatter);
+                    searchByDate(dateTo.format(dateFormatter));
+                }
+
+            if(fields.containsKey("search") && !fields.get("search").isEmpty())
+                searchByText(fields.get("search"));
+
+            if(fields.containsKey("status") && !fields.get("status").isEmpty())
+                searchByStatus(fields.get("status"));
         }
-        apply();
     }
 
     private static void clearDateInput(){
+        reporter.info("Clear input date");
         findElement(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_INPUT")).clear();
     }
 
-    //TODO
-    // divide on two separate methods: clearFrom and clearTo and use in this ???
+
     private static void clearDataInputRange(){
+        reporter.info("Clear input date range");
         findElement(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_TO_INPUT")).clear();
         findElement(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_FROM_INPUT")).clear();
     }
@@ -79,6 +67,7 @@ public class FilterComponent extends BasePageComponent {
 
     public static void searchByDate(String date){
         useRangeOff();
+        clearDateInput();
         reporter.info("Search by date: " + date);
         clearDateInput();
         findElement(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_INPUT")).sendKeys(date);
@@ -86,9 +75,9 @@ public class FilterComponent extends BasePageComponent {
     }
 
     public static void searchByDateRange(String dateFrom, String dataTo) {
-        reporter.info("Search by date range from "+dateFrom+" to "+dataTo);
         useRangeOn();
         clearDataInputRange();
+        reporter.info("Search by date range from "+dateFrom+" to "+dataTo);
         findElement(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_FROM_INPUT")).sendKeys(dateFrom);
         findElement(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_BY_DATE_TO_INPUT")).sendKeys(dataTo);
         pressTab();
