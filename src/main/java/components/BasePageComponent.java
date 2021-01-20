@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reporting.ReporterManager;
+import web.Selenium4Wrapper;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,10 @@ public class BasePageComponent {
         return driver.get();
     }
 
+    //TODO
+    public void slow(){
+        ((Selenium4Wrapper) (driver.get())).slowDown();
+    }
     /**
      * Reload page
      */
@@ -254,6 +259,7 @@ public class BasePageComponent {
         for (int attemptNumber = 0; attemptNumber < timeoutForFindElement; attemptNumber++) {
             try {
                 findElement(element, 1).click();
+                LOGGER.info("Clicked");
                 break;
             } catch (Exception e) {
                 LOGGER.warn("Failure clicking on element " + element.toString() + " " + e.getMessage());

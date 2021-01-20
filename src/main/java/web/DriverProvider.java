@@ -88,12 +88,20 @@ public class DriverProvider {
                 case "proxy"    : instance.set(getChrome(false, true)); break;
                 case "chrome_headless": instance.set(getChrome(true, false));break;
                 case "chrome_headless_proxy": instance.set(getChrome(true, true));break;
+                case "selenium4": instance.set(getSelenium4());break;
                 default: instance.set(getChrome(false, false));
 
             }
 
         //return instance;
         return instance.get();
+    }
+
+    //TODO
+    private static WebDriver getSelenium4() {
+        //.....
+        WebDriver driver = new Selenium4Wrapper(getChrome(true, true));
+        return driver;
     }
 
 
