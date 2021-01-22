@@ -1,8 +1,6 @@
 package components.subcomponents;
 
 import components.BasePageComponent;
-import components.salesforce.AddressListingComponent;
-import configuration.LocatorsRepository;
 import datasources.JSONConverter;
 
 import java.time.LocalDate;

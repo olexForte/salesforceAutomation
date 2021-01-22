@@ -1,4 +1,4 @@
-package components.salesforce;
+package components.salesforce.common;
 
 import components.BasePageComponent;
 

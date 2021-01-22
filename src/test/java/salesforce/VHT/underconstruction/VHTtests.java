@@ -1,9 +1,9 @@
-package salesforce;
+package salesforce.VHT.underconstruction;
 
 import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import components.BasePageComponent;
-import components.salesforce.LoginComponent;
+import components.salesforce.common.LoginComponent;
 import utils.BaseTest;
 import org.testng.annotations.Test;
 

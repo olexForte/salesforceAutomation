@@ -1,11 +1,11 @@
-package components.salesforce;
+package components.salesforce.common;
 
 import org.openqa.selenium.By;
 import components.BasePageComponent;
 
 public class LoginComponent extends BasePageComponent {
 
-    static String name = "loginComponent";
+    static String name = "LoginComponent";
 
     static By inputUsername    = LOCATORS.getBy(name, "LOGIN_INPUT"); // By.xpath("//input[@id='username']");
     static By inputPassword    = LOCATORS.getBy(name, "PASSWORD_INPUT");//By.xpath("//input[@id='password']");

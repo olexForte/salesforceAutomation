@@ -1,11 +1,11 @@
-package components.salesforce;
+package components.salesforce.vht;
 
 import components.BasePageComponent;
 import components.subcomponents.FilterComponent;
 
-public class MainPageComponent extends BasePageComponent {
+public class VHTMainPageComponent extends BasePageComponent {
 
-    static String COMPONENT_NAME = "mainPage";
+    static String COMPONENT_NAME = "VHTMainPage";
 
 
     public static void openAddressFromTable(String name){

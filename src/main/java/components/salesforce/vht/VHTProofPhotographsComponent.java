@@ -1,9 +1,9 @@
-package components.salesforce;
+package components.salesforce.vht;
 
 import components.BasePageComponent;
 import org.openqa.selenium.By;
 
-public class ProofPhotographsComponent  extends BasePageComponent {
+public class VHTProofPhotographsComponent extends BasePageComponent {
     static String COMPONENT_NAME = "ProofPhotographs";
 
     public static boolean isAddButtonVisibleOnPhoto(String name){

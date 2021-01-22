@@ -1,8 +1,8 @@
 <suite name="Suite" parallel="methods" thread-count="5">
     <test name="Test">
         <classes>
-<!--            <class name="salesforce.VHT.underconstruction.VHT_APITest" />-->
-<!--            <class name="salesforce.VHT.underconstruction.VHTFooterTests" />-->
+            <class name="salesforce.VHT.smoke.VHT_OrderPurchaseTest" />
+            <class name="salesforce.VHT.smoke.VHT_ProofPhotosTest" />
         </classes>
     </test> <!-- test -->
 </suite> <!-- suite -->

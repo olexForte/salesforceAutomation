@@ -4,7 +4,7 @@ import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import components.BasePageComponent;
-import components.salesforce.LoginComponent;
+import components.salesforce.common.LoginComponent;
 import utils.BaseTest;
 
 /**

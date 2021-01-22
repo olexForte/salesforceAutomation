@@ -1,8 +1,8 @@
-package components.salesforce;
+package components.salesforce.vht;
 
 import components.BasePageComponent;
 
-public class OrderSummaryComponent extends BasePageComponent {
+public class VHTOrderSummaryComponent extends BasePageComponent {
 
     static String COMPONENT_NAME = "OrderSummaryComponent";
 

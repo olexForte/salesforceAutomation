@@ -1,13 +1,13 @@
-package components.salesforce;
+package components.salesforce.vht;
 
 import components.subcomponents.FilterComponent;
 import org.openqa.selenium.By;
 import components.BasePageComponent;
 
 
-public class AddressListingComponent extends BasePageComponent {
+public class VHTAddressListingComponent extends BasePageComponent {
 
-    static public String COMPONENT_NAME = "listingAddressDetailsPage";
+    static public String COMPONENT_NAME = "ListingAddressDetailsPage";
     static By TITLE_LABEL = LOCATORS.getBy(COMPONENT_NAME, "TITLE_LABEL");
 
     //tab titles

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class VHTFooterTests extends BaseUITest {
+public class VHT_FooterTests extends BaseUITest {
 
 
     @DataProvider(name="Scripts to run")
