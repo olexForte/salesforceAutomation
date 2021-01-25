@@ -17,12 +17,13 @@ public class BaseUITest extends BaseTest{
     @BeforeMethod
     public void beforeWithData(Object[] data, Method method) {
 
-        super.beforeWithData(data,method);
+        super.beforeWithData(data, method);
 
         //init threadlocal driver
         try {
             reporter.info("Driver creation");
-            BasePageComponent.driver.set(DriverProvider.getDriver(reporter.TEST_NAME.get()));
+            //if(BasePageComponent.driver.get() == null)
+                BasePageComponent.driver.set(DriverProvider.getDriver(reporter.TEST_NAME.get()));
             //reporter.info("Driver created " + BasePage.driver.get().hashCode());
         }catch (Exception e){
             reporter.fail("Before test failure during Driver creation", e);

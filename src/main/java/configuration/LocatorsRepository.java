@@ -25,24 +25,27 @@ public class LocatorsRepository {
     HashMap<String, String> processedParameters = new HashMap<>();
 
     public String get(String componentName, String locator, String... parameters){
+        LOGGER.info("Get property: " + locator + " " + parameters);
         if (processedParameters.containsKey(componentName + "." + locator))
             return String.format(processedParameters.get(componentName + "." + locator), parameters);
 
         String path =  LOCATORS_DIR + componentName + ".properties";
         Properties locators = new Properties();
         File file = new File(path);
-        try {
-            FileInputStream fileInput = new FileInputStream(file);
-            locators.load(fileInput);
+        if (file.exists()) {
+            try {
+                FileInputStream fileInput = new FileInputStream(file);
+                locators.load(fileInput);
 
-            for (Map.Entry property: locators.entrySet()) {
-                processedParameters.put(componentName + "." + property.getKey(), (String) property.getValue());
+                for (Map.Entry property : locators.entrySet()) {
+                    processedParameters.put(componentName + "." + property.getKey(), (String) property.getValue());
+                }
+
+            } catch (FileNotFoundException e) {
+                LOGGER.warn("File not found: ", e);
+            } catch (IOException e) {
+                LOGGER.warn("IOException: ", e);
             }
-
-        } catch (FileNotFoundException e) {
-           // e.printStackTrace();
-        } catch (IOException e) {
-           // e.printStackTrace();
         }
 
         if (processedParameters.containsKey(componentName + "." + locator))
@@ -51,17 +54,19 @@ public class LocatorsRepository {
         String generalPath = DEFAULT_LOCATORS_DIR  + componentName + ".properties";
         locators = new Properties();
         file = new File(generalPath);
-        try {
-            FileInputStream fileInput = new FileInputStream(file);
-            locators.load(fileInput);
+        if (file.exists()) {
+            try {
+                FileInputStream fileInput = new FileInputStream(file);
+                locators.load(fileInput);
 
-            for (Map.Entry property: locators.entrySet()) {
-                processedParameters.putIfAbsent(componentName + "." + property.getKey(), (String) property.getValue());
+                for (Map.Entry property : locators.entrySet()) {
+                    processedParameters.putIfAbsent(componentName + "." + property.getKey(), (String) property.getValue());
+                }
+            } catch (FileNotFoundException e) {
+                LOGGER.warn("File not found: ", e);
+            } catch (IOException e) {
+                LOGGER.warn("IOException: ", e);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         if (processedParameters.containsKey(componentName + "." + locator))

@@ -21,14 +21,13 @@ public class searchTest extends BaseUITest {
         SearchEntity[] search = (SearchEntity[]) dataRepository.getObjectFromJson("DataForSearch",SearchEntity[].class);
         List<Object[]> result = new ArrayList<Object[]>();
         for(SearchEntity item : search){
-            //TODO pleas explain me SearchEntity[]{item} ??
+            //create array from one known element
             result.add(new SearchEntity[]{item});
         }
         return result.iterator();
     }
 
-    //TODO can i change logic about after and before ?
-    @Test(testName = "test search",dataProvider ="Data for search")
+    @Test(testName = "test search", dataProvider ="Data for search")
     public void searchTest(SearchEntity search){
         logInApplication();
         Assert.assertTrue(SearchComponent.isSearchExist());

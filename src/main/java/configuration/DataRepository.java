@@ -104,20 +104,18 @@ public class DataRepository {
      * @return HashMap parameters from file
      */
     private HashMap<String,String> getParamsFromProperties(File file){
-
+        LOGGER.info("Load data properties file: " + file.getPath());
         HashMap<String,String> results = new HashMap<>();
         Properties props = new Properties();
         FileInputStream fileInput = null;
         try {
             fileInput = new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             LOGGER.error("File was not found " + file.getAbsolutePath(), e);
         }
         try {
             props.load(fileInput);
         } catch (IOException e) {
-            e.printStackTrace();
             LOGGER.error("Problems with properties loading " + file.getAbsolutePath(), e);
         }
 
@@ -134,6 +132,7 @@ public class DataRepository {
      * @return HashMap parameters from Json
      */
     private HashMap<String,String> getParamsFromJSON(File file){
+        LOGGER.info("Load JSON data file: " + file.getPath());
         String jsonFromFile= FileManager.getFileContent(file);
         HashMap<String, String> result = JSONConverter.toHashMapFromJsonString(jsonFromFile);
         return result;
