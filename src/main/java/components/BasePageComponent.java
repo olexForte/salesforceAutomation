@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reporting.ReporterManager;
-import web.Selenium4Wrapper;
+//import web.Selenium4Wrapper;
 
 import java.util.ArrayList;
 
@@ -66,10 +66,10 @@ public class BasePageComponent {
         return driver.get();
     }
 
-    //TODO
-    public void slow(){
-        ((Selenium4Wrapper) (driver.get())).slowDown();
-    }
+//    //TODO
+//    public void slow(){
+//        ((Selenium4Wrapper) (driver.get())).slowDown();
+//    }
     /**
      * Reload page
      */
@@ -113,8 +113,8 @@ public class BasePageComponent {
      * @param element
      * @param value
      */
-    public static void setText(By element, String value){
-        findElement(element).clear();
+    public static void setText(By element, String value,int... timeout){
+        findElement(element,timeout).clear();
         if (value != null) {
             findElement(element).sendKeys(value);
         }
@@ -171,16 +171,22 @@ public class BasePageComponent {
      * @param by
      * @return
      */
-    public static boolean isElementDisplayed(By by) {
-        try {
-            WebElement element = findElement(by);
-            if (element == null)
-                return true;
-            return element.isDisplayed();
-        } catch (Exception e) {
-            LOGGER.warn("isElementDisplayed Error", e);
-            return false;
+    public static boolean isElementDisplayed(By by,int... timeout) {
+        int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+        for (int attemptNumber = 0; attemptNumber < timeoutForFindElement; attemptNumber++) {
+            try {
+                if(driver().findElement(by).isDisplayed()==true);
+                    return true;
+            } catch (Exception e) {
+                if(attemptNumber>=timeoutForFindElement)
+                {
+                    reporter.fail("isElementDisplayed Error",  e);
+                    throw e;
+                }
+            }
+            sleepFor(1000);
         }
+        return false;
     }
 
 
@@ -254,6 +260,8 @@ public class BasePageComponent {
      * @return
      */
     public static void clickOnElement(By element, int... timeout) {
+        //error message: javascript error: Cannot read property 'defaultView' of undefined
+        String errorMessage = "javascript error: Cannot read property 'defaultView' of undefined";
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
         waitForPageToLoad();
         for (int attemptNumber = 0; attemptNumber < timeoutForFindElement; attemptNumber++) {
@@ -270,6 +278,13 @@ public class BasePageComponent {
                     break;
                 }
             } catch (Exception e) {
+                if (e.getMessage().contains(errorMessage))
+                {
+                    clickOnElementWithJSIgnoreException(element,timeout);
+                    LOGGER.info("Clicked by JS");
+                    break;
+                }
+
                 LOGGER.warn("Failure clicking on element " + element.toString() + " " + e.getMessage());
                 if (attemptNumber >= timeoutForFindElement) {
                     reporter.fail("Failure clicking on element",  e);
@@ -280,6 +295,17 @@ public class BasePageComponent {
         } 
         waitForPageToLoad();
     }
+
+    private static void clickOnElementWithJSIgnoreException(By by, int... timeout) {
+        try {
+            ((JavascriptExecutor) driver()).executeScript("arguments[0].click();",findElement(by, timeout));
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
+    }
+
     /**
      * Find Element
      * @param element By
