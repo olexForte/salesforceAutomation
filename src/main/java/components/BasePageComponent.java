@@ -261,6 +261,14 @@ public class BasePageComponent {
                 findElement(element, 1).click();
                 LOGGER.info("Clicked");
                 break;
+            } catch (JavascriptException e){
+                LOGGER.warn("Failure clicking on element " + element.toString() + " " + e.getMessage());
+                if(e.getMessage().contains("Cannot read property 'defaultView' of undefined")) { // processing of known issues with lightning elements
+                    JavascriptExecutor executor = (JavascriptExecutor) driver();
+                    executor.executeScript("arguments[0].click();", findElement(element, 1));
+                    LOGGER.info("Clicked using JS");
+                    break;
+                }
             } catch (Exception e) {
                 LOGGER.warn("Failure clicking on element " + element.toString() + " " + e.getMessage());
                 if (attemptNumber >= timeoutForFindElement) {
