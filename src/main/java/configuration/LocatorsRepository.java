@@ -19,7 +19,7 @@ public class LocatorsRepository {
     private static LocatorsRepository instance;
     public static LocatorsRepository Instance = (instance != null) ? instance : new LocatorsRepository();
 
-    public static final String GENERAL_LOCATORS_DIR = "src/test/automation/resources/locators/general/";
+    public static final String DEFAULT_LOCATORS_DIR = "src/test/automation/resources/locators/default/";
     public static final String LOCATORS_DIR         = "src/test/automation/resources/locators/" + ProjectConfiguration.getConfigProperty("LocatorsDir") + "/";
 
     HashMap<String, String> processedParameters = new HashMap<>();
@@ -40,15 +40,15 @@ public class LocatorsRepository {
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+           // e.printStackTrace();
         }
 
         if (processedParameters.containsKey(componentName + "." + locator))
             return String.format(processedParameters.get(componentName + "." + locator), parameters);
 
-        String generalPath = GENERAL_LOCATORS_DIR  + componentName + ".properties";
+        String generalPath = DEFAULT_LOCATORS_DIR  + componentName + ".properties";
         locators = new Properties();
         file = new File(generalPath);
         try {
