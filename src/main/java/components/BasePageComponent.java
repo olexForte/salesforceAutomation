@@ -402,6 +402,22 @@ public class BasePageComponent {
         }
     }
 
+
+    public static String getAttributeHrefIgnoreException(By element, int... timeout) {
+        int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+        waitForPageToLoad();
+        try {
+            //synchronize();
+            (new WebDriverWait(driver(), timeoutForFindElement))
+                    .until(ExpectedConditions.visibilityOfElementLocated(element));
+            String href = findElement(element).getAttribute("href");
+            return href;
+        } catch (Exception e) {
+            reporter.info("Got exception. Exception is expected and ignored.");
+        }
+        return null;
+    }
+
     public static void setDriverContextToPage(WebDriver driver) {
         reporter.info("Setting the context mode to Page");
         driver.switchTo().defaultContent();

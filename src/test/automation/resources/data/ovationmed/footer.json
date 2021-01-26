@@ -1,12 +1,12 @@
 [
   {
-    "linkOfElement": "https://www.facebook.com/VHTStudios/",
-    "textOfXpath": "//img[@data-link='facebook']",
-    "openInNewTab": true
+    "linkOfElement": "https://staging-ovation-medical.cs194.force.com/s/profile/home",
+    "itemName": "Profile",
+    "openInNewTab": false
   },
   {
-    "linkOfElement": "https://twitter.com/vht_studios",
-    "textOfXpath": "//img[@data-link='twitter']",
-    "openInNewTab": true
+    "linkOfElement": "https://staging-ovation-medical.cs194.force.com/s/recordlist/OrderSummary/Default",
+    "itemName": "My Orders",
+    "openInNewTab": false
   }
 ]
