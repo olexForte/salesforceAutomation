@@ -30,8 +30,8 @@ public class searchTest extends BaseUITest {
     @Test(testName = "test search", dataProvider ="Data for search")
     public void searchTest(SearchEntity search){
         logInApplication();
-        Assert.assertTrue(SearchComponent.isSearchExist());
-        SearchComponent.findByQuery(search.query);
+        Assert.assertTrue(HeaderComponent.search.isSearchExist());
+        HeaderComponent.search.findByQuery(search.query);
         Assert.assertTrue(SearchResultComponent.isSearchResultExist());
         Assert.assertEquals(SearchResultComponent.getCountOfResult(),search.countOfExpectedResult);
         Assert.assertTrue(SearchResultComponent.isItemsInResult(search.result));

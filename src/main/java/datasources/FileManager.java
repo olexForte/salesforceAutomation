@@ -48,7 +48,7 @@ public class FileManager {
         try {
             createDir(directory);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Fail create DIR"+e);
             return null;
         }
         return directory;
@@ -64,7 +64,7 @@ public class FileManager {
         try {
             result = FileUtils.readFileToString(new File(filePath).getAbsoluteFile(), StandardCharsets.UTF_8).replace("\r", "");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Fail get contetnt from file path "+filePath+" "+e.toString());
         }
         return result ;
     }
@@ -79,7 +79,7 @@ public class FileManager {
         try {
             result = FileUtils.readFileToString(file, StandardCharsets.UTF_8).replace("\r", "");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Fail get content from "+file.getAbsolutePath()+" "+e.toString());
         }
         return result ;
     }
@@ -176,7 +176,8 @@ public class FileManager {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Fail archive Files");
+
         }
 
         return archiveName;
@@ -368,14 +369,11 @@ public class FileManager {
 
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            ReporterManager.Instance.fail("Config was not found: " + file.getName());
+            LOGGER.error("File was not found: " + file.getAbsolutePath());
         } catch (IOException e) {
-            e.printStackTrace();
-            ReporterManager.Instance.fail("Config was not opened: " + file.getName());
+            LOGGER.error("Config was not opened: " + file.getAbsolutePath());
         } catch (Exception e){
-            e.printStackTrace();
-            ReporterManager.Instance.fail("File was not found: " + file.getName());
+            LOGGER.error("Fail open file : " + file.getAbsolutePath());
         }
 
         for(String property : properties.stringPropertyNames()){

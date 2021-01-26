@@ -21,4 +21,18 @@ public class HeaderComponent extends BasePageComponent {
         setText(LOCATORS.getBy(COMPONENT_NAME,"GLOBAL_SEARCH_INPUT"), productName);
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "GLOBAL_SEARCH_BUTTON"));
     }
+
+    public static void openItemFromUserMenu(String itemName){
+        openUserProfileMenu();
+        reporter.info("Open user profile");
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"USER_MENU_ITEM_BY_NAME",itemName),SHORT_TIMEOUT);
+    }
+
+
+    private static void openUserProfileMenu(){
+        reporter.info("Open user profile menu");
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"USER_PROFILE_MENU"),SHORT_TIMEOUT);
+    }
+
+
 }

@@ -529,7 +529,7 @@ public class ReporterManager {
         try {
             result.close();
         } catch (IOException e) {
-            e.printStackTrace();
+           logger.error(" Fail get stack trace "+problem.getMessage());
         }
 
         return resultMessage;
@@ -571,7 +571,6 @@ public class ReporterManager {
             FileUtils.copyFile(file, new File(screenshotLocation));
         } catch (IOException e) {
             logger.error("Could not take screenshot", e);
-//            e.printStackTrace();
         }
         return filename;
     }
@@ -654,7 +653,7 @@ public class ReporterManager {
         try {
             FileManager.createFile(REPORT_FILE_LOCATION, content);
         } catch (IOException e) {
-            e.printStackTrace();
+           logger.error("Fail add custom scripts and styles");
         }
 
     }

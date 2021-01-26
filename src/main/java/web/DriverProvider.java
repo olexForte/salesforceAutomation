@@ -17,6 +17,8 @@ import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 
 import java.net.MalformedURLException;
@@ -33,7 +35,7 @@ import java.util.logging.Level;
 public class DriverProvider {
 
     public static ThreadLocal<WebDriver> instance = new ThreadLocal<WebDriver>();
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(DriverProvider.class);
     //BrowserStack local lunch support
     static Local bsLocal = new Local();
     public static final String BS_CONNECTION_URL = getBSConnectionString();
@@ -314,7 +316,7 @@ public class DriverProvider {
                     capabilities
             );
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LOGGER.error("Get selenoid fail "+e.toString());
         }
         return driver;
     }
@@ -403,7 +405,7 @@ public class DriverProvider {
         try {
             driver = new RemoteWebDriver(new URL(BS_CONNECTION_URL), caps);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LOGGER.error("Fail get Browser Stack Driver Proxy "+e.toString());
             return null;
         }
 
@@ -444,7 +446,7 @@ public class DriverProvider {
         try {
             driver = new RemoteWebDriver(new URL(BS_CONNECTION_URL), caps);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LOGGER.error("Fail get Browser Stack Driver "+e.toString());
             return null;
         }
 
@@ -524,7 +526,7 @@ public class DriverProvider {
         try {
             driver = new RemoteWebDriver(new URL("https://ondemand.saucelabs.com:443/wd/hub"), caps);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LOGGER.error("Fail get sauce lab driver "+e.toString());
             return null;
         }
 
@@ -565,7 +567,7 @@ public class DriverProvider {
         try {
             driver = new RemoteWebDriver(new URL(kobitonServerUrl), capabilities);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LOGGER.error("Fail get kobiton driver "+e.toString());
             return null;
         }
 

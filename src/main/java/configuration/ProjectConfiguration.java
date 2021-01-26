@@ -46,13 +46,10 @@ public class ProjectConfiguration {
 
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             ReporterManager.Instance.fail("Config was not found");
         } catch (IOException e) {
-            e.printStackTrace();
             ReporterManager.Instance.fail("Config was not opened");
         } catch (Exception e){
-            e.printStackTrace();
             ReporterManager.Instance.fail("Field was not found: " + PROPERTIES_FILE);
         }
         return result;

@@ -45,7 +45,7 @@ public class DataRepository {
             result = JSONConverter.toObjectFromJson(jsonFromFile, t);
             return result;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("fail get "+t.getName()+ "from file "+dataName+" "+e.getMessage());
         }
         return  result;
     }
@@ -67,8 +67,7 @@ public class DataRepository {
             return  result;
 
         } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error("Error in get object from API "+e);
+            LOGGER.error("fail get "+t.getName()+ "from api by query"+query+" "+e.getMessage());
         }
             return null;
     }
