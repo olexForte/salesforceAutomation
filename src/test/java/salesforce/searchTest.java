@@ -12,6 +12,8 @@ import utils.BaseUITest;
 
 import javax.xml.crypto.Data;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class searchTest extends BaseUITest {
 
@@ -29,11 +31,14 @@ public class searchTest extends BaseUITest {
 
     @Test(testName = "test search", dataProvider ="Data for search")
     public void searchTest(SearchEntity search){
+
         logInApplication();
-        Assert.assertTrue(HeaderComponent.search.isSearchExist());
-        HeaderComponent.search.findByQuery(search.query);
-        Assert.assertTrue(SearchResultComponent.isSearchResultExist());
-        Assert.assertEquals(SearchResultComponent.getCountOfResult(),search.countOfExpectedResult);
-        Assert.assertTrue(SearchResultComponent.isItemsInResult(search.result));
+        Assert.assertTrue(SearchComponent.isSearchExist());
+
+        SearchComponent.findByQuery(search.query);
+
+        Assert.assertTrue(SearchResultComponent.isSearchResultExist(), "No search results found");
+        Assert.assertEquals(SearchResultComponent.getTotalNumberOfResults(), search.countOfExpectedResult, "Total results number is unexpected");
+        Assert.assertTrue(SearchResultComponent.areItemsInResult(search.result), "Items were not found in results");
     }
 }

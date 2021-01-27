@@ -32,7 +32,7 @@ public class VHT_ProofPhotosTest extends BaseUITest {
         //check if cart count correct after added
         HeaderComponent.waitForNumberOfItemsInCart(expectedNumberOfItemsInCart);
         Assert.assertEquals(HeaderComponent.getCountItemInCart(), expectedNumberOfItemsInCart, "Wrong number of items in cart");
-        //check if button remove exist and button add isn`t exist
+        //check if button remove exist and button add doesn`t exist
         //too long
         Assert.assertTrue((!VHTProofPhotographsComponent.isAddButtonVisibleOnPhoto(params.get("PICTURE_NAME")) && VHTProofPhotographsComponent.isRemoveButtonVisibleOnPhoto(params.get("PICTURE_NAME"))));
 

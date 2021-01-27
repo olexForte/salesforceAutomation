@@ -21,45 +21,52 @@ public class SearchResultComponent extends BasePageComponent {
             clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ADD_TO_CART_BY_NAME", productName));
         }
     }
-//TODO this method work incorrect
-    public static int getCountOfResult(){
+
+    public static int getTotalNumberOfResults() {
         reporter.info("Get count item from result");
-            return findElements(LOCATORS.getBy(COMPONENT_NAME, "ITEM_IN_CART"),SHORT_TIMEOUT).size();
+        //take third group of digits in line. Example of line: 1 - 20 of 105 Results for "Thumb Spica, Right, X-Small, Retail"
+        return Integer.parseInt(getElementText(LOCATORS.getBy(COMPONENT_NAME, "SEARCH_RESULT_TITLE")).replaceAll("\\d+\\D+\\d+\\D+(\\d+).*", "$1"));
+    }
+
+    public static int getNumberOfItemsOnAPage(){
+        return findElements(LOCATORS.getBy(COMPONENT_NAME, "ITEM_IN_CART"),SHORT_TIMEOUT).size();
     }
 
 
     public static boolean isSearchResultExist(){
-        if(findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME, "SEARCH_RESULT"),SHORT_TIMEOUT)!=null)
+        if(isElementDisplayed(LOCATORS.getBy(COMPONENT_NAME, "SEARCH_RESULT")))
         {
             reporter.info("Search result exist");
             return true;
         }
         else{
-            reporter.info("Search result isn`t exist");
+            reporter.info("Search result doesn`t exist");
         }
         return false;
     }
 
     public static boolean isItemInResult(String itemName){
         reporter.info("Find item in result:"+itemName);
-            if (findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME, "PRODUCT_IN_TABLE_BY_TEXT",itemName))!=null)
-            {
-                return true;
-            }
-        return false;
+        return findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME, "PRODUCT_IN_TABLE_BY_TEXT",itemName)) != null;
     }
 
-    public static boolean isItemsInResult(List<String> items)
+    //TODO implement search by pages
+    public static boolean areItemsInResult(List<String> items)
     {
         reporter.info("Find items in result: "+items.toString());
         if(isSearchResultExist())
         {
+            boolean result = true;
             for(String item: items)
             {
-                if(isItemInResult(item)==false)
-                    return false;
+                if(isItemInResult(item)) {
+                    reporter.info("Item was found; " + item);
+                } else {
+                    reporter.fail("Item was not found; " + item);
+                    result = false;
+                }
             }
-            return true;
+            return result;
         }
         return false;
     }

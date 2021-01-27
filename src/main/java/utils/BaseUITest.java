@@ -4,6 +4,7 @@ import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import components.BasePageComponent;
 import components.salesforce.common.LoginComponent;
@@ -22,9 +23,10 @@ public class BaseUITest extends BaseTest{
         //init threadlocal driver
         try {
             reporter.info("Driver creation");
-            //if(BasePageComponent.driver.get() == null)
+            if (BasePageComponent.driver.get() == null){
                 BasePageComponent.driver.set(DriverProvider.getDriver(reporter.TEST_NAME.get()));
-            //reporter.info("Driver created " + BasePage.driver.get().hashCode());
+                reporter.info("Driver created " + BasePageComponent.driver.get().hashCode());
+            }
         }catch (Exception e){
             reporter.fail("Before test failure during Driver creation", e);
             reporter.stopReporting();
@@ -41,12 +43,20 @@ public class BaseUITest extends BaseTest{
      * Login to application with default credentials
      */
     public  void logInApplication() {
-
         LoginComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
         LoginComponent
                 .loginAs(ProjectConfiguration.getConfigProperty("DefaultUserName"),
                         ProjectConfiguration.getConfigProperty("DefaultUserPassword"));
 
+    }
+
+    //TODO conditional login
+    public void logIn(boolean forced){
+        if ( ProjectConfiguration.getConfigProperty("LOGGED_IN_DRIVER") == null || forced) {
+            logInApplication();
+            //TODO look at var names and param values
+            ProjectConfiguration.setLocalThreadConfigProperty("LOGGED_IN_DRIVER", BasePageComponent.driver().getCurrentUrl());
+        }
     }
 
     /**
@@ -63,10 +73,14 @@ public class BaseUITest extends BaseTest{
 
     @AfterMethod
     public void endTest(ITestResult testResult) throws Exception {
-
         super.endTest(testResult);
+    }
+
+    @AfterTest
+    public void closeDriver() throws Exception {
        // BasePage BasePage = new BasePage();
         //close driver
+        ProjectConfiguration.setLocalThreadConfigProperty("LOGGED_IN_DRIVER", null); // just in case
         BasePageComponent.driver().quit();
         DriverProvider.closeDriver();
 

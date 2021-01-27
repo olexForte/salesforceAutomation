@@ -1,10 +1,21 @@
 package components.salesforce.common;
 
 import components.BasePageComponent;
+import configuration.ProjectConfiguration;
 import org.openqa.selenium.By;
 import utils.BaseUITest;
 
 public class SearchComponent extends BasePageComponent {
+
+//    SearchComponent instance = null;
+//    SearchComponent getInstance(){
+//        if (instance == null)
+//            if (ProjectConfiguration.getConfigProperty("config").contains("asd"))
+//                instance = SearchComponent();
+//            else
+//                instance = new AnotherSearchCompnent();
+//            return instance;
+//    }
 
     public static String COMPONENT_NAME = "SearchComponent";
     //TODO ask about memory
@@ -14,10 +25,10 @@ public class SearchComponent extends BasePageComponent {
     public static boolean isSearchExist (){
         if(findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_INPUT"),SHORT_TIMEOUT)!=null)
         {
-            reporter.info("Search is exist");
+            reporter.info("Search exists");
             return true;
         }
-        reporter.info("Search isn`t exist");
+        reporter.info("Search doesn`t exist");
         return false;
     }
 

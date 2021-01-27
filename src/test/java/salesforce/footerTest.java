@@ -29,7 +29,7 @@ public class footerTest extends BaseUITest {
 
     @Test(testName = "test footer links", dataProvider ="Item for footer")
     public void footerLinkTest(FooterEntity footer){
-        logInApplication();
+        logIn(false);
         Assert.assertEquals(FooterComponent.getLink(footer.itemName,footer.openInNewTab),footer.linkOfElement);
     }
 

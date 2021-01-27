@@ -26,7 +26,7 @@ public class ProfileComponent extends BasePageComponent {
       clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"SAVE_BUTTON"),SHORT_TIMEOUT);
    }
 
-   public static void setDataIntoField(String fieldName,String value){
+   public static void setDataIntoField(String fieldName, String value){
       reporter.info("Set data "+value+" into field"+fieldName);
       setText(LOCATORS.getBy(COMPONENT_NAME,"FIELD_INPUT_BY_NAME",fieldName),value,SHORT_TIMEOUT);
    }

@@ -20,9 +20,11 @@ public class ProjectConfiguration {
 
     static public String CONFIG_FILE = System.getProperty("config");
     static String PROPERTIES_FILE = "src/test/automation/config/" + (( CONFIG_FILE == null ) ? "default" : CONFIG_FILE) + ".properties";
-    static private Properties localProps = loadProperties();
 
     static public ThreadLocal<Properties> threadProperties = new ThreadLocal<Properties>();
+    static private Properties localProps = loadProperties();
+
+
 
     /**
      * Load main config file
@@ -52,6 +54,10 @@ public class ProjectConfiguration {
         } catch (Exception e){
             ReporterManager.Instance.fail("Field was not found: " + PROPERTIES_FILE);
         }
+
+        //TODO move
+        threadProperties.set(new Properties());
+
         return result;
     }
 

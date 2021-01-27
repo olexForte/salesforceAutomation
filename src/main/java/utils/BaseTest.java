@@ -1,5 +1,8 @@
 package utils;
 
+import components.salesforce.common.AnotherSearchCompnent;
+import components.salesforce.common.LoginComponent;
+import components.salesforce.common.SearchComponent;
 import configuration.DataRepository;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -16,6 +19,17 @@ public class BaseTest{
 
     public HashMap<String, String> params;
 
+    //TODO factory???
+//    public LoginComponent loin;
+//    public SearchComponent seach;
+//
+//    private void createAllComponents() {
+//        seach = new SearchComponent();
+//        if ()
+//            seach = new AnotherSearchCompnent();
+//        ...
+//    }
+
     @BeforeMethod
     public void beforeWithData(Object[] data, Method method) {
 
@@ -27,6 +41,8 @@ public class BaseTest{
         dataRepository = DataRepository.Instance;
 
         //TODO params = dataRepository.getParametersForTest();
+
+        //createAllComponents();
     }
 
     @AfterMethod

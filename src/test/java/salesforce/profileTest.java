@@ -32,6 +32,7 @@ public class profileTest extends BaseUITest {
     @Test(testName = "Profile edit test")//, dataProvider ="Data for search")
     public void profileTest(){
 
+        //TODO add processing of random Templates (RANDOM:10d-5a , RANDOM:cur_date:YYYYMM, )
         HashMap<String,String> fields = dataRepository.getParametersForTest("profileFields");
         HashMap<String,String> params = dataRepository.getParametersForTest("profileTest");
 
