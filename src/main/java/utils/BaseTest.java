@@ -1,6 +1,5 @@
 package utils;
 
-import components.salesforce.common.AnotherSearchCompnent;
 import components.salesforce.common.LoginComponent;
 import components.salesforce.common.SearchComponent;
 import configuration.DataRepository;

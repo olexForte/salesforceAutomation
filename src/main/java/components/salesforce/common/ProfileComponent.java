@@ -1,6 +1,7 @@
 package components.salesforce.common;
 
 import components.BasePageComponent;
+import datasources.DataGenerator;
 import datasources.RandomDataGenerator;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -58,6 +59,17 @@ public class ProfileComponent extends BasePageComponent {
       return fields;
    }
 
+//   public static HashMap<String, String> getFieldsFromAPI(HashMap<String, String> fields) {
+//      reporter.info("Get fields from api");
+//      reloadPage();
+//      clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"EDIT_BUTTON"));
+//      for(Map.Entry<String,String> field: fields.entrySet())
+//      {
+//         field.setValue(getTextFromField(field.getKey()));
+//      }
+//      return fields;
+//   }
+
 
 
    public static HashMap<String, String> editFields(HashMap<String, String> fields) {
@@ -66,24 +78,20 @@ public class ProfileComponent extends BasePageComponent {
       for(Map.Entry<String,String> field: fields.entrySet())
       {
          String fieldName = field.getKey();
-         String fieldType = field.getValue();
-
-         if(fieldType.equals("Integer"))
-         {
-            int value =randomDataGenerator(Integer.class);
-            setDataIntoField(fieldName,String.valueOf(value));
-            field.setValue(String.valueOf(value));
-            continue;
-         }
-         if(fieldType.equals("String"))
-         {
-            String value =randomDataGenerator(String.class);
-            setDataIntoField(fieldName,value);
-            field.setValue(String.valueOf(value));
-            continue;
-         }
+         String fieldTemplate = field.getValue();
+         String randomData=getRandomData(fieldTemplate);
+         setDataIntoField(fieldName,randomData);
+         field.setValue(String.valueOf(randomData));
       }
       saveData();
       return fields;
    }
+
+
+   //how work with boolean or checkbox
+   public static String getRandomData(String template){
+      reporter.info("Get random data for template: "+ template);
+     return DataGenerator.getField(template);
+   }
+
 }

@@ -1,6 +1,8 @@
+
 {
-  "First Name": "String",
-  "Last Name": "String",
-  "City": "String",
-  "Fax": "Integer"
+  "First Name": "dp.MM-dd-yyyy",
+  "Last Name": "c.5",
+  "City": "c.5",
+  "Fax": "d.8"
+
 }

@@ -18,18 +18,18 @@ public class FooterComponent extends BasePageComponent
         if(inNewTab==true)
             return getLinkFromNewTab(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName));
         if(inNewTab==false)
-           return getlinkFromElement(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName));
+           return getLinkFromElement(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName));
 
         return null;
     }
 
     public static String getLink(String itemName,boolean inNewTab){
 
-        String hrefFromElement=getLinkFromAttributeHref(itemName);
-        if(hrefFromElement==null)
+        String link=getLinkFromAttributeHref(itemName);
+        if(link==null)
            return getLinkByClick(itemName,inNewTab);
 
-        return hrefFromElement;
+        return link;
     }
 
 }

@@ -539,7 +539,7 @@ public class BasePageComponent {
                 ArrayList<String> tabs2 = new ArrayList<String> (driver().getWindowHandles());
 
                 if(tabs1.size()==tabs2.size()||tabs2.size()>tabs1.size()+1)
-                        throw new Exception("link didn`t open in new tab, or count of link from this button more than one");
+                        throw new Exception("link don`t open in new tab, or count of link from this button more than one");
 
                 for(int i=0;i<tabs2.size();i++){
                     for(int j=0;j<tabs1.size();j++){
@@ -560,7 +560,7 @@ public class BasePageComponent {
             }
         }
 
-        public static String getlinkFromElement(By by, int... timeout){
+        public static String getLinkFromElement(By by, int... timeout){
             try {
                 clickOnElementIgnoreException(by);
                 return driver().getCurrentUrl();
