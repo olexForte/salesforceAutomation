@@ -28,9 +28,9 @@ public class DataGenerator {
    dd-M-yyyy hh:mm:ss
    ----
    second char -> count or data format
-    //TODO time
+    //TODO time,dropDown,checkboks..
     */
-    public static String getField(String template){
+    public static String getString(String template){
         logger.info("Get random field for template "+template);
         String delimeter = "\\.";
         String param[] = template.split(delimeter);
@@ -60,10 +60,16 @@ public class DataGenerator {
 
             case "d" : return RandomStringUtils.random(count, false, true);
             case "s" : return RandomStringUtils.random(count, true, true);
+            case "b" : return String.valueOf(Math.random()<0.5);
             case "c" : return RandomStringUtils.random(count, true, false);
-            case "b" : return String.valueOf(Math.random() < 0.5);
             case "e" : return RandomStringUtils.random(count, true, true)+"@i.ua";
         }
         return null;
+    }
+
+
+    public static boolean booleanGenerator()
+    {
+        return Math.random() < 0.5;
     }
 }

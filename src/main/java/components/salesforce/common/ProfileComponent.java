@@ -1,12 +1,17 @@
 package components.salesforce.common;
 
+import api.BaseAPIClient;
+import api.BaseRestClient;
 import components.BasePageComponent;
 import datasources.DataGenerator;
 import datasources.RandomDataGenerator;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.jsoup.Connection;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ProfileComponent extends BasePageComponent {
 
@@ -37,17 +42,6 @@ public class ProfileComponent extends BasePageComponent {
       return getElementText(LOCATORS.getBy(COMPONENT_NAME,"FIELD_INPUT_BY_NAME",fieldName),SHORT_TIMEOUT);
    }
 
-   public static <T> T randomDataGenerator(Class<T> type)
-   {
-      if(type.toString().equals("class java.lang.Integer") )
-         return (T) Integer.valueOf(RandomStringUtils.random(8, false, true));
-
-      //if(type.getClass().equals(String.class) )
-      return (T) RandomStringUtils.random(8, true, true);
-   }
-
-
-
    public static HashMap<String, String> getFields(HashMap<String, String> fields) {
       reporter.info("Get fields");
       reloadPage();
@@ -59,16 +53,27 @@ public class ProfileComponent extends BasePageComponent {
       return fields;
    }
 
-//   public static HashMap<String, String> getFieldsFromAPI(HashMap<String, String> fields) {
-//      reporter.info("Get fields from api");
-//      reloadPage();
-//      clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"EDIT_BUTTON"));
-//      for(Map.Entry<String,String> field: fields.entrySet())
-//      {
-//         field.setValue(getTextFromField(field.getKey()));
+//   public static HashMap<String, String> getFieldsFromAPI(Set<String> fields) {
+//      reporter.info("Get fields from API: "+fields.toString());
+//      final  String apiUrl="https://cs199.salesforce.com";
+//      String queryForContactTemplate ="/services/data/v50.0/query/?q=Select+%s++from+Contact+Where+id='0035500000lghLNAAY'";
+//      String queryForUser ="/services/data/v50.0/query/?q=Select+Name++from+Contact+Where+id='0035500000lghLNAAY'";
+//
+//      for(String field: fields){
+//         String queryContact=String.format(queryForContactTemplate,field.replaceAll(" ", ""));
+//         BaseAPIClient.runQuery(queryContact).body().toString();
 //      }
-//      return fields;
+//      BaseAPIClient.runQuery(queryForContact);
+//      clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"EDIT_BUTTON"));
+////      for(Map.Entry<String,String> field: fields.entrySet())
+////      {
+////         field.setValue(getTextFromField(field.getKey()));
+////      }
+////      return fields;
 //   }
+
+
+
 
 
 
@@ -79,7 +84,7 @@ public class ProfileComponent extends BasePageComponent {
       {
          String fieldName = field.getKey();
          String fieldTemplate = field.getValue();
-         String randomData=getRandomData(fieldTemplate);
+         String randomData=getRandomString(fieldTemplate);
          setDataIntoField(fieldName,randomData);
          field.setValue(String.valueOf(randomData));
       }
@@ -88,10 +93,8 @@ public class ProfileComponent extends BasePageComponent {
    }
 
 
-   //how work with boolean or checkbox
-   public static String getRandomData(String template){
-      reporter.info("Get random data for template: "+ template);
-     return DataGenerator.getField(template);
+   public static String getRandomString(String template){
+      reporter.info("Get random string for template: "+ template);
+     return DataGenerator.getString(template);
    }
-
 }

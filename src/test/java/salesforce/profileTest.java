@@ -45,6 +45,8 @@ public class profileTest extends BaseUITest {
         //Update field random data and check if data was change
         Assert.assertEquals(ProfileComponent.editFields(fields),ProfileComponent.getFields(fields));
 
+        //ProfileComponent.getFieldsFromAPI(fields.keySet());
+
 
     }
 }

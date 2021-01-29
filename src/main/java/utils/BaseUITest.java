@@ -50,12 +50,11 @@ public class BaseUITest extends BaseTest{
 
     }
 
-    //TODO conditional login
+
     public void logIn(boolean forced){
         if ( ProjectConfiguration.getConfigProperty("LOGGED_IN_DRIVER") == null || forced) {
             logInApplication();
-            //TODO look at var names and param values
-            ProjectConfiguration.setLocalThreadConfigProperty("LOGGED_IN_DRIVER", BasePageComponent.driver().getCurrentUrl());
+            ProjectConfiguration.setLocalThreadConfigProperty("LOGGED_IN_DRIVER", BasePageComponent.driver().toString());
         }
     }
 

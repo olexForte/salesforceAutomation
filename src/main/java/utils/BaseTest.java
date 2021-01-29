@@ -1,7 +1,5 @@
 package utils;
 
-import components.salesforce.common.LoginComponent;
-import components.salesforce.common.SearchComponent;
 import configuration.DataRepository;
 import org.testng.ITestResult;
 import org.testng.annotations.*;

@@ -25,7 +25,7 @@ public class LocatorsRepository {
     HashMap<String, String> processedParameters = new HashMap<>();
 
     public String get(String componentName, String locator, String... parameters){
-        LOGGER.info("Get property: " + locator + " " + parameters);
+        LOGGER.info("Get property: " + locator + " ");
         if (processedParameters.containsKey(componentName + "." + locator))
             return String.format(processedParameters.get(componentName + "." + locator), parameters);
 

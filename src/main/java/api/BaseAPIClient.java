@@ -20,9 +20,9 @@ public class BaseAPIClient {
     public final static ReporterManager reporter = ReporterManager.Instance;
     public final static LocatorsRepository locatorsRepository = LocatorsRepository.Instance;
 
-    private String authToken = "";
+    private static String authToken = "";
 
-    public Response runQuery(String query){
+    public static Response runQuery(String query){
 
         if (authToken.equals(""))
             authToken = APIAuthorization.getAccessToken();
@@ -44,12 +44,12 @@ public class BaseAPIClient {
 
     }
 
-    public String getValueByJsonPath(Response resp, String expected_json_path) {
-
-        return resp.jsonPath().getString(expected_json_path);
-
-
-    }
+//  // public String getValueByJsonPath(Response resp, String expected_json_path) {
+//
+//        return resp.jsonPath().getString(expected_json_path);
+//
+//
+//    }
 
     public List<String> getListValueByJsonPath(Response resp, String expected_json_path)
     {
