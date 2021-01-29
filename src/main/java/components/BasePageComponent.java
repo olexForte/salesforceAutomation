@@ -189,6 +189,9 @@ public class BasePageComponent {
         return false;
     }
 
+    public static boolean isElementDisplayed(String by,int... timeout) {
+    return isElementDisplayed(By.xpath(by),timeout);
+    }
 
     public static void selectFromDropdown(By element, String value){
         Select dropdown = new Select(findElement(element));

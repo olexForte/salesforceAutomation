@@ -54,12 +54,14 @@ public class HeaderComponent extends BasePageComponent {
 
     public static String navigateByHeaderMenuToItem(String navigationWay){
         reporter.info("Navigate to "+navigationWay);
-        String[] steps=navigationWay.split("\\|");
+        String[] steps=navigationWay.split("/");
         for(String step: steps){
             openItemFromHeaderMenu(step);
         }
         return steps[steps.length-1];
     }
+
+
 
     private static void openItemFromHeaderMenu(String item){
         reporter.info("Open item "+item);

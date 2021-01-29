@@ -2,6 +2,7 @@ package salesforce;
 
 import components.salesforce.common.HeaderComponent;
 import configuration.DataRepository;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -16,21 +17,22 @@ public class navigationMenuTest extends BaseUITest {
 
 
     @DataProvider(name="navigation")
-    public Iterator<Object[]> dataProvider(){
+    public Iterator<Object[]> dataProvider() throws Exception {
         DataRepository dataRepository = DataRepository.Instance;
-        String navigationWays = dataRepository.getContentFromFile("NavigationWays.csv");
-        String[] listWays=navigationWays.split("\\n");
+        List<String[]> listWays = dataRepository.getTableDataFromFile("NavigationWays.csv");
+
         List<Object[]> result = new ArrayList<Object[]>();
-        for(String way : listWays){
-            result.add(new String[]{way});
+        for(String[] way : listWays){
+            result.add(way);
         }
         return result.iterator();
     }
 
     @Test(testName = "Navigation test", dataProvider ="navigation")
-    public void navigate(Object way){
+    public void navigate(String location ,String result){
         logIn(false);
-        Assert.assertEquals(HeaderComponent.navigateByHeaderMenuToItem((String) way),HeaderComponent.getNameResultPage(),"Name page result is unexpected");
+        HeaderComponent.navigateByHeaderMenuToItem(location);
+        Assert.assertTrue(HeaderComponent.isElementDisplayed(result));
     }
 
 }

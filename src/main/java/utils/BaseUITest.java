@@ -79,7 +79,7 @@ public class BaseUITest extends BaseTest{
     public void closeDriver() throws Exception {
        // BasePage BasePage = new BasePage();
         //close driver
-        ProjectConfiguration.setLocalThreadConfigProperty("LOGGED_IN_DRIVER", null); // just in case
+        ProjectConfiguration.removeLocalThreadConfigProperty("LOGGED_IN_DRIVER"); // just in case
         BasePageComponent.driver().quit();
         DriverProvider.closeDriver();
 

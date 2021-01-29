@@ -300,7 +300,7 @@ public class FileManager {
         IOFileFilter fn = new NameFileFilter(fileName);
         IOFileFilter dn = new NameFileFilter(fileName);
         try {
-            //TODO I change this method, need to review
+
             return FileUtils.listFiles(new File(dir), new WildcardFileFilter(fileName + ".*"), new WildcardFileFilter("*")).stream().findFirst().get();
 
             //was
@@ -567,6 +567,7 @@ public class FileManager {
             }
         }
 
+
         //        String result = null;
 //        FileReader af;
 //        BufferedReader actual = Files.newBufferedReader(actualFile.toPath());
@@ -585,7 +586,37 @@ public class FileManager {
 //        }
         return result;
     }
+    /**
+     * Get files from dir
+     * @param fileName name of file
+     * @param dir dir location
+     * @return list of files
+     */
+    public static File getFileFromDirs(String fileName, String... dir ) {
+        ArrayList<String> result = new ArrayList<>();
+        IOFileFilter fn = new NameFileFilter(fileName);
+        IOFileFilter dn = new NameFileFilter(fileName);
 
+        try {
+            return FileUtils.listFiles(new File(dir[0]), new WildcardFileFilter(fileName + "*"), new WildcardFileFilter("*")).stream().findFirst().get();
+        }catch (NoSuchElementException e){
+            LOGGER.error("File was not found: " + fileName + " in " + dir[0]);
+        }
+
+        try {
+            return FileUtils.listFiles(new File(dir[1]), new WildcardFileFilter(fileName + "*"), new WildcardFileFilter("*")).stream().findFirst().get();
+        }catch (NoSuchElementException e){
+            LOGGER.error("File was not found: " + fileName + " in " + dir[1]);
+        }
+
+        try {
+            return FileUtils.listFiles(new File("."), new WildcardFileFilter(fileName + "*"), null).stream().findFirst().get();
+        }catch (NoSuchElementException e){
+            LOGGER.error("File was not found: " + fileName + " in current dir");
+        }
+
+        return null;
+    }
     public static Collection<File> getFilesFromDownloadDir(String data) {
         return FileManager.getFilesFromDir(data, OUTPUT_DIR);
     }

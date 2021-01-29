@@ -1,3 +1,3 @@
-LOWER EXTREMITY|WALKING BOOTS|PNEUMATIC WALKER BOOTS
-SPINE|CASTING MATERIAL
-UPPER EXTREMITY|WRIST & THUMB
+LOWER EXTREMITY/WALKING BOOTS/PNEUMATIC WALKER BOOTS|//li[@class='slds-breadcrumb__item']//p[contains(text(),'PNEUMATIC WALKER BOOTS')]
+SPINE/CASTING MATERIAL|//li[@class='slds-breadcrumb__item']//p[contains(text(),'CASTING MATERIAL')]
+UPPER EXTREMITY/WRIST & THUMB|//li[@class='slds-breadcrumb__item']//p[contains(text(),'WRIST & THUMB')]

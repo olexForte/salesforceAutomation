@@ -25,7 +25,7 @@ public class DataRepository {
 
     private static DataRepository instance;
     public static DataRepository Instance = (instance != null) ? instance : new DataRepository();
-
+    public static String DEFAULT_CSV_SEPARATOR = "\\|";
     String DATA_DIR = "src/test/automation/resources/data/" + ProjectConfiguration.getConfigProperty("DataDir");
 
     /**
@@ -73,6 +73,35 @@ public class DataRepository {
     }
 
     /**
+     * Get list of lists items from file
+     * @param fileName name of file in TEST_DATA_RESOURCES
+     * @return List of Lists of Strings with all data from file
+     * @throws Exception possible exception
+     */
+    public List<String[]> getTableDataFromFile(String fileName,String... separator) throws Exception {
+        List<String[]> result = new LinkedList<>();
+        String currentSeparator = separator.length==0 ? DEFAULT_CSV_SEPARATOR : separator[0];
+
+        List<String> lineList = FileManager.getFileContentAsListOfLines( getDataFile(fileName));
+        for(String line : lineList){
+            String[] list = (line.split(currentSeparator));
+            result.add(list);
+        }
+        return result;
+    }
+    /**
+     * Get test file name based on dataField
+     * @param dataField
+     * @return file location
+     */
+    public File getDataFile(String dataField) throws Exception {
+        LOGGER.info("Get data file from field:" + dataField);
+        return FileManager.getFileFromDirs(dataField, DATA_DIR);//, DEFAULT_TEST_DATA_RESOURCES);
+    }
+
+
+
+    /**
      * get HashMap from properties
      * @param testName file name
      * @return HashMap parameters from file
@@ -96,6 +125,17 @@ public class DataRepository {
         String filePath = DATA_DIR+"/"+fileName;
         return FileManager.getFileContent(filePath);
     }
+
+    /**
+     * get String from file
+     * @param fileName file name
+     * @return String text from file
+     */
+    public String[] getLinesFromFile(String fileName){
+        String filePath = DATA_DIR+"/"+fileName;
+        return FileManager.getFileContent(filePath).split("\\n");
+    }
+
 
     /**
      * get HashMap parameters from file

@@ -110,6 +110,13 @@ public class ProjectConfiguration {
     public static void setLocalThreadConfigProperty(String fieldName, String value) {
         threadProperties.get().setProperty(fieldName, value);
     }
+    /**
+     * Remove config property for Local thread
+     * @param fieldName
+     */
+    public static void removeLocalThreadConfigProperty(String fieldName) {
+        threadProperties.get().remove(fieldName);
+    }
 
     /**
      * True if using IE
