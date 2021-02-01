@@ -35,10 +35,12 @@ public class profileTest extends BaseUITest {
         //TODO add processing of random Templates (RANDOM:10d-5a , RANDOM:cur_date:YYYYMM, )
         HashMap<String,String> fields = dataRepository.getParametersForTest("profileFields");
         HashMap<String,String> params = dataRepository.getParametersForTest("profileTest");
-
+        ProfileComponent.dsasdadas();
         //log in
         logInApplication();
         //Open profile
+
+
         HeaderComponent.openItemFromUserMenu("Profile");
         //check if profile name equals to config
         Assert.assertEquals(params.get("PROFILE_NAME"),ProfileComponent.getProfileName());

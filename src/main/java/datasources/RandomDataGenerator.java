@@ -9,9 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Common tools for random data generation
@@ -70,6 +68,16 @@ public class RandomDataGenerator {
         return String.valueOf(r.nextInt(i));
     }
 
+    public static String getRandomDropdown(List<String> elements){
+        if(elements.size()>=1)
+        {
+            Random random = new Random();
+            int randomIndex = random.nextInt(elements.size());
+            return  elements.get(randomIndex);
+        }
+        return "";
+    }
+
     /**
      * Generate random string for parameters
      * @param parameters
@@ -86,12 +94,19 @@ public class RandomDataGenerator {
         String PAST_DATE_LABEL = "past_date";
         String WI_USER_LABEL = "wi_user";
         String DEFAULT_TEMPLATE = "10c";
+        String DROPDOWNS = "dropdown";
 
         String template;
         if (parameters.equals("")){
             template = DEFAULT_TEMPLATE;
         } else {
             template = parameters;
+        }
+
+        if (parameters.toLowerCase().contains(DROPDOWNS)) {
+
+            List<String> elements = Arrays.asList(parameters.split(parameterDelimiter));
+            return getRandomDropdown(elements.subList(1,elements.size()));
         }
 
         //dates generation

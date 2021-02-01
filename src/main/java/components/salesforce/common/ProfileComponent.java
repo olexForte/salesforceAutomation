@@ -53,29 +53,6 @@ public class ProfileComponent extends BasePageComponent {
       return fields;
    }
 
-//   public static HashMap<String, String> getFieldsFromAPI(Set<String> fields) {
-//      reporter.info("Get fields from API: "+fields.toString());
-//      final  String apiUrl="https://cs199.salesforce.com";
-//      String queryForContactTemplate ="/services/data/v50.0/query/?q=Select+%s++from+Contact+Where+id='0035500000lghLNAAY'";
-//      String queryForUser ="/services/data/v50.0/query/?q=Select+Name++from+Contact+Where+id='0035500000lghLNAAY'";
-//
-//      for(String field: fields){
-//         String queryContact=String.format(queryForContactTemplate,field.replaceAll(" ", ""));
-//         BaseAPIClient.runQuery(queryContact).body().toString();
-//      }
-//      BaseAPIClient.runQuery(queryForContact);
-//      clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"EDIT_BUTTON"));
-////      for(Map.Entry<String,String> field: fields.entrySet())
-////      {
-////         field.setValue(getTextFromField(field.getKey()));
-////      }
-////      return fields;
-//   }
-
-
-
-
-
 
    public static HashMap<String, String> editFields(HashMap<String, String> fields) {
       openEditForm();
@@ -98,4 +75,16 @@ public class ProfileComponent extends BasePageComponent {
       return RandomDataGenerator.getRandomField(template,"\\.");
      //return DataGenerator.getString(template);
    }
+
+   //TODO possibility get value of field by by field label ( add to test, soo impotent)
+   public static HashMap<String, String>  getApiField(HashMap<String, String> fields){
+
+      ////
+
+      ////ApiComponent.getFieldNameByLabel(fields.entrySet())
+
+      return  fields;
+   }
+
+
 }

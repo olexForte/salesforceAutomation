@@ -1,5 +1,6 @@
 package api;
 
+import configuration.DataRepository;
 import configuration.LocatorsRepository;
 import configuration.SessionManager;
 import io.restassured.http.ContentType;
@@ -18,7 +19,7 @@ public class BaseAPIClient {
     private static final Logger logger = LoggerFactory.getLogger(BaseAPIClient.class);
 
     public final static ReporterManager reporter = ReporterManager.Instance;
-    public final static LocatorsRepository locatorsRepository = LocatorsRepository.Instance;
+    public final static DataRepository dataRepository = DataRepository.Instance;
 
     private static String authToken = "";
 
@@ -27,14 +28,15 @@ public class BaseAPIClient {
         if (authToken.equals(""))
             authToken = APIAuthorization.getAccessToken();
 
-        String finalQuery = (locatorsRepository.getURL("apiURLs", "API_QUERY_URL") + query);
+        authToken="00D7f0000000r4e!AQ4AQIl3amuov26909ZGseN9M7d1QKkZ1.0RbWfUNa0lA6Cty2xg19ywVRMg5Q8Hg2tAp_69Mo6iD5VvZIozdMe9ct9wPBwK";
+        String finalQuery =query;// (locatorsRepository.getURL("apiURLs", "API_QUERY_URL") + query);
 
         Response response = given()
                 .auth().oauth2(authToken)
                 .when()
-                .contentType(ContentType.JSON)
                 .get(finalQuery)
                 .then()
+                .contentType(ContentType.JSON)
                 .extract()
                 .response();
 
@@ -43,6 +45,8 @@ public class BaseAPIClient {
         return response;
 
     }
+
+
 
 //  // public String getValueByJsonPath(Response resp, String expected_json_path) {
 //

@@ -27,6 +27,7 @@ public class DataRepository {
     public static DataRepository Instance = (instance != null) ? instance : new DataRepository();
     public static String DEFAULT_CSV_SEPARATOR = "\\|";
     String DATA_DIR = "src/test/automation/resources/data/" + ProjectConfiguration.getConfigProperty("DataDir");
+    public static final String DEFAULT_DATA_DIR = "src/test/automation/resources/data/default/";
 
     /**
      * get object from json file
@@ -96,7 +97,20 @@ public class DataRepository {
      */
     public File getDataFile(String dataField) throws Exception {
         LOGGER.info("Get data file from field:" + dataField);
+        //DEFAULT_LOCATORS_DIR
         return FileManager.getFileFromDirs(dataField, DATA_DIR);//, DEFAULT_TEST_DATA_RESOURCES);
+    }
+
+
+    //TODO need to do dataRepository like Locators repository (Include default dir)
+    public HashMap<String, String> getDefaultParametersForTest(String testName){
+        File file = FileManager.getFileFromDir(testName, DEFAULT_DATA_DIR);
+        if(file.getName().contains(".properties"))
+            return getParamsFromProperties(file);
+        if(file.getName().contains(".json"))
+            return getParamsFromJSON(file);
+
+        return null;
     }
 
 

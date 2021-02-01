@@ -9,9 +9,9 @@ import java.util.Base64;
 public class APIAuthorization {
 
     public static String accessTokenURL ="https://test.salesforce.com/services/oauth2/token";
-    public static String clientId = ProjectConfiguration.getConfigProperty("API_CLIENT_ID");
-    private static String clientSecret = ProjectConfiguration.getConfigProperty("API_CLIENT_SECRET");
-    private static String refreshToken = ProjectConfiguration.getConfigProperty("API_REFRESH_TOKEN");
+    public static String clientId = ProjectConfiguration.getConfigProperty("ApiClientId");
+    private static String clientSecret = ProjectConfiguration.getConfigProperty("ApiClientSecret");
+    private static String refreshToken = ProjectConfiguration.getConfigProperty("RefreshToken");
     public static String grant_type = "refresh_token";
 
     private static String getToken() {
