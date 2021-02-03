@@ -76,15 +76,8 @@ public class ProfileComponent extends BasePageComponent {
      //return DataGenerator.getString(template);
    }
 
-   //TODO possibility get value of field by by field label ( add to test, soo impotent)
-   public static HashMap<String, String>  getApiField(HashMap<String, String> fields){
-
-      ////
-
-      ////ApiComponent.getFieldNameByLabel(fields.entrySet())
-
-      return  fields;
+   public static HashMap<String, String>  getFieldsFromApi(HashMap<String, String> fields, String objectName,String objectId){
+      return  ApiComponent.getValues(objectName,fields,objectId);
    }
-
 
 }

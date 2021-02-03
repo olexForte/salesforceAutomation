@@ -61,7 +61,7 @@ public class DataRepository {
         Object result = null;
         try {
             BaseAPIClient apiClient = new BaseAPIClient();
-            Response response = apiClient.runQuery(query);
+            Response response = apiClient.runGetRequest(query);
             String jsonFromResponce =response.jsonPath().get("records");
 
             result=  JSONConverter.toObjectFromJson(jsonFromResponce,t);
