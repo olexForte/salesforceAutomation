@@ -26,11 +26,12 @@ public class footerTest extends BaseUITest {
         return result.iterator();
     }
 
+    private FooterComponent footerComponent = FooterComponent.getInstance();
 
     @Test(testName = "test footer links", dataProvider ="Item for footer")
     public void footerLinkTest(FooterEntity footer){
         logIn(false);
-        Assert.assertEquals(FooterComponent.getLink(footer.itemName,footer.openInNewTab),footer.linkOfElement);
+        Assert.assertEquals(footerComponent.getLink(footer.itemName,footer.openInNewTab),footer.linkOfElement);
     }
 
 }
