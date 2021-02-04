@@ -6,34 +6,61 @@ import java.util.List;
 
 public class SearchResultComponent extends BasePageComponent {
     public static String COMPONENT_NAME = "SearchResultComponent";
+    private static SearchResultComponent instance = null;
+    public static SearchResultComponent  getInstance() {
+        if (instance == null)
+            instance = new SearchResultComponent();
 
-    public static void openItemFromTable(String productName) {
+        return instance;
+    }
+
+    /**
+     * open item in table of result
+     * @param productName name of product
+     * @return void
+     */
+    public void openItemFromTable(String productName) {
         reporter.info("Open item from table: "+productName);
         if(isSearchResultExist()){
             clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "PRODUCT_IN_TABLE_BY_TEXT", productName));
         }
     }
 
-    public static void addToCart(String productName){
+    /**
+     * Add item into cart
+     * @param productName name of product
+     * @return void
+     */
+    public void addToCart(String productName){
         reporter.info("Add item to cart: "+productName);
         if(isSearchResultExist())
         {
             clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ADD_TO_CART_BY_NAME", productName));
         }
     }
-
-    public static int getTotalNumberOfResults() {
+    /**
+     * Get count of result
+     * @return int count of result
+     */
+    public int getTotalNumberOfResults() {
         reporter.info("Get count item from result");
         //take third group of digits in line. Example of line: 1 - 20 of 105 Results for "Thumb Spica, Right, X-Small, Retail"
         return Integer.parseInt(getElementText(LOCATORS.getBy(COMPONENT_NAME, "SEARCH_RESULT_TITLE")).replaceAll("\\d+\\D+\\d+\\D+(\\d+).*", "$1"));
     }
 
-    public static int getNumberOfItemsOnAPage(){
+    /**
+     * Get count of item in the page
+     * @return int count of result
+     */
+    public int getNumberOfItemsOnAPage(){
         return findElements(LOCATORS.getBy(COMPONENT_NAME, "ITEM_IN_CART"),SHORT_TIMEOUT).size();
     }
 
-
-    public static boolean isSearchResultExist(){
+    /**
+     * Check if result page is exist
+     * @return boolean
+     */
+    public boolean isSearchResultExist(){
         if(isElementDisplayed(LOCATORS.getBy(COMPONENT_NAME, "SEARCH_RESULT")))
         {
             reporter.info("Search result exist");
@@ -45,13 +72,17 @@ public class SearchResultComponent extends BasePageComponent {
         return false;
     }
 
-    public static boolean isItemInResult(String itemName){
+    /**
+     * Check if item is in the page
+     * @return int count of result
+     */
+    public boolean isItemInResult(String itemName){
         reporter.info("Find item in result:"+itemName);
-        return findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME, "PRODUCT_IN_TABLE_BY_TEXT",itemName)) != null;
+        return (LOCATORS.getBy(COMPONENT_NAME, "PRODUCT_IN_TABLE_BY_TEXT",itemName)) != null;
     }
 
     //TODO implement search by pages
-    public static boolean areItemsInResult(List<String> items)
+    public boolean areItemsInResult(List<String> items)
     {
         reporter.info("Find items in result: "+items.toString());
         if(isSearchResultExist())

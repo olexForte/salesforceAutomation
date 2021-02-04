@@ -19,7 +19,7 @@ public class BaseTest{
     //TODO factory???
 //    public LoginComponent loin;
 //    public SearchComponent seach;
-//
+////
 //    private void createAllComponents() {
 //        seach = new SearchComponent();
 //        if ()

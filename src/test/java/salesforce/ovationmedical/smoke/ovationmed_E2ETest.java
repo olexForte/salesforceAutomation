@@ -9,6 +9,11 @@ import java.util.HashMap;
 
 public class ovationmed_E2ETest extends BaseUITest {
 
+    private HeaderComponent headerComponent = HeaderComponent.getInstance();
+    private ProductDetailsComponent productDetailsComponent = ProductDetailsComponent.getInstance();
+    private CartPageComponent cartPageComponent = CartPageComponent.getInstance();
+    private MainPageComponent mainPageComponent = MainPageComponent.getInstance();
+
     @Test(testName = "E2E test")
     public void test(){
 
@@ -17,21 +22,21 @@ public class ovationmed_E2ETest extends BaseUITest {
         // login
         logInApplication();
 
-        HeaderComponent.searchForProduct(params.get("PRODUCT_NAME"));
-        MainPageComponent.openItemFromTable(params.get("PRODUCT_NAME"));
+        headerComponent.searchForProduct(params.get("PRODUCT_NAME"));
+        mainPageComponent.openItemFromTable(params.get("PRODUCT_NAME"));
         //check if record open
-        Assert.assertEquals(ProductDetailsComponent.getTitle(), params.get("PRODUCT_NAME"),"Expected product was not open");
-        ProductDetailsComponent.addToCart(); // item/items add
+        Assert.assertEquals(productDetailsComponent.getTitle(), params.get("PRODUCT_NAME"),"Expected product was not open");
+        productDetailsComponent.addToCart(); // item/items add
 
         //count of item in cart
-        int expectedNumberOfItemsInCart = HeaderComponent.getCountItemInCart() + 1;
+        int expectedNumberOfItemsInCart = headerComponent.getCountItemInCart() + 1;
         Assert.assertTrue(OrderCreatedPopUp.isPopupDisplayed(), "No dialog displayed"); // check if pop-up open
 
-        HeaderComponent.waitForNumberOfItemsInCart(expectedNumberOfItemsInCart);
-        Assert.assertEquals(HeaderComponent.getCountItemInCart(), expectedNumberOfItemsInCart, "Wrong number of items in cart");
+        headerComponent.waitForNumberOfItemsInCart(expectedNumberOfItemsInCart);
+        Assert.assertEquals(headerComponent.getCountItemInCart(), expectedNumberOfItemsInCart, "Wrong number of items in cart");
 
         OrderCreatedPopUp.clickOnViewCartButton();
-        Assert.assertTrue(CartPageComponent.isItemInCart(params.get("PRODUCT_NAME")), "Item was not found in cart");
+        Assert.assertTrue(cartPageComponent.isItemInCart(params.get("PRODUCT_NAME")), "Item was not found in cart");
 
     }
 

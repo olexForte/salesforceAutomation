@@ -1,51 +1,76 @@
 package components.salesforce.common;
 
-import api.BaseAPIClient;
-import api.BaseRestClient;
 import components.BasePageComponent;
-import datasources.DataGenerator;
 import datasources.RandomDataGenerator;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.jsoup.Connection;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class ProfileComponent extends BasePageComponent {
 
    public static String COMPONENT_NAME="ProfileComponent";
+   private static ProfileComponent instance = null;
+   public static ProfileComponent  getInstance() {
+      if (instance == null)
+         instance = new ProfileComponent();
 
-   public static String getProfileName(){
+      return instance;
+   }
+   /**
+    * get name from profile
+    * @return String name of opened profile
+    */
+   public String getProfileName(){
       reporter.info("Get profile name");
      return getElementText(LOCATORS.getBy(COMPONENT_NAME,"PROFILE_NAME"),SHORT_TIMEOUT);
    }
 
-   public static void openEditForm(){
+   /**
+    * Open edit form
+    * @return void
+    */
+   public void openEditForm(){
       reporter.info("Open edit form");
       clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"EDIT_BUTTON"),SHORT_TIMEOUT);
    }
-
-   public static void saveData(){
+   /**
+    * Click button "save" in edit form
+    * @return void
+    */
+   public void saveData(){
       reporter.info("Save edited form");
       clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"SAVE_BUTTON"),SHORT_TIMEOUT);
    }
 
-   public static void setDataIntoField(String fieldName, String value){
-      reporter.info("Set data "+value+" into field"+fieldName);
-      setText(LOCATORS.getBy(COMPONENT_NAME,"FIELD_INPUT_BY_NAME",fieldName),value,SHORT_TIMEOUT);
+   /**
+    * Set data into field in edit form
+    * @param fieldLabel field label
+    * @param value value that need to set
+    * @return void
+    */
+   public void setDataIntoField(String fieldLabel, String value){
+      reporter.info("Set data "+value+" into field"+fieldLabel);
+      setText(LOCATORS.getBy(COMPONENT_NAME,"FIELD_INPUT_BY_NAME",fieldLabel),value,SHORT_TIMEOUT);
    }
 
-   public static String getTextFromField(String fieldName){
-      reporter.info("Get text from field  "+fieldName);
-      return getElementText(LOCATORS.getBy(COMPONENT_NAME,"FIELD_INPUT_BY_NAME",fieldName),SHORT_TIMEOUT);
+   /**
+    * Get text form field in edit form
+    * @param fieldLabel field name
+    * @return String value from field
+    */
+   public String getTextFromField(String fieldLabel){
+      reporter.info("Get text from field  "+fieldLabel);
+      return getElementText(LOCATORS.getBy(COMPONENT_NAME,"FIELD_INPUT_BY_NAME",fieldLabel),SHORT_TIMEOUT);
    }
-
-   public static HashMap<String, String> getFields(HashMap<String, String> fields) {
+   /**
+    * Get text form field in edit form
+    * @param fields HashMap<String, String> where key - field label
+    * @return HashMap<String, String> with result where key - field label , value - field value
+    */
+   public HashMap<String, String> getFields(HashMap<String, String> fields) {
       reporter.info("Get fields");
       reloadPage();
-      clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"EDIT_BUTTON"));
+      openEditForm();
       for(Map.Entry<String,String> field: fields.entrySet())
       {
             field.setValue(getTextFromField(field.getKey()));
@@ -53,8 +78,12 @@ public class ProfileComponent extends BasePageComponent {
       return fields;
    }
 
-
-   public static HashMap<String, String> editFields(HashMap<String, String> fields) {
+   /**
+    * Edit fields
+    * @param fields HashMap<String, String> where key - field label, value - template for edit
+    * @return HashMap<String, String> with result where key - field label , value - field value
+    */
+   public HashMap<String, String> editFields(HashMap<String, String> fields) {
       openEditForm();
       reporter.info("Edit fields with random data");
       for(Map.Entry<String,String> field: fields.entrySet())
@@ -69,15 +98,26 @@ public class ProfileComponent extends BasePageComponent {
       return fields;
    }
 
-
-   public static String getRandomString(String template){
+   /**
+    * Get random value by template
+    * @param template String
+    * @return String random data
+    */
+   public String getRandomString(String template){
       reporter.info("Get random string for template: "+ template);
       return RandomDataGenerator.getRandomField(template,"\\.");
      //return DataGenerator.getString(template);
    }
 
-   public static HashMap<String, String>  getFieldsFromApi(HashMap<String, String> fields, String objectName,String objectId){
-      return  ApiComponent.getValues(objectName,fields,objectId);
+   /**
+    * Get field from API
+    * @param fields HashMap<String, String> where key - field label
+    * @param objectName String name of object
+    * @param recordId String record id
+    * @return HashMap<String, String> where key - field label, value - value from field
+    */
+   public HashMap<String, String>  getFieldsFromApi(HashMap<String, String> fields, String objectName,String recordId){
+      return  ApiComponent.getValues(objectName,fields,recordId);
    }
 
 }

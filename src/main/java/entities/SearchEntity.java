@@ -9,7 +9,7 @@ public class SearchEntity {
 
     @Override
     public String toString(){
-        return "search query "+query+" |result"+result;
+        return "search query "+query+" |expected result"+result;
     }
 
 

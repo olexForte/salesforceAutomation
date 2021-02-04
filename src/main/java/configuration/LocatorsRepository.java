@@ -24,6 +24,14 @@ public class LocatorsRepository {
 
     HashMap<String, String> processedParameters = new HashMap<>();
 
+
+    /**
+     * get locator from default/normal dir
+     * @param componentName file name
+     * @param locator locator name
+     * @param parameters String for set into locator
+     * @return String locator with parameters
+     */
     public String get(String componentName, String locator, String... parameters){
         LOGGER.info("Get property: " + locator + " ");
         if (processedParameters.containsKey(componentName + "." + locator))
@@ -75,11 +83,16 @@ public class LocatorsRepository {
         return null;
     }
 
+
+    /**
+     * get locator from default/normal dir
+     * @param componentName file name
+     * @param locator locator name
+     * @param parameters String for set into locator
+     * @return By locator with parameters
+     */
     public By getBy(String componentName, String locator, String... parameters) {
         return By.xpath(get(componentName, locator, parameters));
     }
 
-    public String getURL(String componentName, String locator, String... parameters){
-        return get(componentName, locator, parameters);
-    }
 }

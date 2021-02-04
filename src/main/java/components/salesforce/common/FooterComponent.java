@@ -1,7 +1,6 @@
 package components.salesforce.common;
 
 import components.BasePageComponent;
-import components.salesforce.vht.VHTFooterComponent;
 import configuration.ProjectConfiguration;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
@@ -13,7 +12,7 @@ public class FooterComponent extends BasePageComponent
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(FooterComponent.class);
 
-   public static String COMPONENT_NAME = "FooterComponent";
+    public static String COMPONENT_NAME = "FooterComponent";
 
     private static FooterComponent instance = null;
 
@@ -24,31 +23,52 @@ public class FooterComponent extends BasePageComponent
 //                case "VHT" :
 //                    instance = new VHTFooterComponent(); break;
 //                default:
-                    instance = new FooterComponent();
+            instance = new FooterComponent();
 //            }
         return instance;
     }
 
-    public String getLinkFromAttributeHref(String itemName){
-        return getAttributeHrefIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName),SHORT_TIMEOUT);
+
+    /**
+     * Get value from Attribute
+     * @param attribute name of attribute
+     * @param attribute name of attribute
+     * @return boolean
+     */
+    public String getValueFromAttribute(String itemName,String attribute){
+        return getAttributeIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName),attribute,SHORT_TIMEOUT);
     }
 
+    /**
+     * Get link by click
+     * @param itemName text in button
+     * @param inNewTab boolean if link opening in new page
+     * @return String
+     */
     public String getLinkByClick(String itemName,boolean inNewTab){
         if(inNewTab==true)
-            return getLinkFromNewTab(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName));
+            return getLinkByClickFromNewTab(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName));
         if(inNewTab==false)
-           return getLinkFromElement(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName));
+           return getLinkByClickFromElement(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName));
 
         return null;
     }
 
-    public String getLink(String itemName,boolean inNewTab){
+    /**
+     * Get link by click
+     * @param itemName text in button
+     * @param inNewTab boolean if link opening in new page
+     * @return String
+     */
+    public String getLinkByHrefAttribute(String itemName,boolean inNewTab){
         LOGGER.info("Get link: " + itemName);
-        String link=getLinkFromAttributeHref(itemName);
+        String link=getAttributeIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"LINK_BY_NAME",itemName),"href");
         if(link==null)
            return getLinkByClick(itemName,inNewTab);
 
         return link;
     }
+
+    //public String getLink()
 
 }

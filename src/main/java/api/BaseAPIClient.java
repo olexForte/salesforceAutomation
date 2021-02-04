@@ -14,6 +14,7 @@ import reporting.ReporterManager;
 import java.util.HashMap;
 import java.util.List;
 
+import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 public class BaseAPIClient {
@@ -30,12 +31,17 @@ public class BaseAPIClient {
         return  dataRepository.getDefaultParametersForTest("Api");
     }
 
-    public static Response runGetRequest(String query){
-            logger.info("run request "+query);
+    /**
+     * Send GET request
+     * @param url String
+     * @return response object
+     */
+    public static Response runGetRequest(String url){
+            logger.info("run request "+url);
         if (authToken.equals(""))
             authToken = APIAuthorization.getAccessToken();
 
-        String finalQuery =query;
+        String finalQuery =baseURI+url;
 
         Response response = given()
                 .auth().oauth2(authToken)

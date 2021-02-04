@@ -189,6 +189,11 @@ public class BasePageComponent {
         return false;
     }
 
+    /**
+     * Check if element is displayed by string
+     * @param by
+     * @return
+     */
     public static boolean isElementDisplayed(String by,int... timeout) {
     return isElementDisplayed(By.xpath(by),timeout);
     }
@@ -298,7 +303,12 @@ public class BasePageComponent {
         } 
         waitForPageToLoad();
     }
-
+    /**
+     * Click on Element ignore Exception with using JS
+     * @param by By
+     * @param timeout int
+     * @return
+     */
     private static void clickOnElementWithJSIgnoreException(By by, int... timeout) {
         try {
             ((JavascriptExecutor) driver()).executeScript("arguments[0].click();",findElement(by, timeout));
@@ -381,61 +391,72 @@ public class BasePageComponent {
         }
     }
 
-    public static String getAttributeIDIgnoreExecption(By element, int... timeout) {
-        waitForPageToLoad();
-        try {
-            return getAttributeID(element, timeout[0]);
-        } catch (RuntimeException e) {
-            reporter.info("Got exception. Exception is expected and ignored.");
-        }
-        return null;
-    }
-
-    public static String getAttributeID(By element, int... timeout) {
+    /**
+     * Get attribute from element
+     * @param element By
+     * @param timeout int
+     * @param attribute String
+     * @return String or Exception
+     */
+    public static String getAttribute(By element,String attribute, int... timeout) {
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
         waitForPageToLoad();
         try {
             //synchronize();
             (new WebDriverWait(driver(), timeoutForFindElement))
                     .until(ExpectedConditions.visibilityOfElementLocated(element));
-            String id = findElement(element).getAttribute("id");
-            return id;
+            String value = findElement(element).getAttribute(attribute);
+            return value;
         } catch (Exception e) {
-            throw new RuntimeException("Failure getting attribute id of an element");
+            throw new RuntimeException("Failure getting attribute "+attribute+" of an element");
         }
     }
 
-
-    public static String getAttributeHrefIgnoreException(By element, int... timeout) {
+    /**
+     * Get attribute from element ignore exception
+     * @param element By
+     * @param timeout int
+     * @param attribute String
+     * @return String
+     */
+    public static String getAttributeIgnoreException(By element,String attribute, int... timeout) {
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
         waitForPageToLoad();
         try {
             //synchronize();
             (new WebDriverWait(driver(), timeoutForFindElement))
                     .until(ExpectedConditions.visibilityOfElementLocated(element));
-            String href = findElement(element).getAttribute("href");
-            return href;
+            String value = findElement(element).getAttribute(attribute);
+            return value;
         } catch (Exception e) {
             reporter.info("Got exception. Exception is expected and ignored.");
         }
         return null;
     }
 
-    public static void setDriverContextToPage(WebDriver driver) {
-        reporter.info("Setting the context mode to Page");
-        driver.switchTo().defaultContent();
-    }
-
+    /**
+     * Scroll to Element
+     * @param element WebElement
+     * @return void
+     */
     public static void scrollToElement(WebElement element) {
         waitForPageToLoad();
         ((JavascriptExecutor) driver()).executeScript("arguments[0].scrollIntoView();", element);
     }
-
+    /**
+     * Scroll to Element
+     * @param element WebElement
+     * @return void
+     */
     public static void scrollToShopElement(WebElement element){
         waitForPageToLoad();
         ((JavascriptExecutor) driver()).executeScript("arguments[0].focus(); window.scroll(0, window.scrollY+=200)",element);
     }
 
+    /**
+     * wait for a page will be load
+     * @return void
+     */
     public static void waitForPageToLoad(){
         ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
 
@@ -481,11 +502,21 @@ public class BasePageComponent {
 
     }
 
+    /**
+     * wait for element
+     * @param by By
+     * @return void
+     */
     static void waitForElement(By by){
         WebDriverWait wait = new WebDriverWait(driver(), DEFAULT_TIMEOUT);
         wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+    /**
+     * sleep
+     * @param timeout int
+     * @return void
+     */
     public static void sleepFor(int timeout){
         try {
             Thread.sleep(timeout);
@@ -493,6 +524,11 @@ public class BasePageComponent {
         }
     }
 
+    /**
+     * wait for alert will be displayed
+     * @param timeout int
+     * @return void
+     */
     static void waitForAlert(WebDriver driver, int timeout) {
         int i = 0;
         while (i++ < timeout) {
@@ -515,6 +551,11 @@ public class BasePageComponent {
 
 
     // Does not work because of geckodriver bug - https://stackoverflow.com/questions/40360223/webdriverexception-moveto-did-not-match-a-known-command
+    /**
+     * hower to item
+     * @param element By
+     * @return void
+     */
     public static void hoverItem(By element){
         sleepFor(2000);
         reporter.info("Put mouse pointer over element: " + element.toString());
@@ -522,56 +563,88 @@ public class BasePageComponent {
         action.moveToElement(findElement(element)).build().perform();
     }
 
+    /**
+     * Swith to some frame
+     * @param xpath By
+     * @return void
+     */
     public void switchToFrame(By xpath) {
         reporter.info("Switch to frame: " + xpath.toString());
         driver().switchTo().frame(findElement(xpath));
     }
 
+    /**
+     * Set Driver Context to default content (first or default frame)
+     * @return void
+     */
     public void switchToDefaultContent(){
         reporter.info("Switch to default content");
         driver().switchTo().defaultContent();
     }
-    //TODO
-        //custom method from Yura
-        public static String getLinkFromNewTab(By by, int... timeout){
-            try {
-                String link;
-                String oldTab= driver().getWindowHandle();
-                ArrayList<String> tabs1 = new ArrayList<String> (driver().getWindowHandles());
-                clickOnElementIgnoreException(by);
-                ArrayList<String> tabs2 = new ArrayList<String> (driver().getWindowHandles());
 
-                if(tabs1.size()==tabs2.size()||tabs2.size()>tabs1.size()+1)
-                        throw new Exception("link don`t open in new tab, or count of link from this button more than one");
+    /**
+     * Set Driver Context to default content (first or default frame)
+     * @param driver WebDriver
+     * @return void
+     */
+    public static void setDriverContextToPage(WebDriver driver) {
+        reporter.info("Setting the context mode to Page");
+        driver.switchTo().defaultContent();
+    }
 
-                for(int i=0;i<tabs2.size();i++){
-                    for(int j=0;j<tabs1.size();j++){
-                      if(tabs2.get(i).equals(tabs1.get(j)))
-                          tabs2.remove(i);
-                    }
+    /**
+     * Get link from button that opening page in new tab
+     * @param by By
+     * @param timeout int
+     * @return String link new page
+     */
+    public static String getLinkByClickFromNewTab(By by, int... timeout) {
+        try {
+            String link;
+            String oldTab = driver().getWindowHandle();
+            ArrayList<String> tabs1 = new ArrayList<String>(driver().getWindowHandles());
+            clickOnElementIgnoreException(by);
+            ArrayList<String> tabs2 = new ArrayList<String>(driver().getWindowHandles());
+
+            if (tabs1.size() == tabs2.size() || tabs2.size() > tabs1.size() + 1)
+                throw new Exception("link don`t open in new tab, or count of link from this button more than one");
+
+            for (int i = 0; i < tabs2.size(); i++) {
+                for (int j = 0; j < tabs1.size(); j++) {
+                    if (tabs2.get(i).equals(tabs1.get(j)))
+                        tabs2.remove(i);
                 }
-
-                driver().switchTo().window(tabs2.get(0)).getCurrentUrl();
-                link=driver().getCurrentUrl();
-                driver().close();
-                driver().switchTo().window(oldTab);
-                return link;
-
-            } catch (Exception e) {
-                reporter.fail("Failure getting link from button ",  e);
-                throw new RuntimeException("Failure getting link from button " );
             }
+
+            driver().switchTo().window(tabs2.get(0)).getCurrentUrl();
+            link = driver().getCurrentUrl();
+            driver().close();
+            driver().switchTo().window(oldTab);
+            return link;
+
+        } catch (Exception e) {
+            reporter.fail("Failure getting link from button ", e);
+            throw new RuntimeException("Failure getting link from button ");
         }
-
-        public static String getLinkFromElement(By by, int... timeout){
-            try {
-                clickOnElementIgnoreException(by);
-                return driver().getCurrentUrl();
-            }
-            catch (Exception e) {
-                    reporter.fail("Failure getting link from button ",  e);
-                    throw new RuntimeException("Failure getting link from button " );
-            }
+    }
+    /**
+     * Get link from button that opening page in this tab
+     * (can be problem, when button go to page that to do redirect)
+     * @param by By
+     * @param timeout int
+     * @return String link new page
+     */
+    public static String getLinkByClickFromElement(By by, int... timeout) {
+        try {
+            clickOnElement(by);
+            waitForPageToLoad();
+            String url =driver().getCurrentUrl();
+            driver().navigate().back();
+            return url;
+        } catch (Exception e) {
+            reporter.fail("Failure getting link from button ", e);
+            throw new RuntimeException("Failure getting link from button ");
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package salesforce;
 
+import components.salesforce.common.FooterComponent;
 import components.salesforce.common.HeaderComponent;
 import configuration.DataRepository;
 import org.openqa.selenium.By;
@@ -13,7 +14,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class navigationMenuTest extends BaseUITest {
+public class NavigationMenuTest extends BaseUITest {
 
 
     @DataProvider(name="navigation")
@@ -28,10 +29,12 @@ public class navigationMenuTest extends BaseUITest {
         return result.iterator();
     }
 
+    private HeaderComponent headerComponent = HeaderComponent.getInstance();
+
     @Test(testName = "Navigation test", dataProvider ="navigation")
     public void navigate(String location ,String result){
         logIn(false);
-        HeaderComponent.navigateByHeaderMenuToItem(location);
+        headerComponent.navigateByHeaderMenuToItem(location);
         Assert.assertTrue(HeaderComponent.isElementDisplayed(result));
     }
 

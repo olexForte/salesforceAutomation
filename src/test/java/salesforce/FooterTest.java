@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class footerTest extends BaseUITest {
+public class FooterTest extends BaseUITest {
 
     @DataProvider(name = "Item for footer")
     Iterator<Object[]> getDataForTest(){
@@ -31,7 +31,7 @@ public class footerTest extends BaseUITest {
     @Test(testName = "test footer links", dataProvider ="Item for footer")
     public void footerLinkTest(FooterEntity footer){
         logIn(false);
-        Assert.assertEquals(footerComponent.getLink(footer.itemName,footer.openInNewTab),footer.linkOfElement);
+        Assert.assertEquals(footerComponent.getLinkByHrefAttribute(footer.itemName,footer.openInNewTab),footer.linkOfElement);
     }
 
 }

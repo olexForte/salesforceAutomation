@@ -1,6 +1,7 @@
 package salesforce;
 
 import components.salesforce.common.HeaderComponent;
+import components.salesforce.common.ProfileComponent;
 import components.salesforce.common.SearchResultComponent;
 import configuration.DataRepository;
 import entities.SearchEntity;
@@ -11,7 +12,7 @@ import utils.BaseUITest;
 
 import java.util.*;
 
-public class searchTest extends BaseUITest {
+public class SearchTest extends BaseUITest {
 
     @DataProvider(name = "Data for search")
     Iterator<Object[]> getDataForTest(){
@@ -24,17 +25,19 @@ public class searchTest extends BaseUITest {
         }
         return result.iterator();
     }
+    private HeaderComponent headerComponent = HeaderComponent.getInstance();
+    private SearchResultComponent searchResultComponent = SearchResultComponent.getInstance();
 
     @Test(testName = "test search", dataProvider ="Data for search")
     public void searchTest(SearchEntity search){
 
         logInApplication();
-        Assert.assertTrue(HeaderComponent.isSearchExist());
+        Assert.assertTrue(headerComponent.isSearchExist());
 
-        HeaderComponent.findByQuery(search.query);
+        headerComponent.findByQuery(search.query);
 
-        Assert.assertTrue(SearchResultComponent.isSearchResultExist(), "No search results found");
-        Assert.assertEquals(SearchResultComponent.getTotalNumberOfResults(), search.countOfExpectedResult, "Total results number is unexpected");
-        Assert.assertTrue(SearchResultComponent.areItemsInResult(search.result), "Items were not found in results");
+        Assert.assertTrue(searchResultComponent.isSearchResultExist(), "No search results found");
+        Assert.assertEquals(searchResultComponent.getTotalNumberOfResults(), search.countOfExpectedResult, "Total results number is unexpected");
+        Assert.assertTrue(searchResultComponent.areItemsInResult(search.result), "Items were not found in results");
     }
 }

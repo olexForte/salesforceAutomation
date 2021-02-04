@@ -1,6 +1,7 @@
 package salesforce.VHT.smoke;
 
 import components.salesforce.common.HeaderComponent;
+import components.salesforce.common.MainPageComponent;
 import components.salesforce.common.OrderCreatedPopUp;
 import components.salesforce.vht.*;
 import org.testng.Assert;
@@ -11,6 +12,10 @@ import java.util.HashMap;
 
 public class VHT_OrderPurchaseTest extends BaseUITest {
 
+    private MainPageComponent mainPageComponent = MainPageComponent.getInstance();
+  //  private MainPageComponent mainPageComponent = MainPageComponent.getInstance();
+  //  private MainPageComponent mainPageComponent = MainPageComponent.getInstance();
+
     @Test(testName = "Order Purchase test")
     public void test(){
 
@@ -19,8 +24,8 @@ public class VHT_OrderPurchaseTest extends BaseUITest {
 
         // login
         logInApplication();
-
-        VHTMainPageComponent.openAddressFromTable(params.get("NAME"));
+        mainPageComponent.op
+        mainPageComponent.openAddressFromTable(params.get("NAME"));
         //check if record open
         Assert.assertEquals(VHTAddressListingComponent.getTitle(), params.get("NAME"),"Expected title was not found");
 

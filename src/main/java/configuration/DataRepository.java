@@ -51,27 +51,6 @@ public class DataRepository {
         return  result;
     }
 
-    /**
-     * get object from API
-     * @param query search text
-     * @param t class of object
-     * @return Object what was get
-     */
-    public Object getObjectFromAPI(String query, Class t ){
-        Object result = null;
-        try {
-            BaseAPIClient apiClient = new BaseAPIClient();
-            Response response = apiClient.runGetRequest(query);
-            String jsonFromResponce =response.jsonPath().get("records");
-
-            result=  JSONConverter.toObjectFromJson(jsonFromResponce,t);
-            return  result;
-
-        } catch (Exception e) {
-            LOGGER.error("fail get "+t.getName()+ "from api by query"+query+" "+e.getMessage());
-        }
-            return null;
-    }
 
     /**
      * Get list of lists items from file
