@@ -23,8 +23,8 @@ public class ProfileTest extends BaseUITest {
     public void profileTest(){
 
 
-        HashMap<String,String> fields = dataRepository.getParametersForTest("profileFields");
-        HashMap<String,String> params = dataRepository.getParametersForTest("profileTest");
+        HashMap<String,String> fields = dataRepository.getParametersForTest("ProfileFields");
+        HashMap<String,String> params = dataRepository.getParametersForTest("ProfileTest");
 
 
         //log in
@@ -40,7 +40,7 @@ public class ProfileTest extends BaseUITest {
         //Get fields values from API (from contact and user)
         //test will be fail, bug, also need to add mapping field;
         HashMap<String,String> fieldsInUser =profileComponent.getFieldsFromApi(fields,"Contact",params.get("PROFILE_CONTACT_ID"));
-        HashMap<String,String> fieldsINContact = profileComponent.getFieldsFromApi(fields,"User",params.get("PROFILE_USER_ID"));
-        Assert.assertEquals(fieldsInUser, fieldsINContact);
+        HashMap<String,String> fieldsInContact = profileComponent.getFieldsFromApi(fields,"User",params.get("PROFILE_USER_ID"));
+        Assert.assertEquals(fieldsInUser, fieldsInContact);
     }
 }

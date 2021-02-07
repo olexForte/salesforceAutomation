@@ -6,8 +6,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//import entities.TestFile;
-import components.BasePage;
+import components.BasePageComponent;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -406,7 +405,7 @@ public class ReporterManager {
         String screenshotFile;
         String message = "<pre>" + details.replace("\n", "<br>") + "</pre>";
         logger.error(details);
-        report().log(LogStatus.INFO,  String.format("<b>Current URL is %s</b>", BasePage.getCurrentURL()));
+        report().log(LogStatus.INFO,  String.format("<b>Current URL is %s</b>", BasePageComponent.getCurrentURL()));
 
         try {
             if (DriverProvider.isDriverActive()) {

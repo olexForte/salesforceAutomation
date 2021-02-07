@@ -88,10 +88,10 @@ public class ProfileComponent extends BasePageComponent {
       reporter.info("Edit fields with random data");
       for(Map.Entry<String,String> field: fields.entrySet())
       {
-         String fieldName = field.getKey();
+         String fieldLabel = field.getKey();
          String fieldTemplate = field.getValue();
          String randomData=getRandomString(fieldTemplate);
-         setDataIntoField(fieldName,randomData);
+         setDataIntoField(fieldLabel,randomData);
          field.setValue(String.valueOf(randomData));
       }
       saveData();

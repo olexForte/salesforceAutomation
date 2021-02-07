@@ -114,7 +114,7 @@ public class BasePageComponent {
      * @param value
      */
     public static void setText(By element, String value,int... timeout){
-        findElement(element,timeout).clear();
+        findElementIgnoreException(element,timeout).clear();
         if (value != null) {
             findElement(element).sendKeys(value);
         }
@@ -155,6 +155,30 @@ public class BasePageComponent {
             if (!result.equals(""))
                 break;
             sleepFor(1000);
+        }
+        return result;
+    }
+
+
+    /**
+     * Get text of element with sleep=timeout if element don`t find
+     * @param by
+     * @param timeout
+     * @return
+     */
+    public static String getElementTextIgnoreException(By by, int... timeout) {
+        String result = null;
+        int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+
+        try {
+            (new WebDriverWait(driver(), timeoutForFindElement))
+                    .until(ExpectedConditions.presenceOfElementLocated(by));
+            WebElement elem = findElement(by, 1);
+            if (elem != null) {
+                result = elem.getText();
+            }
+        } catch (Exception e) {
+            LOGGER.warn("getElementText " + by.toString() + " " + e.getMessage());
         }
         return result;
     }

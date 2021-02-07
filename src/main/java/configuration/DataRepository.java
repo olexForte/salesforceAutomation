@@ -109,6 +109,23 @@ public class DataRepository {
         return null;
     }
 
+
+    /**
+     * get HashMap from properties
+     * @param testName file name
+     * @return HashMap parameters from file
+     */
+    //TODO add possibility use default dir
+    public HashMap<String, String> getParametersForTestDefaultDir(String testName) {
+        File file = FileManager.getFileFromDir(testName, DEFAULT_DATA_DIR);
+        if(file.getName().contains(".properties"))
+            return getParamsFromProperties(file);
+        if(file.getName().contains(".json"))
+            return getParamsFromJSON(file);
+
+        return null;
+    }
+
     /**
      * get String from file
      * @param fileName file name

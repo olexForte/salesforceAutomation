@@ -18,9 +18,8 @@ public class ovationmed_E2ETest extends BaseUITest {
     public void test(){
 
         HashMap<String,String> params = dataRepository.getParametersForTest("E2E");
-
         // login
-        logInApplication();
+        logIn(false);
 
         headerComponent.searchForProduct(params.get("PRODUCT_NAME"));
         mainPageComponent.openItemFromTable(params.get("PRODUCT_NAME"));
@@ -37,8 +36,5 @@ public class ovationmed_E2ETest extends BaseUITest {
 
         OrderCreatedPopUp.clickOnViewCartButton();
         Assert.assertTrue(cartPageComponent.isItemInCart(params.get("PRODUCT_NAME")), "Item was not found in cart");
-
     }
-
-
 }

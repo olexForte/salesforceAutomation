@@ -11,12 +11,20 @@ public class LoginComponent extends BasePageComponent {
     static By inputPassword    = LOCATORS.getBy(name, "PASSWORD_INPUT");//By.xpath("//input[@id='password']");
     static By buttonLogin      = LOCATORS.getBy(name, "LOGIN_BUTTON");//By.xpath("//input[@id='Login']");
 
+    private static LoginComponent instance = null;
+    public static LoginComponent  getInstance() {
+        if (instance == null)
+            instance = new LoginComponent();
+
+        return instance;
+    }
+
     /**
      * log in store
      * @param params String login ,password
      * @return void
      */
-    public static void loginAs(String... params){ //} username, String password){
+    public void loginAs(String... params){ //} username, String password){
 
         String username = params[0];
         String password = params[1];

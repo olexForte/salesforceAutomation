@@ -1,5 +1,6 @@
 package utils;
 
+import components.salesforce.common.HeaderComponent;
 import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -14,6 +15,8 @@ import java.lang.reflect.Method;
 
 
 public class BaseUITest extends BaseTest{
+
+    LoginComponent loginComponent = LoginComponent.getInstance();
 
     @BeforeMethod
     public void beforeWithData(Object[] data, Method method) {
@@ -43,8 +46,8 @@ public class BaseUITest extends BaseTest{
      * Login to application with default credentials
      */
     public  void logInApplication() {
-        LoginComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
-        LoginComponent
+        loginComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
+        loginComponent
                 .loginAs(ProjectConfiguration.getConfigProperty("DefaultUserName"),
                         ProjectConfiguration.getConfigProperty("DefaultUserPassword"));
 
@@ -63,8 +66,8 @@ public class BaseUITest extends BaseTest{
      */
     public  void logInSalesforce() {
 
-        LoginComponent.open(ProjectConfiguration.getConfigProperty("SalesforceURL"));
-        LoginComponent
+        loginComponent.open(ProjectConfiguration.getConfigProperty("SalesforceURL"));
+        loginComponent
                 .loginAs(ProjectConfiguration.getConfigProperty("DefaultSalesforceUserName"),
                         ProjectConfiguration.getConfigProperty("DefaultSalesforceUserPassword"));
 

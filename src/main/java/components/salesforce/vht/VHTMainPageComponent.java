@@ -8,7 +8,6 @@ public class VHTMainPageComponent extends MainPageComponent {
 
     static String COMPONENT_NAME = "VHTMainPage";
 
-
     public  void openAddressFromTable(String name){
     reporter.info("Opening Listing address " + name);
     clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "LISTING_ADDRESS_LINK_BY_NAME", name));
