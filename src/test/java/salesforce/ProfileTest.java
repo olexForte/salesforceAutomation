@@ -32,16 +32,16 @@ public class ProfileTest extends BaseUITest {
         //Open profile
         headerComponent.openItemFromUserMenu("Profile");
         //check if profile name equals to config
-        Assert.assertEquals(params.get("PROFILE_NAME"),profileComponent.getProfileName());
+        Assert.assertEquals(params.get("PROFILE_NAME"), profileComponent.getProfileName());
         //Update field random data and check if data was change
-        HashMap<String,String> expectedResult=profileComponent.editFields(fields);
-        HashMap<String,String> actualResult =profileComponent.getFields(fields);
-        Assert.assertTrue(expectedResult.equals(actualResult),"Expected result don`t equals actual result");
+        HashMap<String, String> expectedResult = profileComponent.editFields(fields);
+        HashMap<String, String> actualResult = profileComponent.getFields(fields);
+        Assert.assertTrue(expectedResult.equals(actualResult), "Expected result don`t equals actual result");
         //Get fields values from API (from contact and user)
         //test will be fail, bug, also need to add mapping field;
         //TODO fix
-        HashMap<String,String> fieldsInContact =profileComponent.getFieldsFromApi(fields,"Contact",params.get("PROFILE_CONTACT_ID"));
-        HashMap<String,String>  fieldsInUser= profileComponent.getFieldsFromApi(fields,"User",params.get("PROFILE_USER_ID"));
-        Assert.assertEquals(fieldsInContact,fieldsInUser);
+        HashMap<String, String> fieldsInContact = profileComponent.getFieldsFromApi(fields, "Contact", params.get("PROFILE_CONTACT_ID"));
+        HashMap<String, String> fieldsInUser = profileComponent.getFieldsFromApi(fields, "User", params.get("PROFILE_USER_ID"));
+        Assert.assertEquals(fieldsInContact, fieldsInUser);
     }
 }

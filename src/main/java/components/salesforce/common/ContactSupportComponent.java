@@ -1,12 +1,13 @@
 package components.salesforce.common;
 
 import components.BasePageComponent;
+import datasources.JSONConverter;
 import datasources.RandomDataGenerator;
+import entities.InputTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ContactSupportComponent extends BasePageComponent {
 
@@ -50,7 +51,7 @@ public class ContactSupportComponent extends BasePageComponent {
 
     public String getRandomString(String template){
         reporter.info("Get random string for template: "+ template);
-        return RandomDataGenerator.getRandomField(template,"\\.");
+        return RandomDataGenerator.getRandomField(template,RandomDataGenerator.DEFAULT_SEPARATOR);
     }
 
     public boolean isMessageCaseCreatedExist(){
@@ -63,5 +64,18 @@ public class ContactSupportComponent extends BasePageComponent {
     public String getTitle() {
         waitForPageToLoad();
         return driver().getTitle();
+    }
+
+    public HashMap<String, String> enterFields(String fieldsAsJson) {
+        reporter.info("Set : " + fieldsAsJson);
+        HashMap<String, String> mapOfFields = JSONConverter.toHashMapFromJsonString(fieldsAsJson);
+
+        InputTypes it = InputTypes.getFromSonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
+        return fillDataFields(mapOfFields, it); // TODO
+    }
+
+    public HashMap<String, String> getFields(HashMap<String, String> actualExpectedFields) {
+        InputTypes it = InputTypes.getFromSonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
+        return getDataFields(actualExpectedFields.keySet(), it); // TODO
     }
 }

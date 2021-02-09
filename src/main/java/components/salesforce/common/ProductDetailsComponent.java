@@ -30,9 +30,9 @@ public class ProductDetailsComponent extends BasePageComponent {
      */
     public  void addToCart() {
         reporter.info("Add to Cart");
-        if(getQuantity()!="1")
+        if(getQuantity() != "1" )
         {
-            reporter.fail("Quantity is incorrect");
+            reporter.warn("Quantity is incorrect");
             setQuantity(1);
         }
 

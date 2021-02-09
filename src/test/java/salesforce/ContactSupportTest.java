@@ -26,11 +26,14 @@ public class ContactSupportTest extends BaseUITest {
         headerComponent.openItemFromUserMenu(params.get("PAGE_NAME"));
         Assert.assertEquals(contactSupportComponent.getTitle(),"Contact Support"); // get from params
         //get expected subject and describe
-        String expectedSubject = params.get("SUBJECT");
-        String expectedDescription = params.get("DESCRIPTION");
+        //String expectedSubject = params.get("SUBJECT");
+        //String expectedDescription = params.get("DESCRIPTION");
+
+        String expectedData = params.get("EXPECTED_FIELD_VALUES");
 
         //set subject and describe
-        contactSupportComponent.enterFields(expectedSubject,expectedDescription);
+        //contactSupportComponent.enterFields(expectedSubject,expectedDescription);
+        HashMap<String, String> actualExpectedFields = contactSupportComponent.enterFields(expectedData);
         contactSupportComponent.submit();
 
         //verification if message about case created exist
@@ -39,12 +42,11 @@ public class ContactSupportTest extends BaseUITest {
         contactSupportComponent.openCase();
 
         //get value from field subject and describe
-        String actualSubject=contactSupportComponent.getFieldValue("Subject");
-        String actualDescription=contactSupportComponent.getFieldValue("Description");
+       // String actualSubject=contactSupportComponent.getFieldValue("Subject");
+        //String actualDescription=contactSupportComponent.getFieldValue("Description");
+        HashMap<String, String> actualActualFields  = contactSupportComponent.getFields(actualExpectedFields);
 
-
-        Assert.assertEquals(expectedSubject,actualSubject);
-        Assert.assertEquals(expectedDescription,actualDescription);
+        Assert.assertEquals(actualActualFields,actualExpectedFields);
     }
 
 

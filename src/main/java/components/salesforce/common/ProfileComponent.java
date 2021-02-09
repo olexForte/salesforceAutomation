@@ -107,7 +107,7 @@ public class ProfileComponent extends BasePageComponent {
     */
    public String getRandomString(String template){
       reporter.info("Get random string for template: "+ template);
-      return RandomDataGenerator.getRandomField(template,"\\.");
+      return RandomDataGenerator.getRandomField(template,RandomDataGenerator.DEFAULT_SEPARATOR);
      //return DataGenerator.getString(template);
    }
 

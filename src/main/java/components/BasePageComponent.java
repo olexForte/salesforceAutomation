@@ -2,6 +2,8 @@ package components;
 
 import configuration.LocatorsRepository;
 import configuration.ProjectConfiguration;
+import datasources.RandomDataGenerator;
+import entities.InputTypes;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
@@ -10,9 +12,7 @@ import org.slf4j.LoggerFactory;
 import reporting.ReporterManager;
 //import web.Selenium4Wrapper;
 
-import java.util.ArrayList;
-
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents active component of Web page
@@ -222,6 +222,20 @@ public class BasePageComponent {
      */
     public static boolean isElementDisplayed(String by,int... timeout) {
     return isElementDisplayed(By.xpath(by),timeout);
+    }
+
+
+    /**
+     * Check if element is displayed by string
+     * @param by
+     * @return
+     */
+    public static boolean isElementDisplayedIgnoreException(String by,int... timeout) {
+        try{
+            return isElementDisplayed(By.xpath(by), timeout);
+        } catch (Exception e){
+            return false;
+        }
     }
 
     public static void selectFromDropdown(By element, String value){
@@ -675,5 +689,77 @@ public class BasePageComponent {
         }
     }
 
+
+    public HashMap<String, String> fillDataFields(HashMap<String, String> mapOfFields, InputTypes it) {
+        HashMap<String, String> result = new HashMap<>();
+        String processedValue = "";
+        for (Map.Entry<String, String> curField : mapOfFields.entrySet()) {
+
+        //input
+        if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, curField.getKey()),1)){
+            processedValue = RandomDataGenerator.getRandomField(curField.getValue());
+            setText(By.xpath(it.getInput().replace(it.KEY_WORD, curField.getKey())), processedValue,1);
+            result.put(curField.getKey(), processedValue);
+            continue;
+        }
+
+        // select
+        // option
+         if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curField.getKey()),1)){
+                clickOnElement(By.xpath(it.getParentSelect().replace(it.KEY_WORD, curField.getKey())), 1);
+                processedValue = RandomDataGenerator.getRandomField(curField.getValue());
+                if (processedValue.matches("#\\d+")) { // TODO test and validate on multiple selects
+                    int index = Integer.parseInt(processedValue.replace("#", ""));
+                    findElements(By.xpath(it.getSelectOption())).get(index).click();
+                } else
+                    clickOnElement(By.xpath(it.getSelectOption().replace(it.KEY_WORD, processedValue)), 1);
+
+                result.put(curField.getKey(), processedValue);
+                continue;
+         }
+
+         // checkbox
+
+            //TODO checkbox
+        }
+
+        return result;
+    }
+
+//TODO
+    public HashMap<String, String> getDataFields(Set<String> setOfKeys, InputTypes it) {
+        HashMap<String, String> result = new HashMap<>();
+        String processedValue = "";
+        for (String curKey : setOfKeys) {
+
+            //input
+            if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, curKey),1)){
+                processedValue = getElementText(By.xpath(it.getInput().replace(it.KEY_WORD, curKey)));
+                result.put(curKey, processedValue);
+                continue;
+            }
+
+            // select TODO
+            // option
+//            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curField.getKey()),1)){
+//                clickOnElement(By.xpath(it.getParentSelect().replace(it.KEY_WORD, curField.getKey())), 1);
+//                processedValue = RandomDataGenerator.getRandomField(curField.getValue());
+//                if (processedValue.matches("#\\d+")) { // TODO test and validate on multiple selects
+//                    int index = Integer.parseInt(processedValue.replace("#", ""));
+//                    findElements(By.xpath(it.getSelectOption())).get(index).click();
+//                } else
+//                    clickOnElement(By.xpath(it.getSelectOption().replace(it.KEY_WORD, processedValue)), 1);
+//
+//                result.put(curField.getKey(), processedValue);
+//                continue;
+//            }
+
+            // checkbox
+
+            //TODO checkbox
+        }
+
+        return result;
+    }
 
 }

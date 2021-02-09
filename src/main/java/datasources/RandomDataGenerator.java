@@ -18,6 +18,7 @@ import java.util.*;
 public class RandomDataGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(RandomDataGenerator.class);
+    public static final String DEFAULT_SEPARATOR = "\\.";
 
     /**
      * encode password from Base64
@@ -83,6 +84,9 @@ public class RandomDataGenerator {
      * @param parameters
      * @return
      */
+    public static String getRandomField(String parameters) {
+        return getRandomField(parameters, RandomDataGenerator.DEFAULT_SEPARATOR);
+    }
     public static String getRandomField(String parameters, String parameterDelimiter) {
 
         String result = "";

@@ -28,7 +28,7 @@ public class FooterTest extends BaseUITest {
 
     private FooterComponent footerComponent = FooterComponent.getInstance();
 
-    @Test(testName = "test footer links", dataProvider ="Item for footer")
+    @Test(testName = "vtest footer links", dataProvider ="Item for footer")
     public void footerLinkTest(FooterEntity footer){
         logIn(false);
         Assert.assertEquals(footerComponent.getLinkByHrefAttribute(footer.itemName,footer.openInNewTab),footer.linkOfElement);
