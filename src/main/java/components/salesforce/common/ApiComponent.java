@@ -14,7 +14,7 @@ public class ApiComponent extends BaseAPIClient {
     public static String COMPONENT_NAME="ApiComponent";
     public static HashMap<String,String> apiParams = dataRepository.getDefaultParametersForTest("Api");
     public static HashMap<String,Response> describes= new HashMap<>();
-
+    public static HashMap<String,Response> response = new HashMap<>();
 
 
     /**
@@ -26,9 +26,20 @@ public class ApiComponent extends BaseAPIClient {
     public static String getFieldNameByLabel(String objectName,String fieldLabel){
         reporter.info("Get field name by label "+fieldLabel+" for object "+objectName);
         String groovyPathFindFieldNameByLabel =String.format(apiParams.get("GPATH_GET_NAME_OF_FIELD_BY_LABEL"),fieldLabel);
-        return getDescribe(objectName).jsonPath().get(groovyPathFindFieldNameByLabel);
+        String fieldName =getDescribe(objectName).jsonPath().get(groovyPathFindFieldNameByLabel);
+        return fieldName;
     }
 
+    /**
+     * Get response by url and save response
+     * @param url get url
+     * @return void
+     */
+    public static void getResponseFromAPI(String url){
+        reporter.info("Get value from API for url: "+url);
+        Response result= BaseAPIClient.runGetRequest(url);
+        response.put(url,result);
+    }
     /**
      * Get values record
      * @param objectName name of object
@@ -39,10 +50,13 @@ public class ApiComponent extends BaseAPIClient {
     public static String getValue(String objectName,String fieldLabel,String recordId){
         reporter.info("Get value for field label "+fieldLabel+" for object "+objectName+" by id "+recordId);
         String fieldName=getFieldNameByLabel(objectName,fieldLabel);
-        String url =defaultURL+String.format(apiParams.get("GET_FIELD_VALUE_RECORD_BY_ENTITY_BY_ID"),fieldName,objectName,recordId);
         String groovyPathFindValue =String.format(apiParams.get("GPATH_GET_VALUE_FROM_RECORD_BY_FIELD_NAME"),fieldName);
-        return BaseAPIClient.runGetRequest(url).jsonPath().getString(groovyPathFindValue);
-        //.get(groovyPathFindValue).toString();
+        String url =defaultURL+String.format(apiParams.get("GET_FIELD_VALUE_RECORD_BY_ENTITY_BY_ID"),fieldName,objectName,recordId);
+        if(!response.containsKey(url))
+        {
+            getResponseFromAPI(url);
+        }
+        return response.get(url).jsonPath().getString(groovyPathFindValue);
     }
 
     /**
@@ -52,6 +66,7 @@ public class ApiComponent extends BaseAPIClient {
      * @param recordId String record id
      * @return HashMap<String, String>  where key is field label, value will be result
      */
+    //TODO reduce api request
     public static HashMap<String, String>  getValues(String objectName,HashMap<String, String> fields, String recordId){
         for (Map.Entry<String, String> entry : fields.entrySet())
             fields.put(entry.getKey(),getValue(objectName,entry.getKey(),recordId));

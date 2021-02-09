@@ -42,6 +42,7 @@ public class SearchResultComponent extends BasePageComponent {
      * Get count of result
      * @return int count of result
      */
+    //TODO add possibility check if result 1
     public int getTotalNumberOfResults() {
         reporter.info("Get count item from result");
         //take third group of digits in line. Example of line: 1 - 20 of 105 Results for "Thumb Spica, Right, X-Small, Retail"

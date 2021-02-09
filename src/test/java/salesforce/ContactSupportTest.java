@@ -18,15 +18,16 @@ public class ContactSupportTest extends BaseUITest {
     @Test(testName = "Contact Support create case test")
     public void ContactSupportTest() {
 
-        HashMap<String,String> params = dataRepository.getParametersForTestDefaultDir("ContactSupportFields");
+        HashMap<String,String> params = dataRepository.getParametersForTest("ContactSupport");
+
         //login
         logIn(false);
         //open contact support page
-        headerComponent.openItemFromUserMenu("Contact Support");
-
+        headerComponent.openItemFromUserMenu(params.get("PAGE_NAME"));
+        Assert.assertEquals(contactSupportComponent.getTitle(),"Contact Support"); // get from params
         //get expected subject and describe
-        String expectedSubject = params.get("Subject");
-        String expectedDescription = params.get("Description");
+        String expectedSubject = params.get("SUBJECT");
+        String expectedDescription = params.get("DESCRIPTION");
 
         //set subject and describe
         contactSupportComponent.enterFields(expectedSubject,expectedDescription);

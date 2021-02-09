@@ -17,7 +17,7 @@ public class OrderCreatedPopUp extends BasePageComponent {
      * @return boolean
      */
     public static boolean isPopupDisplayed(){
-        return isElementDisplayed(LOCATORS.getBy(COMPONENT_NAME, "CONTINUE_SHOPPING_BUTTON"));
+        return isElementDisplayed(LOCATORS.getBy(COMPONENT_NAME, "VIEW_CART_BUTTON"));
     }
     /**
      * click in button "view cart"

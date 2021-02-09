@@ -22,8 +22,6 @@ public class ContactSupportComponent extends BasePageComponent {
         return instance;
     }
 
-
-
     public void enterFields(String subject, String description) {
         reporter.info("Set subject: "+ subject+" and description: "+description);
         setText(LOCATORS.getBy(COMPONENT_NAME,"SUBJECT_INPUT"),subject);
@@ -60,5 +58,10 @@ public class ContactSupportComponent extends BasePageComponent {
         if (findElementIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"CASE_WAS_CREATED_MESSAGE"))!=null)
             return true;
         return false;
+    }
+
+    public String getTitle() {
+        waitForPageToLoad();
+        return driver().getTitle();
     }
 }

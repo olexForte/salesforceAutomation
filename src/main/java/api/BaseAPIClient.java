@@ -41,7 +41,7 @@ public class BaseAPIClient {
         if (authToken.equals(""))
             authToken = APIAuthorization.getAccessToken();
 
-        String finalQuery =baseURI+url;
+        String finalQuery =url;
 
         Response response = given()
                 .auth().oauth2(authToken)

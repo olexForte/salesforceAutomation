@@ -35,16 +35,7 @@ public class HeaderComponent extends BasePageComponent {
     }
 
 
-    /**
-     * Search if search field
-     * @param productName String
-     * @return void
-     */
-    public void searchForProduct(String productName) {
-        reporter.info("Search for: " + productName);
-        setText(LOCATORS.getBy(COMPONENT_NAME,"GLOBAL_SEARCH_INPUT"), productName);
-        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "GLOBAL_SEARCH_BUTTON"));
-    }
+
     /**
      * Open item in user profile menu
      * @param itemName String
@@ -87,6 +78,7 @@ public class HeaderComponent extends BasePageComponent {
         reporter.info("Search for: " + query);
         if(isSearchExist())
         {
+
             setText(LOCATORS.getBy(COMPONENT_NAME,"SEARCH_INPUT"),query,SHORT_TIMEOUT);
             clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "SEARCH_BUTTON"));
         }

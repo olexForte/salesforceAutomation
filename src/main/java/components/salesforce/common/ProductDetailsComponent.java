@@ -30,6 +30,24 @@ public class ProductDetailsComponent extends BasePageComponent {
      */
     public  void addToCart() {
         reporter.info("Add to Cart");
+        if(getQuantity()!="1")
+        {
+            reporter.fail("Quantity is incorrect");
+            setQuantity(1);
+        }
+
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ADD_TO_CART_BUTTON"));
     }
+
+    public String getQuantity(){
+        return getElementTextIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"QUANTITY"));
+    }
+
+
+
+    public void setQuantity(int count){
+        reporter.info("Set quantity "+count);
+        setText(LOCATORS.getBy(COMPONENT_NAME,"QUANTITY"),String.valueOf(count));
+    }
+
 }

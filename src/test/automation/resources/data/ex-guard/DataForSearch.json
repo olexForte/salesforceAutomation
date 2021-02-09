@@ -1,0 +1,18 @@
+[
+  {
+    "query": "LT",
+    "countOfExpectedResult": 32,
+    "result": [
+      "LT-D350"
+    ]
+  },
+  {
+    "query": "XG",
+    "countOfExpectedResult": 200,
+    "result": [
+      "XG-09FM2106E",
+      "XG-20F114SB",
+      "XG-CM125BLP"
+    ]
+  }
+]

@@ -1,0 +1,2 @@
+Mounting Brackets|//li[@class='slds-breadcrumb__item']//p[contains(text(),'Mounting Brackets')]
+Replacement Parts|//li[@class='slds-breadcrumb__item']//p[contains(text(),'Replacement Parts')]

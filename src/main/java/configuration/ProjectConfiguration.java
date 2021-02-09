@@ -31,6 +31,7 @@ public class ProjectConfiguration {
      * @return
      */
     public static Properties loadProperties(){
+
         Properties result = new Properties();
 
         try {
@@ -56,7 +57,7 @@ public class ProjectConfiguration {
         }
 
         //TODO move
-        threadProperties.set(new Properties());
+
 
         return result;
     }
@@ -67,6 +68,7 @@ public class ProjectConfiguration {
      * @return
      */
     public static boolean isPropertySet(String property){
+
         String valueFromProperties = getConfigProperty(property);
         if(valueFromProperties != null)
             return Boolean.parseBoolean(valueFromProperties);
@@ -108,6 +110,8 @@ public class ProjectConfiguration {
      * @param value
      */
     public static void setLocalThreadConfigProperty(String fieldName, String value) {
+        if(threadProperties.get()==null)
+            threadProperties.set(new Properties());
         threadProperties.get().setProperty(fieldName, value);
     }
     /**
@@ -115,6 +119,7 @@ public class ProjectConfiguration {
      * @param fieldName
      */
     public static void removeLocalThreadConfigProperty(String fieldName) {
+        if(threadProperties.get()!=null)
         threadProperties.get().remove(fieldName);
     }
 

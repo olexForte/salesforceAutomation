@@ -22,7 +22,7 @@ public class ProfileComponent extends BasePageComponent {
     */
    public String getProfileName(){
       reporter.info("Get profile name");
-     return getElementText(LOCATORS.getBy(COMPONENT_NAME,"PROFILE_NAME"),SHORT_TIMEOUT);
+     return getElementText(LOCATORS.getBy(COMPONENT_NAME,"PROFILE_NAME"));
    }
 
    /**
@@ -31,7 +31,7 @@ public class ProfileComponent extends BasePageComponent {
     */
    public void openEditForm(){
       reporter.info("Open edit form");
-      clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"EDIT_BUTTON"),SHORT_TIMEOUT);
+      clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"EDIT_BUTTON"));
    }
    /**
     * Click button "save" in edit form
@@ -39,7 +39,7 @@ public class ProfileComponent extends BasePageComponent {
     */
    public void saveData(){
       reporter.info("Save edited form");
-      clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"SAVE_BUTTON"),SHORT_TIMEOUT);
+      clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"SAVE_BUTTON"));
    }
 
    /**
@@ -75,7 +75,9 @@ public class ProfileComponent extends BasePageComponent {
       {
             field.setValue(getTextFromField(field.getKey()));
       }
-      return fields;
+      HashMap<String,String> result = new HashMap<>();
+      result.putAll(fields);
+      return result;
    }
 
    /**
@@ -117,7 +119,9 @@ public class ProfileComponent extends BasePageComponent {
     * @return HashMap<String, String> where key - field label, value - value from field
     */
    public HashMap<String, String>  getFieldsFromApi(HashMap<String, String> fields, String objectName,String recordId){
-      return  ApiComponent.getValues(objectName,fields,recordId);
+      HashMap<String,String> result = new HashMap<>();
+      result.putAll(ApiComponent.getValues(objectName,fields,recordId));
+      return  result;
    }
 
 }

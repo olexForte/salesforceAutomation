@@ -4,6 +4,7 @@ import components.salesforce.common.HeaderComponent;
 import configuration.ProjectConfiguration;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
@@ -78,12 +79,12 @@ public class BaseUITest extends BaseTest{
         super.endTest(testResult);
     }
 
-    @AfterTest
+    @AfterClass
     public void closeDriver() throws Exception {
        // BasePage BasePage = new BasePage();
         //close driver
         ProjectConfiguration.removeLocalThreadConfigProperty("LOGGED_IN_DRIVER"); // just in case
-        BasePageComponent.driver().quit();
+       // BasePageComponent.driver().quit();
         DriverProvider.closeDriver();
 
     }

@@ -1,7 +1,7 @@
 [
   {
     "query": "Thumb Spica, Right, X-Small, Retail",
-    "countOfExpectedResult": 20,
+    "countOfExpectedResult": 105,
     "result": [
       "Thumb Spica, Right, X-Small, Retail",
       "Thumb Spica, Right, XL, Retail",
@@ -10,7 +10,7 @@
   },
   {
     "query": "Standard Pneumatic Walker, Large",
-    "countOfExpectedResult": 20,
+    "countOfExpectedResult": 116,
     "result": [
       "Standard Pneumatic Walker, X-Large",
       "Standard Walker, Large",
@@ -19,7 +19,7 @@
   },
   {
     "query": "Hybrid Night Splint Accesory Strap",
-    "countOfExpectedResult": 20,
+    "countOfExpectedResult": 27,
     "result": [
       "Hybrid Night Splint Accesory Strap",
       "Dorsal Night Splint, Large - X-Large",

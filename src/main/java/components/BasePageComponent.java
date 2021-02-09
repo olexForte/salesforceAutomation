@@ -113,8 +113,10 @@ public class BasePageComponent {
      * @param element
      * @param value
      */
+    //TODO clear don`t work // need to set value=""
     public static void setText(By element, String value,int... timeout){
-        findElementIgnoreException(element,timeout).clear();
+        findElement(element,timeout).click();
+        findElement(element,timeout).clear();
         if (value != null) {
             findElement(element).sendKeys(value);
         }
@@ -628,6 +630,7 @@ public class BasePageComponent {
             String oldTab = driver().getWindowHandle();
             ArrayList<String> tabs1 = new ArrayList<String>(driver().getWindowHandles());
             clickOnElementIgnoreException(by);
+            waitForPageToLoad();
             ArrayList<String> tabs2 = new ArrayList<String>(driver().getWindowHandles());
 
             if (tabs1.size() == tabs2.size() || tabs2.size() > tabs1.size() + 1)
@@ -660,10 +663,11 @@ public class BasePageComponent {
      */
     public static String getLinkByClickFromElement(By by, int... timeout) {
         try {
+            String currentPage= driver().getCurrentUrl();
             clickOnElement(by);
             waitForPageToLoad();
             String url =driver().getCurrentUrl();
-            driver().navigate().back();
+            driver().navigate().to(currentPage);
             return url;
         } catch (Exception e) {
             reporter.fail("Failure getting link from button ", e);

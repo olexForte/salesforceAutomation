@@ -1,0 +1,12 @@
+[
+  {
+    "linkOfElement": "https://staging-ex-guard.cs196.force.com/s/recordlist/OrderSummary/Default?OrderSummary-filterId=all_order_summaries",
+    "itemName": "My Orders",
+    "openInNewTab": false
+  },
+  {
+    "linkOfElement": "https://staging-ex-guard.cs196.force.com/s/account-management",
+    "itemName": "Account Management",
+    "openInNewTab": false
+  }
+]
