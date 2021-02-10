@@ -18,6 +18,7 @@ public class VHT_OrderPurchaseTest extends BaseUITest {
     private HeaderComponent headerComponent = HeaderComponent.getInstance();
     private VHTAddressListingComponent vHTAddressListingComponent = VHTAddressListingComponent.getInstance();
     private VHTOrderSummaryComponent vHTOrderSummaryComponent = VHTOrderSummaryComponent.getInstance();
+    private OrderCreatedPopUp orderCreatedPopUp = OrderCreatedPopUp.getInstance();
   //  private MainPageComponent mainPageComponent = MainPageComponent.getInstance();
 
     @Test(testName = "Order Purchase test")
@@ -42,7 +43,7 @@ public class VHT_OrderPurchaseTest extends BaseUITest {
         //count of item in cart
         int expectedNumberOfItemsInCart = headerComponent.getCountItemInCart() + Integer.valueOf(params.get("EXPECTED_QUANTITY_OF_ITEMS"));
         vHTOrderSummaryComponent.startReorder(); // item/items add
-        Assert.assertTrue(OrderCreatedPopUp.isPopupDisplayed(), "No dialog displayed"); // check if pop-up open
+        Assert.assertTrue(orderCreatedPopUp.isPopupDisplayed(), "No dialog displayed"); // check if pop-up open
 
 
         headerComponent.waitForNumberOfItemsInCart(expectedNumberOfItemsInCart);

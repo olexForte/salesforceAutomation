@@ -25,6 +25,18 @@ public class SearchResultComponent extends BasePageComponent {
             clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "PRODUCT_IN_TABLE_BY_TEXT", productName));
         }
     }
+    /**
+     * add item to cart
+     * @param productName name of product
+     * @return void
+     */
+    public void addItemToCart(String productName) {
+        reporter.info("Add item to cart : "+productName);
+        if (isSearchResultExist()){
+            clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ADD_TO_CART_BY_NAME", productName));
+        }
+    }
+
 
     /**
      * Add item into cart
@@ -54,7 +66,7 @@ public class SearchResultComponent extends BasePageComponent {
      * @return int count of result
      */
     public int getNumberOfItemsOnAPage(){
-        return findElements(LOCATORS.getBy(COMPONENT_NAME, "ITEM_IN_CART"),SHORT_TIMEOUT).size();
+        return findElements(LOCATORS.getBy(COMPONENT_NAME, "ITEM_IN_TABLE"),SHORT_TIMEOUT).size();
     }
 
     /**

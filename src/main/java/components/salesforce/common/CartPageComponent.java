@@ -24,4 +24,16 @@ public class CartPageComponent extends BasePageComponent {
     public boolean isItemInCart(String productName) {
         return isElementDisplayed(LOCATORS.getBy(COMPONENT_NAME, "ITEM_IN_CART_BY_NAME", productName));
     }
+
+    public String getFinalPrice(){
+        return getElementTextIgnoreException(LOCATORS.getBy(COMPONENT_NAME, "FINAL_PRICE")).replaceAll("[^0-9.]","");
+    }
+
+    public void removeItem(String product_name) {
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "REMOVE_ITEM_BY_NAME",product_name));
+    }
+
+    public void waitForFinalPrice(double expectedPrice) {
+        waitForElementText(LOCATORS.getBy(COMPONENT_NAME,"FINAL_PRICE"), String.valueOf(expectedPrice),SHORT_TIMEOUT);
+    }
 }

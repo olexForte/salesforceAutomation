@@ -1,13 +1,15 @@
 package salesforce;
 
 import components.salesforce.common.*;
+import org.apache.xmlbeans.soap.SchemaWSDLArrayType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.BaseUITest;
 
 import java.util.HashMap;
 
-public class E2ETest extends BaseUITest {
+public class CartTest extends BaseUITest {
+
 
     private HeaderComponent headerComponent = HeaderComponent.getInstance();
     private ProductDetailsComponent productDetailsComponent = ProductDetailsComponent.getInstance();
@@ -15,26 +17,37 @@ public class E2ETest extends BaseUITest {
     private SearchResultComponent searchResultComponent = SearchResultComponent.getInstance();
     private OrderCreatedPopUp orderCreatedPopUp = OrderCreatedPopUp.getInstance();
 
-    @Test(testName = "E2E test")
-    public void test(){
 
-        HashMap<String,String> params = dataRepository.getParametersForTest("E2E");
+    @Test(testName = "Cart items test")
+    public void ContactSupportTest() {
+
+        logIn(false);
+     //   searchSomeProduct
+        //add item to cart
+        //open cart
+        //get Price
+        //remove item
+        //get price
+        //update page
+        //get price
+
+
+
+        HashMap<String,String> params = dataRepository.getParametersForTest("CartTest");
         // login
         logIn(false);
 
         headerComponent.findByQuery(params.get("PRODUCT_NAME"));
-        searchResultComponent.openItemFromTable(params.get("PRODUCT_NAME"));
-        //check if record open
-        Assert.assertEquals(productDetailsComponent.getTitle(), params.get("PRODUCT_NAME"),"Expected product was not open");
-        productDetailsComponent.addToCart(); // item/items add
 
-        //count of item in cart
-        int expectedNumberOfItemsInCart = headerComponent.getCountItemInCart() + 1;
+        searchResultComponent.addItemToCart(params.get("PRODUCT_NAME"));
         Assert.assertTrue(orderCreatedPopUp.isPopupDisplayed(), "No dialog displayed"); // check if pop-up open
         orderCreatedPopUp.clickOnViewCartButton();
-
-        headerComponent.waitForNumberOfItemsInCart(expectedNumberOfItemsInCart);
-        Assert.assertEquals(headerComponent.getCountItemInCart(), expectedNumberOfItemsInCart, "Wrong number of items in cart");
         Assert.assertTrue(cartPageComponent.isItemInCart(params.get("PRODUCT_NAME")), "Item was not found in cart");
+        double actualPrice=Double.valueOf(cartPageComponent.getFinalPrice());
+        double expectedPrice=actualPrice-Double.valueOf(params.get("ITEM_PRICE"));
+        cartPageComponent.removeItem(params.get("PRODUCT_NAME"));
+        cartPageComponent.waitForFinalPrice(expectedPrice);
+        Assert.assertEquals(expectedPrice,Double.valueOf(cartPageComponent.getFinalPrice()));
     }
+
 }

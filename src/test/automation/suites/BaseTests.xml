@@ -6,6 +6,7 @@
             <class name="salesforce.FooterTest" />
             <class name="salesforce.NavigationMenuTest" />
             <class name="salesforce.SearchTest" />
+            <class name="salesforce.CartTest" />
         </classes>
     </test> <!-- test -->
 </suite> <!-- suite -->

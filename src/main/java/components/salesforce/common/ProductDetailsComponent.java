@@ -38,8 +38,9 @@ public class ProductDetailsComponent extends BasePageComponent {
 
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ADD_TO_CART_BUTTON"));
     }
-
+    //TODO get value / now work incorrect
     public String getQuantity(){
+
         return getElementTextIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"QUANTITY"));
     }
 
