@@ -42,6 +42,6 @@ public class ProfileTest extends BaseUITest {
         //TODO fix
         HashMap<String, String> fieldsInContact = profileComponent.getFieldsFromApi(fields, "Contact", params.get("PROFILE_CONTACT_ID"));
         HashMap<String, String> fieldsInUser = profileComponent.getFieldsFromApi(fields, "User", params.get("PROFILE_USER_ID"));
-        Assert.assertEquals(fieldsInContact, fieldsInUser);
+        Assert.assertEquals(fieldsInContact, fieldsInUser,"Fields in contact isn`t equals fields in user");
     }
 }

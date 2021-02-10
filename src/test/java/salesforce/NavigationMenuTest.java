@@ -35,7 +35,7 @@ public class NavigationMenuTest extends BaseUITest {
     public void navigate(String location ,String result){
         logIn(false);
         headerComponent.navigateByHeaderMenuToItem(location);
-        Assert.assertTrue(HeaderComponent.isElementDisplayed(result));
+        Assert.assertTrue(HeaderComponent.isElementDisplayed(result),"Expected element isn`t existing in the page");
     }
 
 }

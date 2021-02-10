@@ -24,7 +24,7 @@ public class ContactSupportTest extends BaseUITest {
         logIn(false);
         //open contact support page
         headerComponent.openItemFromUserMenu(params.get("PAGE_NAME"));
-        Assert.assertEquals(contactSupportComponent.getTitle(),"Contact Support"); // get from params
+        Assert.assertEquals(contactSupportComponent.getTitle(),params.get("PAGE_TITLE"),"Wrong title on the page");
         //get expected subject and describe
         //String expectedSubject = params.get("SUBJECT");
         //String expectedDescription = params.get("DESCRIPTION");
@@ -37,7 +37,7 @@ public class ContactSupportTest extends BaseUITest {
         contactSupportComponent.submit();
 
         //verification if message about case created exist
-        Assert.assertTrue(contactSupportComponent.isMessageCaseCreatedExist());
+        Assert.assertTrue(contactSupportComponent.isMessageCaseCreatedExist(),"Case isn`t existing");
 
         contactSupportComponent.openCase();
 
@@ -46,7 +46,7 @@ public class ContactSupportTest extends BaseUITest {
         //String actualDescription=contactSupportComponent.getFieldValue("Description");
         HashMap<String, String> actualActualFields  = contactSupportComponent.getFields(actualExpectedFields);
 
-        Assert.assertEquals(actualActualFields,actualExpectedFields);
+        Assert.assertEquals(actualActualFields,actualExpectedFields,"Field is incorrect");
     }
 
 
