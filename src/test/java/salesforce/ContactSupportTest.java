@@ -18,7 +18,7 @@ public class ContactSupportTest extends BaseUITest {
     @Test(testName = "Contact Support create case test")
     public void ContactSupportTest() {
 
-        HashMap<String,String> params = dataRepository.getParametersForTest("ContactSupport");
+        HashMap<String,String> params = dataRepository.getParametersForTest("ContactSupportTest");
 
         //login
         logIn(false);
@@ -29,7 +29,7 @@ public class ContactSupportTest extends BaseUITest {
         //String expectedSubject = params.get("SUBJECT");
         //String expectedDescription = params.get("DESCRIPTION");
 
-        String expectedData = params.get("EXPECTED_FIELD_VALUES");
+        String expectedData = params.get("EXPECTED_FIELD");
 
         //set subject and describe
         //contactSupportComponent.enterFields(expectedSubject,expectedDescription);
@@ -38,7 +38,6 @@ public class ContactSupportTest extends BaseUITest {
 
         //verification if message about case created exist
         Assert.assertTrue(contactSupportComponent.isMessageCaseCreatedExist(),"Case isn`t existing");
-
         contactSupportComponent.openCase();
 
         //get value from field subject and describe
@@ -46,7 +45,7 @@ public class ContactSupportTest extends BaseUITest {
         //String actualDescription=contactSupportComponent.getFieldValue("Description");
         HashMap<String, String> actualActualFields  = contactSupportComponent.getFields(actualExpectedFields);
 
-        Assert.assertEquals(actualActualFields,actualExpectedFields,"Field is incorrect");
+        Assert.assertEquals(actualActualFields,actualExpectedFields,"Fields is incorrect");
     }
 
 

@@ -718,7 +718,14 @@ public class BasePageComponent {
                 continue;
          }
 
-         // checkbox
+            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()),1)){
+                processedValue = RandomDataGenerator.getRandomField(curField.getValue());
+                getAttribute(By.xpath(it.getCheckbox()),it.getCheckboxValue().replace(it.KEY_WORD, processedValue));
+                clickOnElement(By.xpath(it.getCheckboxValue().replace(it.KEY_WORD, processedValue)), 1);
+
+                result.put(curField.getKey(), processedValue);
+                continue;
+            }
 
             //TODO checkbox
         }
@@ -741,18 +748,15 @@ public class BasePageComponent {
 
             // select TODO
             // option
-//            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curField.getKey()),1)){
-//                clickOnElement(By.xpath(it.getParentSelect().replace(it.KEY_WORD, curField.getKey())), 1);
-//                processedValue = RandomDataGenerator.getRandomField(curField.getValue());
-//                if (processedValue.matches("#\\d+")) { // TODO test and validate on multiple selects
-//                    int index = Integer.parseInt(processedValue.replace("#", ""));
-//                    findElements(By.xpath(it.getSelectOption())).get(index).click();
-//                } else
-//                    clickOnElement(By.xpath(it.getSelectOption().replace(it.KEY_WORD, processedValue)), 1);
-//
-//                result.put(curField.getKey(), processedValue);
-//                continue;
-//            }
+            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curKey),1)){
+                processedValue = getElementText(By.xpath(it.getParentSelect().replace(it.KEY_WORD, curKey)));
+                if (false) { // TODO test and validate on multiple selects
+                    int index = Integer.parseInt(processedValue.replace("#", ""));
+                    findElements(By.xpath(it.getSelectOption())).get(index).click();
+                }
+                result.put(curKey, processedValue);
+                continue;
+            }
 
             // checkbox
 

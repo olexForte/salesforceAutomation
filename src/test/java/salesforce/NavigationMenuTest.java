@@ -20,7 +20,7 @@ public class NavigationMenuTest extends BaseUITest {
     @DataProvider(name="navigation")
     public Iterator<Object[]> dataProvider() throws Exception {
         DataRepository dataRepository = DataRepository.Instance;
-        List<String[]> listWays = dataRepository.getTableDataFromFile("NavigationWays.csv");
+        List<String[]> listWays = dataRepository.getTableDataFromFile("NavigationWaysTest");
 
         List<Object[]> result = new ArrayList<Object[]>();
         for(String[] way : listWays){
@@ -32,7 +32,7 @@ public class NavigationMenuTest extends BaseUITest {
     private HeaderComponent headerComponent = HeaderComponent.getInstance();
 
     @Test(testName = "Navigation test", dataProvider ="navigation")
-    public void navigate(String location ,String result){
+    public void navigateTest(String location ,String result){
         logIn(false);
         headerComponent.navigateByHeaderMenuToItem(location);
         Assert.assertTrue(HeaderComponent.isElementDisplayed(result),"Expected element isn`t existing in the page");

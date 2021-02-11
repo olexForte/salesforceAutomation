@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import java.util.HashMap;
 
 public class InputTypes {
-    public static final String KEY_WORD = "$PARAMTER";
+    public static final String KEY_WORD = "$PARAMETER";
     String input;
 
     public String getInput() {

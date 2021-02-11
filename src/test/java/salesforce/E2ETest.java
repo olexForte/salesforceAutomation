@@ -16,9 +16,9 @@ public class E2ETest extends BaseUITest {
     private OrderCreatedPopUp orderCreatedPopUp = OrderCreatedPopUp.getInstance();
 
     @Test(testName = "E2E test")
-    public void test(){
+    public void E2ETest(){
 
-        HashMap<String,String> params = dataRepository.getParametersForTest("E2E");
+        HashMap<String,String> params = dataRepository.getParametersForTest("E2ETest");
         // login
         logIn(false);
 

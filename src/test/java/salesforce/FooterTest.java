@@ -18,7 +18,7 @@ public class FooterTest extends BaseUITest {
     @DataProvider(name = "Item for footer")
     Iterator<Object[]> getDataForTest(){
         DataRepository dataRepository = DataRepository.Instance;
-        FooterEntity[] search = (FooterEntity[]) dataRepository.getObjectFromJson("Footer",FooterEntity[].class);
+        FooterEntity[] search = (FooterEntity[]) dataRepository.getObjectFromJson("FooterTest",FooterEntity[].class);
         List<Object[]> result = new ArrayList<Object[]>();
         for(FooterEntity item : search){
             result.add(new FooterEntity[]{item});

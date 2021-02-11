@@ -4,7 +4,7 @@ import components.BasePageComponent;
 
 public class CartPageComponent extends BasePageComponent {
 
-    static String COMPONENT_NAME = "CartPage";
+    static String COMPONENT_NAME = "CartPageComponent";
 
     private static CartPageComponent instance = null;
 

@@ -23,8 +23,8 @@ public class ProfileTest extends BaseUITest {
     public void profileTest(){
 
 
-        HashMap<String,String> fields = dataRepository.getParametersForTest("ProfileFields");
-        HashMap<String,String> params = dataRepository.getParametersForTest("Profile");
+        HashMap<String,String> fields = dataRepository.getParametersForTest("ProfileFieldsTest");
+        HashMap<String,String> params = dataRepository.getParametersForTest("ProfileTest");
 
 
         //log in

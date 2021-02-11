@@ -17,7 +17,7 @@ public class SearchTest extends BaseUITest {
     @DataProvider(name = "Data for search")
     Iterator<Object[]> getDataForTest(){
         DataRepository dataRepository = DataRepository.Instance;
-        SearchEntity[] search = (SearchEntity[]) dataRepository.getObjectFromJson("DataForSearch",SearchEntity[].class);
+        SearchEntity[] search = (SearchEntity[]) dataRepository.getObjectFromJson("DataForSearchTest",SearchEntity[].class);
         List<Object[]> result = new ArrayList<Object[]>();
         for(SearchEntity item : search){
             //create array from one known element
