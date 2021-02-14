@@ -694,18 +694,28 @@ public class BasePageComponent {
         HashMap<String, String> result = new HashMap<>();
         String processedValue = "";
         for (Map.Entry<String, String> curField : mapOfFields.entrySet()) {
+            // checkbox
+            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()), 1)) {
+                processedValue = RandomDataGenerator.getRandomField(curField.getValue());
 
-        //input
-        if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, curField.getKey()),1)){
-            processedValue = RandomDataGenerator.getRandomField(curField.getValue());
-            setText(By.xpath(it.getInput().replace(it.KEY_WORD, curField.getKey())), processedValue,1);
-            result.put(curField.getKey(), processedValue);
-            continue;
-        }
+                if (Boolean.parseBoolean(processedValue) != findElement(By.xpath(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()))).isSelected())
+                    findElement(By.xpath(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()))).click();
 
-        // select
-        // option
-         if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curField.getKey()),1)){
+                result.put(curField.getKey(), processedValue);
+                continue;
+            }
+
+            //input
+            if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, curField.getKey()), 1)) {
+                processedValue = RandomDataGenerator.getRandomField(curField.getValue());
+                setText(By.xpath(it.getInput().replace(it.KEY_WORD, curField.getKey())), processedValue, 1);
+                result.put(curField.getKey(), processedValue);
+                continue;
+            }
+
+            // select
+            // option
+            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curField.getKey()), 1)) {
                 clickOnElement(By.xpath(it.getParentSelect().replace(it.KEY_WORD, curField.getKey())), 1);
                 processedValue = RandomDataGenerator.getRandomField(curField.getValue());
                 if (processedValue.matches("#\\d+")) { // TODO test and validate on multiple selects
@@ -716,18 +726,17 @@ public class BasePageComponent {
 
                 result.put(curField.getKey(), processedValue);
                 continue;
-         }
+            }
 
-            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()),1)){
+            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()), 1)) {
                 processedValue = RandomDataGenerator.getRandomField(curField.getValue());
-                getAttribute(By.xpath(it.getCheckbox()),it.getCheckboxValue().replace(it.KEY_WORD, processedValue));
+                getAttribute(By.xpath(it.getCheckbox()), it.getCheckboxValue().replace(it.KEY_WORD, processedValue));
                 clickOnElement(By.xpath(it.getCheckboxValue().replace(it.KEY_WORD, processedValue)), 1);
 
                 result.put(curField.getKey(), processedValue);
                 continue;
             }
 
-            //TODO checkbox
         }
 
         return result;
@@ -738,6 +747,21 @@ public class BasePageComponent {
         HashMap<String, String> result = new HashMap<>();
         String processedValue = "";
         for (String curKey : setOfKeys) {
+            //checkbox
+            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curKey), 1)) {
+                if(findElement(it.getCheckbox().replace(it.KEY_WORD, curKey)).isSelected())
+                processedValue ="true" ;
+                else if(findElement(it.getCheckbox().replace(it.KEY_WORD, curKey)).isEnabled())
+                    processedValue ="false" ;
+                else{
+                    processedValue ="error get checkbox";
+                    LOGGER.info("error get value from checkbox from "+it.getCheckbox().replace(it.KEY_WORD, curKey));
+                }
+
+
+                result.put(curKey, processedValue);
+                continue;
+            }
 
             //input
             if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, curKey),1)){
@@ -746,14 +770,13 @@ public class BasePageComponent {
                 continue;
             }
 
-            // select TODO
-            // option
+            // select
             if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curKey),1)){
                 processedValue = getElementText(By.xpath(it.getParentSelect().replace(it.KEY_WORD, curKey)));
-                if (false) { // TODO test and validate on multiple selects
-                    int index = Integer.parseInt(processedValue.replace("#", ""));
-                    findElements(By.xpath(it.getSelectOption())).get(index).click();
-                }
+//                if (false) { // TODO test and validate on multiple selects
+//                    int index = Integer.parseInt(processedValue.replace("#", ""));
+//                    findElements(By.xpath(it.getSelectOption())).get(index).click();
+//                }
                 result.put(curKey, processedValue);
                 continue;
             }

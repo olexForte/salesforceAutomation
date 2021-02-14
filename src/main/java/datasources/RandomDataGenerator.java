@@ -79,6 +79,13 @@ public class RandomDataGenerator {
         return "";
     }
 
+    public static String getRandomBoolean(){
+      return   String.valueOf(Math.random() < 0.5);
+    }
+
+
+//TODO get random dropdown from webElement / from list /add possibility use some text +template
+
     /**
      * Generate random string for parameters
      * @param parameters
@@ -99,6 +106,7 @@ public class RandomDataGenerator {
         String WI_USER_LABEL = "wi_user";
         String DEFAULT_TEMPLATE = "10c";
         String DROPDOWNS = "dropdown";
+        String CHECKBOX="randomCheckBox";
 
         String template;
         if (parameters.equals("")){
@@ -111,6 +119,10 @@ public class RandomDataGenerator {
 
             List<String> elements = Arrays.asList(parameters.split(parameterDelimiter));
             return getRandomDropdown(elements.subList(1,elements.size()));
+        }
+
+        if(parameters.contains(CHECKBOX)){
+           return getRandomBoolean();
         }
 
         //dates generation

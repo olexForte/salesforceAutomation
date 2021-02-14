@@ -71,10 +71,13 @@ public class ContactSupportComponent extends BasePageComponent {
         HashMap<String, String> mapOfFields = JSONConverter.toHashMapFromJsonString(fieldsAsJson);
 
         InputTypes it = InputTypes.getFromSonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
-        return fillDataFields(mapOfFields, it); // TODO
+        return fillDataFields(mapOfFields, it);
     }
 
-    public HashMap<String, String> getFields(HashMap<String, String> actualExpectedFields) {
+    public HashMap<String, String> getFields(HashMap<String, String> actualExpectedFields ) {
+
+        //ApiComponent.getValues()
+
         InputTypes it = InputTypes.getFromSonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
         return getDataFields(actualExpectedFields.keySet(), it); // TODO
     }

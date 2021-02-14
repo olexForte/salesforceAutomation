@@ -20,9 +20,8 @@ public class AccountInformationEditTest extends BaseUITest {
         logIn(false);
         headerComponent.openItemFromUserMenu(params.get("PAGE_NAME"));
         HashMap<String,String> expectedData = accountInformationComponent.setFields(params.get("EXPECTED_FIELD"));
+        accountInformationComponent.reloadPage();
         HashMap<String,String> actualData =accountInformationComponent.getFields(params.get("EXPECTED_FIELD"));
-       // Assert.assertEquals(expectedData,actualData,"Fields is incorrect");
-
-
+        Assert.assertEquals(actualData,expectedData,"Fields is incorrect");
     }
 }
