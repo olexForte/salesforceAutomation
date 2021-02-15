@@ -2,6 +2,7 @@ package components.salesforce.common;
 
 import components.BasePageComponent;
 import components.subcomponents.FilterComponent;
+import entities.ProductItem;
 import org.openqa.selenium.By;
 
 public class ProductDetailsComponent extends BasePageComponent {
@@ -51,4 +52,15 @@ public class ProductDetailsComponent extends BasePageComponent {
         setText(LOCATORS.getBy(COMPONENT_NAME,"QUANTITY"),String.valueOf(count));
     }
 
+    public ProductItem getProductObject(){
+        ProductItem product = new ProductItem();
+
+        //
+        // get name
+        product.setName(getTitle());
+
+
+
+        return product;
+    }
 }

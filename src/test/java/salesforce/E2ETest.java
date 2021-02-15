@@ -1,9 +1,11 @@
 package salesforce;
 
 import components.salesforce.common.*;
+import entities.ProductItem;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.BaseUITest;
+import utils.ProductComparator;
 
 import java.util.HashMap;
 
@@ -21,6 +23,10 @@ public class E2ETest extends BaseUITest {
         HashMap<String,String> params = dataRepository.getParametersForTest("E2ETest");
         // login
         logIn(false);
+        
+        // TODO: get object to buy from data file
+        //ProductItem item = new ProductItem(params.get("PRODUCT_DESCRIPTION"));
+        //headerComponent.findByQuery(item.getName());
 
         headerComponent.findByQuery(params.get("PRODUCT_NAME"));
         searchResultComponent.openItemFromTable(params.get("PRODUCT_NAME"));
@@ -36,5 +42,9 @@ public class E2ETest extends BaseUITest {
         headerComponent.waitForNumberOfItemsInCart(expectedNumberOfItemsInCart);
         Assert.assertEquals(headerComponent.getCountItemInCart(), expectedNumberOfItemsInCart, "Wrong number of items in cart");
         Assert.assertTrue(cartPageComponent.isItemInCart(params.get("PRODUCT_NAME")), "Item was not found in cart");
+
+        //cartPageComponent.isItemInCart(item);
+        //ProductItem resItem = cartPageComponent.getProductFromCart(0);
+        //ProductComparator.compareProducts(item, resItem, ProductComparator.TypesOfComparison.MEDIUM);
     }
 }

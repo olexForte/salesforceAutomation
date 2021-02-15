@@ -1,6 +1,7 @@
 package components.salesforce.common;
 
 import components.BasePageComponent;
+import entities.ProductItem;
 
 public class CartPageComponent extends BasePageComponent {
 
@@ -49,5 +50,15 @@ public class CartPageComponent extends BasePageComponent {
      */
     public void waitForFinalPrice(double expectedPrice) {
         waitForElementText(LOCATORS.getBy(COMPONENT_NAME,"FINAL_PRICE"), String.valueOf(expectedPrice),SHORT_TIMEOUT);
+    }
+
+    public boolean isItemInCart(ProductItem item) {
+        //item.getPrice();
+        return false;
+    }
+
+    public ProductItem getProductFromCart(int i) {
+        // TODO get item obkect by index
+        return null;
     }
 }
