@@ -109,4 +109,8 @@ public class HeaderComponent extends BasePageComponent {
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"NAVIGATION_ITEM_BY_NAME",item));
     }
 
+    public void openCart() {
+        reporter.info("Open cart");
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"CART_ICON"));
+    }
 }

@@ -26,4 +26,8 @@ public class OrderCreatedPopUp extends BasePageComponent {
     public void  clickOnViewCartButton(){
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "VIEW_CART_BUTTON"));
     }
+
+    public void clickOnContinueShopping() {
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "CONTINUE_SHOPPING_BUTTON"));
+    }
 }

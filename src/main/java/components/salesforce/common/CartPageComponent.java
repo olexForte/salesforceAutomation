@@ -30,8 +30,8 @@ public class CartPageComponent extends BasePageComponent {
      * Get summary price
      * @return void
      */
-    public String getFinalPrice(){
-        return getElementTextIgnoreException(LOCATORS.getBy(COMPONENT_NAME, "FINAL_PRICE")).replaceAll("[^0-9.]","");
+    public float getFinalPrice(){
+        return Float.valueOf(getElementTextIgnoreException(LOCATORS.getBy(COMPONENT_NAME, "FINAL_PRICE")).replaceAll("[^0-9.]",""));
     }
 
     /**
@@ -58,7 +58,13 @@ public class CartPageComponent extends BasePageComponent {
     }
 
     public ProductItem getProductFromCart(int i) {
-        // TODO get item obkect by index
+        // TODO comment/reporter/get item object by index
         return null;
+    }
+
+    public void proceedToCheckout() {
+        reporter.info("Click by button 'Proceed To Checkout'");
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"PROCEED_TO_CHECKOUT"));
+
     }
 }

@@ -30,19 +30,28 @@ public class ProductDetailsComponent extends BasePageComponent {
      * @return void
      */
     public  void addToCart() {
+        addToCart(0);
+    }
+
+    //TODO fix it
+    public void addToCart(int quantity) {
         reporter.info("Add to Cart");
-        if(getQuantity() != "1" )
-        {
+        if (quantity != 0)
+            setQuantity(quantity);
+
+        if (getQuantity() <= 0) {
             reporter.warn("Quantity is incorrect");
             setQuantity(1);
         }
-
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "ADD_TO_CART_BUTTON"));
     }
-    //TODO get value / now work incorrect
-    public String getQuantity(){
 
-        return getElementTextIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"QUANTITY"));
+
+
+    //TODO get value / now work incorrect
+    public int getQuantity(){
+
+        return Integer.parseInt(getElementTextIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"QUANTITY")));
     }
 
 

@@ -30,7 +30,7 @@ public class JSONConverter {
     /**
      * Create HashMap from Json string
      * @param jsonString
-     * @return
+     * @return HashMap<String,String>
      */
     public static final HashMap<String,String> toHashMapFromJsonString(String jsonString) {
         HashMap<String,String> jsonToObject = null;
