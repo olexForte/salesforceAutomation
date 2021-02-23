@@ -22,7 +22,10 @@ public class HeaderComponent extends BasePageComponent {
      * @return int
      */
     public int getCountItemInCart(){
-        return Integer.parseInt(getElementText(LOCATORS.getBy(COMPONENT_NAME, "CART_ICON")).replaceAll("[^0-9]", ""));
+        String textFromCart = getElementText(LOCATORS.getBy(COMPONENT_NAME, "CART_ICON")).replaceAll("[^0-9]", "");
+        if (textFromCart.equals(""))
+            return 0;
+        return Integer.parseInt(textFromCart);
     }
 
     /**

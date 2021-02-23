@@ -47,11 +47,8 @@ public class ProductDetailsComponent extends BasePageComponent {
     }
 
 
-
-    //TODO get value / now work incorrect
     public int getQuantity(){
-
-        return Integer.parseInt(getElementTextIgnoreException(LOCATORS.getBy(COMPONENT_NAME,"QUANTITY")));
+        return Integer.parseInt(getElementText(LOCATORS.getBy(COMPONENT_NAME,"QUANTITY")));
     }
 
 

@@ -11,8 +11,12 @@ import java.util.Map;
 public class ProductItem {
 
 
-    public String getCount() {
+    public static ProductItem toObject(String json) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
+            return gson.fromJson(json, ProductItem.class);
+        }
 
+    public String getCount() {
         return count;
     }
 
@@ -48,8 +52,16 @@ public class ProductItem {
     String name;
     String id;
     String price;
-    public HashMap<String,String> fields= null;
-    public ProductItem(){
+    public HashMap<String,String> fields = new HashMap<>();
 
+    public void addField(String field, String value) {
+        fields.put(field, value);
+    }
+
+    public String getField(String field){
+        return fields.get(field);
+    }
+
+    public ProductItem(){
     }
 }

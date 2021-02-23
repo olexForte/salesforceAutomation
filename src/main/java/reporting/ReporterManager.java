@@ -672,4 +672,17 @@ public class ReporterManager {
     public String getListOfFailedTests(){
         return failedTests.stream().collect(Collectors.joining("\n"));
     }
+
+    public void processDifference(HashMap<String, String> difference) {
+        if(difference.size() == 0)
+            pass("No differences found");
+        else {
+            String message = "";
+
+            for (Map.Entry<String, String> item : difference.entrySet()) {
+                message = message + (item.getKey() + "<br>" + item.getValue())  + "<br>";
+            }
+            fail(message);
+        }
+    }
 }

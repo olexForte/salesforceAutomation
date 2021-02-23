@@ -1,9 +1,18 @@
 package components.salesforce.common;
 
 import components.BasePageComponent;
+import components.salesforce.exGuard.ContactSupportComponent;
 import entities.ProductItem;
+import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class CartPageComponent extends BasePageComponent {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CartPageComponent.class);
 
     static String COMPONENT_NAME = "CartPageComponent";
 
@@ -31,7 +40,7 @@ public class CartPageComponent extends BasePageComponent {
      * @return void
      */
     public float getFinalPrice(){
-        return Float.valueOf(getElementTextIgnoreException(LOCATORS.getBy(COMPONENT_NAME, "FINAL_PRICE")).replaceAll("[^0-9.]",""));
+        return Float.valueOf(getElementText(LOCATORS.getBy(COMPONENT_NAME, "FINAL_PRICE")).replaceAll("[^0-9.]",""));
     }
 
     /**
@@ -58,13 +67,33 @@ public class CartPageComponent extends BasePageComponent {
     }
 
     public ProductItem getProductFromCart(int i) {
-        // TODO comment/reporter/get item object by index
-        return null;
+        return getProductsFromCart().get(i);
     }
 
     public void proceedToCheckout() {
         reporter.info("Click by button 'Proceed To Checkout'");
         clickOnElement(LOCATORS.getBy(COMPONENT_NAME,"PROCEED_TO_CHECKOUT"));
 
+    }
+
+    public void clearCart() {
+        try {
+            clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "CLEAR_CART_BUTTON"), SHORT_TIMEOUT);
+        } catch (Exception e){
+            LOGGER.warn("No Clear Cart button");
+        }
+        sleepFor(2000);
+    }
+
+    public List<ProductItem> getProductsFromCart() {
+        List<ProductItem> result = new LinkedList<>();
+        for(WebElement row : findElements(LOCATORS.getBy(COMPONENT_NAME, "ITEM_IN_CART_TABLE_ROW"))){
+            ProductItem item = new ProductItem();
+            item.setName(row.findElement(LOCATORS.getBy(COMPONENT_NAME, "ITEM_TITLE_LABEL")).getText());
+            item.setCount(row.findElement(LOCATORS.getBy(COMPONENT_NAME, "ITEM_QUANTITY_INPUT")).getAttribute("value"));
+            item.setPrice(row.findElement(LOCATORS.getBy(COMPONENT_NAME, "ITEM_PRICE_PER_UNIT_LABEL")).getText());
+            result.add(item);
+        }
+        return result;
     }
 }

@@ -26,9 +26,17 @@ public class ProductComparator extends BaseComparator {
 
         @Override
         public int compare(ProductItem first, ProductItem second) {
-            return (first.getId().compareTo(second.getId()));
+//            if (first.getId() != null && second.getId() != null)
+//                return (first.getId().compareTo(second.getId()));
+//            else
+                return (first.getName().compareTo(second.getName()));
         }
 
+    }
+
+    public static HashMap<String,String> compareListOfProducts(List<ProductItem> products1, List<ProductItem> products2, TypesOfComparison type){
+        HashMap<String,String> differences = new HashMap<>();
+        return compareListOfProducts(products1, products2, type, differences);
     }
 
     public static HashMap<String,String> compareListOfProducts(List<ProductItem> products1, List<ProductItem> products2, TypesOfComparison type, HashMap<String,String> difference){

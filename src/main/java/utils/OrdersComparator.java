@@ -35,7 +35,6 @@ public class OrdersComparator extends BaseComparator {
 
         ProductComparator.compareListOfProducts(order1.products,order2.products,type,difference);
 
-
         return difference;
     }
 
