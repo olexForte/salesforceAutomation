@@ -6,7 +6,7 @@ public class TypesOfComparison {
     public boolean checkAllProducts;
 
 
-    public TypesOfComparison(boolean checkThatFieldSpecified, boolean checkThatFieldMalformed, boolean checkAllProducts) {
+   public TypesOfComparison(boolean checkThatFieldSpecified, boolean checkThatFieldMalformed, boolean checkAllProducts) {
         this.checkThatFieldSpecified =checkThatFieldSpecified;
         this.checkThatFieldMalformed = checkThatFieldMalformed;
         this.checkAllProducts = checkAllProducts;

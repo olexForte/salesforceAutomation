@@ -1,0 +1,16 @@
+<suite name="Suite" parallel="methods" thread-count="5">
+    <test name="Test">
+        <classes>
+            <class name="salesforce.ProfileTest" />
+            <class name="salesforce.E2ETest" />
+            <class name="salesforce.FooterTest" />
+            <class name="salesforce.NavigationMenuTest" />
+            <class name="salesforce.SearchTest" />
+            <class name="salesforce.CartTest" />
+            <class name="salesforce.AccountInformationEditTest" />
+            <class name="salesforce.CreateOrderTest" />
+            <class name="salesforce.OrderCompareTest" />
+            <class name="salesforce.oventionmed.ContactSupportTest" />
+        </classes>
+    </test> <!-- test -->
+</suite> <!-- suite -->

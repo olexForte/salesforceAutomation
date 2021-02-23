@@ -127,6 +127,7 @@ public class DriverProvider {
         BrowserProxy.stopServer();
 
         //stop driver
+        if (instance.get()!=null)
         instance.get().quit();
         instance.set(null);
 

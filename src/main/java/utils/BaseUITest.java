@@ -79,7 +79,7 @@ public class BaseUITest extends BaseTest{
         super.endTest(testResult);
     }
 
-    @AfterClass
+    @AfterTest
     public void closeDriver() throws Exception {
        // BasePage BasePage = new BasePage();
         //close driver

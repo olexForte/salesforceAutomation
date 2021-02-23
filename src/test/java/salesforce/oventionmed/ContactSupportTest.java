@@ -1,4 +1,4 @@
-package salesforce;
+package salesforce.oventionmed;
 
 import components.salesforce.common.ContactSupportComponent;
 import components.salesforce.common.HeaderComponent;
