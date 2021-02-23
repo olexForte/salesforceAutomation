@@ -5,7 +5,10 @@ import entities.OrderItem;
 import entities.ProductItem;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import utils.BaseComparator;
 import utils.BaseUITest;
+import utils.OrdersComparator;
+import utils.TypesOfComparison;
 
 import java.util.HashMap;
 
@@ -27,23 +30,26 @@ public class CreateOrderTest extends BaseUITest {
         logIn(false);
         int expectedCartCount =headerComponent.getCountItemInCart();
 
- //       for (ProductItem item: expectedOrder.getProducts()  ){
-//
-//            headerComponent.findByQuery(item.getName());
-//            searchResultComponent.openItemFromTable(item.getName());
-//            productDetailsComponent.addToCart(item.getCount());
-//            orderCreatedPopUp.clickOnContinueShopping();
-//            expectedCartCount=expectedCartCount+item.getCount();
- //       }
+        TypesOfComparison types = new TypesOfComparison(true,false,false);
+
+
+
+        for (ProductItem item: expectedOrder.products ){
+
+            headerComponent.findByQuery(item.getName());
+            searchResultComponent.openItemFromTable(item.getName());
+            productDetailsComponent.addToCart(Integer.parseInt(item.getCount()));
+            orderCreatedPopUp.clickOnContinueShopping();
+            expectedCartCount=expectedCartCount+Integer.parseInt(item.getCount());
+        }
 
         headerComponent.openCart();
-//        headerComponent.waitForNumberOfItemsInCart(expectedOrder.getCount());
-//        int actualCount=headerComponent.getCountItemInCart();
-//        Assert.assertEquals(expectedOrder.getCount(),actualCount);
+        headerComponent.waitForNumberOfItemsInCart(Integer.parseInt(expectedOrder.getCount()));
+        int actualCount=headerComponent.getCountItemInCart();
+        Assert.assertEquals(Integer.parseInt(expectedOrder.getCount()),actualCount);
 
         float finalPrice=cartPageComponent.getFinalPrice();
-  //      Assert.assertEquals(expectedOrder.getSummaryPrice(),finalPrice);
-
+        Assert.assertEquals(Float.valueOf(expectedOrder.getSummaryPrice()),finalPrice);
         cartPageComponent.proceedToCheckout();
 
 //TODO this test

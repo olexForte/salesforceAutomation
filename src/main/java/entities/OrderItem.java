@@ -17,49 +17,20 @@ public class OrderItem {
     String status;
     String count;
     String summaryPrice;
-   public List<ProductItem> products;
-   public Map<String, String> fields;
+    public List<ProductItem> products;
+    public HashMap<String, String> fields;
 
-    public OrderItem(){
 
-    }
 
-//    public static OrderItem toLowerCase(OrderItem orderItem){
-//        orderItem.setStatus(orderItem.getStatus().toLowerCase());
-//        orderItem.setStatus(orderItem.getStatus().toLowerCase());
-//        orderItem.setStatus(orderItem.getStatus().toLowerCase());
-//        orderItem.setStatus(orderItem.getStatus().toLowerCase());
-//    }
 
-    public static OrderItem toObject(String json){
+    public static OrderItem toObject(String json) {
         Gson gson = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
-       return gson.fromJson(json, OrderItem.class);
+        return gson.fromJson(json, OrderItem.class);
     }
 
-    public OrderItem(String order_description) {
-      toObject(order_description);
-      HashMap<String,String> order = JSONConverter.toHashMapFromJsonString(order_description);
-
-        for(Map.Entry<String,String> item: order.entrySet())
-        {
-            switch (item.getKey())
-            {
-                default: fields.put(item.getKey(),item.getValue());
-            }
-        }
+    public OrderItem() {
     }
 
-//    private List<ProductItem> getListOfProducts(String products){
-//
-//        List<ProductItem> result = null;
-//        ArrayList<String> listProducts = new ArrayList<String>(Arrays.asList(products.split(",")));
-//
-//        for (String item : listProducts){
-//            ProductItem productItem = new ProductItem(item);
-//            result.add(productItem);
-//        }
-//        return null;
-//    }
 
     public String getId() {
         return id;

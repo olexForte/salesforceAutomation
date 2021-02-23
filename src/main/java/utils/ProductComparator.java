@@ -1,46 +1,50 @@
 package utils;
 
-import entities.OrderItem;
 import entities.ProductItem;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
-// comapre ordes and return differences
-public class ProductComparator {
+
+/// clean value in new class  java !!!!!!!!!!!!!!!!!!!!!!
+public class ProductComparator extends BaseComparator {
 
     static public HashMap<String,String> compareProducts(ProductItem productItem1, ProductItem productItem2, TypesOfComparison type){
         HashMap<String,String> difference = new HashMap<>();
-
-        // compare names
-        //compare fields
-        //.....
-        //if(type.checkDate){
-
-        //} else {
-
-        //}
-
-        //TypesOfComparison.valueOf()
+        compareFields("Name",productItem1.getName(),productItem2.getName(),type,difference);
+        compareFields("Count",productItem1.getCount(),productItem2.getCount(),type,difference);
+        compareFields("Id",productItem1.getId(),productItem2.getId(),type,difference);
+        compareFields("Price",productItem1.getPrice(),productItem2.getPrice(),type,difference);
+        compareHashMap(productItem1.fields,productItem2.fields,type,difference);
 
         return difference;
     }
 
-    public enum TypesOfComparison{
-        STRICT(true, true, true), // value was specified and equal to another value
-        MEDIUM(false, true, true), // value equals to another value - if specified
-        SIMPLE(false,false,false);  // value looks like another value - if specified
+   public static class ProductComparatorForSorting implements Comparator<ProductItem> {
 
-        TypesOfComparison(boolean checkThatFieldSpecified, boolean checkThatFieldMalformed, boolean checkDate) {
-            this.checkThatFieldSpecified = checkThatFieldSpecified;
-            this.checkThatFieldMalformed = checkThatFieldMalformed;
-            this.checkDate = checkDate;
+        @Override
+        public int compare(ProductItem first, ProductItem second) {
+            return (first.getId().compareTo(second.getId()));
         }
-
-        boolean checkThatFieldSpecified;
-        boolean checkThatFieldMalformed;
-        boolean checkDate;
-
 
     }
 
+    public static HashMap<String,String> compareListOfProducts(List<ProductItem> products1, List<ProductItem> products2, TypesOfComparison type, HashMap<String,String> difference){
+        ProductComparator.ProductComparatorForSorting comparator= new ProductComparator.ProductComparatorForSorting();
+        if(products1==null || products2 == null){
+            return difference;
+        }
+        Collections.sort(products1,comparator);
+        Collections.sort(products2,comparator);
+
+        for(int i=0;i<products1.size();i++){
+            HashMap<String,String> productDifference =  ProductComparator.compareProducts(products1.get(i),products2.get(i), type);
+
+            if (productDifference.size()>0)
+                difference.putAll(productDifference);
+        }
+        return  difference;
+    }
 }

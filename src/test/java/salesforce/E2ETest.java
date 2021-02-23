@@ -1,11 +1,9 @@
 package salesforce;
 
 import components.salesforce.common.*;
-import entities.ProductItem;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.BaseUITest;
-import utils.ProductComparator;
 
 import java.util.HashMap;
 
