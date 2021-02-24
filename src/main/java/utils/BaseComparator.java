@@ -103,6 +103,7 @@ public class BaseComparator {
         return Double.valueOf(price.replace("$","").replace(",",""));
     }
 
+
     public static String priceToString(Double value){
         return String.format("%.2f", value);
     }

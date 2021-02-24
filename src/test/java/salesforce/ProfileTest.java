@@ -19,7 +19,7 @@ public class ProfileTest extends BaseUITest {
     private HeaderComponent headerComponent = HeaderComponent.getInstance();
     private ProfileComponent profileComponent = ProfileComponent.getInstance();
 
-    @Test(testName = "Profile edit test")//, dataProvider ="Data for search")
+    @Test(testName = "ProfileTest")//, dataProvider ="Data for search")
     public void profileTest(){
 
 
@@ -32,7 +32,7 @@ public class ProfileTest extends BaseUITest {
         //Open profile
         headerComponent.openItemFromUserMenu("Profile");
         //check if profile name equals to config
-        Assert.assertEquals(params.get("PROFILE_NAME"), profileComponent.getProfileName());
+        Assert.assertEquals(profileComponent.getProfileName(),params.get("PROFILE_NAME"));
         //Update field random data and check if data was change
         HashMap<String, String> expectedResult = profileComponent.editFields(fields);
         HashMap<String, String> actualResult = profileComponent.getFields(fields);

@@ -100,10 +100,10 @@ public class OrderItem {
         return String.valueOf(products.stream().collect(Collectors.summingInt(e -> Integer.valueOf(e.getCount()))));
     }
 
+    //here
     public String getSummaryPrice() {
-
-        return BaseComparator.priceToString(products.stream().collect(Collectors.summingDouble(e -> Integer.valueOf(e.getCount()) * BaseComparator.priceToFloat(e.getPrice()))));
-        //return summaryPrice;
+        String result= BaseComparator.priceToString(products.stream().collect(Collectors.summingDouble(e -> Double.valueOf(e.getCount()) * BaseComparator.priceToFloat(e.getPrice()))));
+        return result.replace(",",".");
     }
 
     public void setSummaryPrice(String summaryPrice) {

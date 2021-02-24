@@ -60,6 +60,8 @@ public class BaseUITest extends BaseTest{
             logInApplication();
             ProjectConfiguration.setLocalThreadConfigProperty("LOGGED_IN_DRIVER", BasePageComponent.driver().toString());
         }
+        else //here
+            BasePageComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
     }
 
     /**

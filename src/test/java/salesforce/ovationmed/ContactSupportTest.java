@@ -1,8 +1,7 @@
-package salesforce.oventionmed;
+package salesforce.ovationmed;
 
 import components.salesforce.common.ContactSupportComponent;
 import components.salesforce.common.HeaderComponent;
-import datasources.RandomDataGenerator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.BaseUITest;
@@ -32,7 +31,6 @@ public class ContactSupportTest extends BaseUITest {
         String expectedData = params.get("EXPECTED_FIELD");
 
         //set subject and describe
-        //contactSupportComponent.enterFields(expectedSubject,expectedDescription);
         HashMap<String, String> actualExpectedFields = contactSupportComponent.enterFields(expectedData);
         contactSupportComponent.submit();
 
@@ -45,7 +43,7 @@ public class ContactSupportTest extends BaseUITest {
         //String actualDescription=contactSupportComponent.getFieldValue("Description");
         HashMap<String, String> actualActualFields  = contactSupportComponent.getFields(actualExpectedFields);
 
-        Assert.assertEquals(actualActualFields,actualExpectedFields,"Fields is incorrect");
+        Assert.assertTrue(actualActualFields.equals(actualExpectedFields),"Fields is incorrect");
     }
 
 

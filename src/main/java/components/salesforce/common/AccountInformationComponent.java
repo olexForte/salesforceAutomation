@@ -28,7 +28,7 @@ public class AccountInformationComponent extends BasePageComponent {
         editOpen();
         reporter.info("Get fields "+fieldsAsJson);
         HashMap<String, String> mapOfFields = JSONConverter.toHashMapFromJsonString(fieldsAsJson);
-        InputTypes it = InputTypes.getFromSonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
+        InputTypes it = InputTypes.getFromJsonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
         HashMap<String, String> result = getDataFields(mapOfFields.keySet(),it);
         return result;
     }
@@ -63,7 +63,7 @@ public class AccountInformationComponent extends BasePageComponent {
         editOpen();
         reporter.info("Set fields: " + fieldsAsJson);
         HashMap<String, String> mapOfFields = JSONConverter.toHashMapFromJsonString(fieldsAsJson);
-        InputTypes it = InputTypes.getFromSonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
+        InputTypes it = InputTypes.getFromJsonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
         HashMap<String,String> result =fillDataFields(mapOfFields, it);
         editSave();
         return result;

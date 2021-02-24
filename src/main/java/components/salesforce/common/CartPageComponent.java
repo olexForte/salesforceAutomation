@@ -39,8 +39,9 @@ public class CartPageComponent extends BasePageComponent {
      * Get summary price
      * @return void
      */
-    public float getFinalPrice(){
-        return Float.valueOf(getElementText(LOCATORS.getBy(COMPONENT_NAME, "FINAL_PRICE")).replaceAll("[^0-9.]",""));
+    public double getFinalPrice(){
+        sleepFor(1);//here
+        return Double.valueOf(getElementText(LOCATORS.getBy(COMPONENT_NAME, "FINAL_PRICE")).replaceAll("[^0-9.]",""));
     }
 
     /**
@@ -78,11 +79,10 @@ public class CartPageComponent extends BasePageComponent {
 
     public void clearCart() {
         try {
-            clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "CLEAR_CART_BUTTON"), SHORT_TIMEOUT);
+            clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "CLEAR_CART_BUTTON"));
         } catch (Exception e){
             LOGGER.warn("No Clear Cart button");
         }
-        sleepFor(2000);
     }
 
     public List<ProductItem> getProductsFromCart() {

@@ -21,7 +21,9 @@ public class ProfileComponent extends BasePageComponent {
     * @return String name of opened profile
     */
    public String getProfileName(){
-      reporter.info("Get profile name");
+     reporter.info("Get profile name");
+     waitForPageToLoad();
+     sleepFor(1);//here
      return getElementText(LOCATORS.getBy(COMPONENT_NAME,"PROFILE_NAME"));
    }
 

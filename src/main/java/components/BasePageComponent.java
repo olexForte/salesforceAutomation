@@ -690,12 +690,12 @@ public class BasePageComponent {
     }
 
 
-    public HashMap<String, String> fillDataFields(HashMap<String, String> mapOfFields, InputTypes it) {
+    public HashMap<String, String> fillDataFields(HashMap<String, String> mapOfFields, InputTypes it, int... timeout) {
         HashMap<String, String> result = new HashMap<>();
         String processedValue = "";
         for (Map.Entry<String, String> curField : mapOfFields.entrySet()) {
             // checkbox
-            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()), 1)) {
+            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()), timeout)) {
                 processedValue = RandomDataGenerator.getRandomField(curField.getValue());
 
                 if (Boolean.parseBoolean(processedValue) != findElement(By.xpath(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()))).isSelected())
@@ -706,32 +706,32 @@ public class BasePageComponent {
             }
 
             //input
-            if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, curField.getKey()), 1)) {
+            if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, curField.getKey()), timeout)) {
                 processedValue = RandomDataGenerator.getRandomField(curField.getValue());
-                setText(By.xpath(it.getInput().replace(it.KEY_WORD, curField.getKey())), processedValue, 1);
+                setText(By.xpath(it.getInput().replace(it.KEY_WORD, curField.getKey())), processedValue, timeout);
                 result.put(curField.getKey(), processedValue);
                 continue;
             }
 
             // select
             // option
-            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curField.getKey()), 1)) {
-                clickOnElement(By.xpath(it.getParentSelect().replace(it.KEY_WORD, curField.getKey())), 1);
+            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curField.getKey()), timeout)) {
+                clickOnElement(By.xpath(it.getParentSelect().replace(it.KEY_WORD, curField.getKey())), timeout);
                 processedValue = RandomDataGenerator.getRandomField(curField.getValue());
                 if (processedValue.matches("#\\d+")) { // TODO test and validate on multiple selects
                     int index = Integer.parseInt(processedValue.replace("#", ""));
                     findElements(By.xpath(it.getSelectOption())).get(index).click();
                 } else
-                    clickOnElement(By.xpath(it.getSelectOption().replace(it.KEY_WORD, processedValue)), 1);
+                    clickOnElement(By.xpath(it.getSelectOption().replace(it.KEY_WORD, processedValue)), timeout);
 
                 result.put(curField.getKey(), processedValue);
                 continue;
             }
 
-            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()), 1)) {
+            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curField.getKey()), timeout)) {
                 processedValue = RandomDataGenerator.getRandomField(curField.getValue());
                 getAttribute(By.xpath(it.getCheckbox()), it.getCheckboxValue().replace(it.KEY_WORD, processedValue));
-                clickOnElement(By.xpath(it.getCheckboxValue().replace(it.KEY_WORD, processedValue)), 1);
+                clickOnElement(By.xpath(it.getCheckboxValue().replace(it.KEY_WORD, processedValue)), timeout);
 
                 result.put(curField.getKey(), processedValue);
                 continue;
@@ -743,12 +743,12 @@ public class BasePageComponent {
     }
 
 //TODO
-    public HashMap<String, String> getDataFields(Set<String> setOfKeys, InputTypes it) {
+    public HashMap<String, String> getDataFields(Set<String> setOfKeys, InputTypes it, int... timeout) {
         HashMap<String, String> result = new HashMap<>();
         String processedValue = "";
         for (String curKey : setOfKeys) {
             //checkbox
-            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curKey), 1)) {
+            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, curKey), timeout)) {
                 if(findElement(it.getCheckbox().replace(it.KEY_WORD, curKey)).isSelected())
                 processedValue ="true" ;
                 else if(findElement(it.getCheckbox().replace(it.KEY_WORD, curKey)).isEnabled())
@@ -764,14 +764,16 @@ public class BasePageComponent {
             }
 
             //input
-            if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, curKey),1)){
+            if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, curKey),timeout)){
                 processedValue = getElementText(By.xpath(it.getInput().replace(it.KEY_WORD, curKey)));
                 result.put(curKey, processedValue);
                 continue;
             }
 
             // select
-            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curKey),1)){
+            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, curKey),timeout)){
+                reporter.info("element was fount");
+                sleepFor(1);
                 processedValue = getElementText(By.xpath(it.getParentSelect().replace(it.KEY_WORD, curKey)));
 //                if (false) { // TODO test and validate on multiple selects
 //                    int index = Integer.parseInt(processedValue.replace("#", ""));

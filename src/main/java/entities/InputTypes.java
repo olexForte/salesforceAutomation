@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class InputTypes {
     public static final String KEY_WORD = "$PARAMETER";
-    String input;
+    String input="";
 
     public String getInput() {
         return input;
@@ -29,8 +29,8 @@ public class InputTypes {
         return checkboxValue;
     }
 
-    String parentSelect;
-    String selectOption;
+    String parentSelect="";
+    String selectOption="";
 
     public void setInput(String input) {
         this.input = input;
@@ -52,8 +52,8 @@ public class InputTypes {
         this.checkboxValue = checkboxValue;
     }
 
-    String checkbox;
-    String checkboxValue;
+    String checkbox="";
+    String checkboxValue="";;
 
     public InputTypes(String input, String parentSelect, String selectOption, String checkbox, String checkboxValue) {
         this.input = input;
@@ -66,7 +66,7 @@ public class InputTypes {
 
     }
 
-    public static InputTypes getFromSonString(String descriptionOfInputFields) {
+    public static InputTypes getFromJsonString(String descriptionOfInputFields) {
         HashMap<String, String> fields = JSONConverter.toHashMapFromJsonString(descriptionOfInputFields);
         InputTypes result = new InputTypes();
         if(fields.containsKey("input"))

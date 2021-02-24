@@ -51,8 +51,8 @@ public class CreateOrderTest extends BaseUITest {
         int actualCount=headerComponent.getCountItemInCart();
         Assert.assertEquals(Integer.parseInt(expectedOrder.getCount()),actualCount);
 
-        float finalPrice=cartPageComponent.getFinalPrice();
-        Assert.assertEquals(Float.valueOf(expectedOrder.getSummaryPrice()),finalPrice);
+        double finalPrice=cartPageComponent.getFinalPrice();
+        Assert.assertEquals(Double.valueOf(expectedOrder.getSummaryPrice()),finalPrice);
 
         List<ProductItem> actualProductsInCart = cartPageComponent.getProductsFromCart();
         List<ProductItem> expectedProductsInCart = expectedOrder.getProducts();

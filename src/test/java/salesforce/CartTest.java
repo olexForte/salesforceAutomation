@@ -22,6 +22,9 @@ public class CartTest extends BaseUITest {
     public void ContactSupportTest() {
 
         logIn(false);
+        headerComponent.openCart();
+        cartPageComponent.clearCart();
+
 
         HashMap<String,String> params = dataRepository.getParametersForTest("CartTest");
         // login
@@ -38,15 +41,14 @@ public class CartTest extends BaseUITest {
         //check if item is in cart
         Assert.assertTrue(cartPageComponent.isItemInCart(params.get("PRODUCT_NAME")), "Item was not found in cart");
         //get final price with item
-        double actualPrice=Double.valueOf(cartPageComponent.getFinalPrice());
+        Assert.assertEquals(Double.valueOf(cartPageComponent.getFinalPrice()),Double.valueOf(params.get("ITEM_PRICE")));
         //get final price without item
-        double expectedPrice=actualPrice-Double.valueOf(params.get("ITEM_PRICE"));
         //remove item from cart
         cartPageComponent.removeItem(params.get("PRODUCT_NAME"));
         //wait for price will be change
-        cartPageComponent.waitForFinalPrice(expectedPrice);
+        cartPageComponent.waitForFinalPrice(0.0);
         //assert actual price and expected
-        Assert.assertEquals(expectedPrice,Double.valueOf(cartPageComponent.getFinalPrice()),"Wrong price in cart");
+        Assert.assertEquals(0.0,Double.valueOf(cartPageComponent.getFinalPrice()),"Wrong price in cart");
     }
 
 }

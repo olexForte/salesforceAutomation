@@ -70,15 +70,15 @@ public class ContactSupportComponent extends BasePageComponent {
         reporter.info("Set : " + fieldsAsJson);
         HashMap<String, String> mapOfFields = JSONConverter.toHashMapFromJsonString(fieldsAsJson);
 
-        InputTypes it = InputTypes.getFromSonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
-        return fillDataFields(mapOfFields, it);
+        InputTypes it = InputTypes.getFromJsonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
+        return fillDataFields(mapOfFields, it,SHORT_TIMEOUT);
     }
 
     public HashMap<String, String> getFields(HashMap<String, String> actualExpectedFields ) {
 
         //ApiComponent.getValues()
-
-        InputTypes it = InputTypes.getFromSonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
-        return getDataFields(actualExpectedFields.keySet(), it); // TODO
+        waitForPageToLoad();
+        InputTypes it = InputTypes.getFromJsonString(LOCATORS.get(COMPONENT_NAME,"READ_FIELDS_AS_JSON"));
+        return getDataFields(actualExpectedFields.keySet(), it,SHORT_TIMEOUT); // here
     }
 }
