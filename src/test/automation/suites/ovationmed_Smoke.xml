@@ -1,7 +1,0 @@
-<suite name="Suite" parallel="methods" thread-count="5">
-    <test name="Test">
-        <classes>
-            <class name="salesforce.ovationmedical.smoke.ovationmed_E2ETest" />
-        </classes>
-    </test> <!-- test -->
-</suite> <!-- suite -->

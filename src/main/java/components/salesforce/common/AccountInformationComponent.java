@@ -66,6 +66,7 @@ public class AccountInformationComponent extends BasePageComponent {
         InputTypes it = InputTypes.getFromJsonString(LOCATORS.get(COMPONENT_NAME,"INPUT_FIELDS_AS_JSON"));
         HashMap<String,String> result =fillDataFields(mapOfFields, it);
         editSave();
+        waitForPageToLoad();
         return result;
     }
 }
