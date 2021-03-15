@@ -1,0 +1,138 @@
+[
+  {
+    "fieldLabel": "Billing ZIP*",
+    "fieldType": "NUMBER",
+    "maxCount": "6",
+    "minCount": "5",
+    "apiName": "",
+    "value": ">5d"
+  },
+  {
+    "fieldLabel": "How many trucks do you sell annually?*",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">8d"
+  },
+  {
+    "fieldLabel": "Company Business Name*",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": "Company Business Name"
+  },
+  {
+    "fieldLabel": "First Name*",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">5c"
+  },
+  {
+    "fieldLabel": "Last Name*",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">7c"
+  },
+  {
+    "fieldLabel": "Email*",
+    "fieldType": "EMAIL",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">email"
+  },
+  {
+    "fieldLabel": "Department*",
+    "fieldType": "DROPDOWN",
+    "maxCount": "0",
+    "minCount": "5",
+    "apiName": "",
+    "value": "Parts"
+  },
+  {
+    "fieldLabel": "Job Title*",
+    "fieldType": "DROPDOWN",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">4c"
+  },
+  {
+    "fieldLabel": "Phone Number*",
+    "fieldType": "NUMBER",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">10d"
+  },
+  {
+    "fieldLabel": "Ext.",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "0",
+    "apiName": "",
+    "value": ">5s"
+  },
+  {
+    "fieldLabel": "Mobile Phone Number*",
+    "fieldType": "NUMBER",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">10d"
+  },
+  {
+    "fieldLabel": "Billing Street*",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">4s"
+  },
+  {
+    "fieldLabel": "Billing City*",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">4s"
+  },
+  {
+    "fieldLabel": "Billing Country*",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">4c"
+  },
+  {
+    "fieldLabel": "Billing State*",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">4s"
+  },
+  {
+    "fieldLabel": "Federal Tax Id*",
+    "fieldType": "NUMBER",
+    "maxCount": "0",
+    "minCount": "1",
+    "apiName": "",
+    "value": ">3d"
+  },
+  {
+    "fieldLabel": "Why are you interested to become our dealer?",
+    "fieldType": "STRING",
+    "maxCount": "0",
+    "minCount": "0",
+    "apiName": "",
+    "value": ">15s"
+  }
+]

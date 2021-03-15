@@ -28,7 +28,6 @@ public class CartTest extends BaseUITest {
 
         HashMap<String,String> params = dataRepository.getParametersForTest("CartTest");
         // login
-        logIn(false);
 
         //find product
         headerComponent.findByQuery(params.get("PRODUCT_NAME"));

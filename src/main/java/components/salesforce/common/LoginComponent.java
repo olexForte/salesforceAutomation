@@ -1,15 +1,16 @@
 package components.salesforce.common;
 
+import configuration.ProjectConfiguration;
 import org.openqa.selenium.By;
 import components.BasePageComponent;
 
 public class LoginComponent extends BasePageComponent {
 
-    static String name = "LoginComponent";
+    static String COMPONENT_NAME = "LoginComponent";
 
-    static By inputUsername    = LOCATORS.getBy(name, "LOGIN_INPUT"); // By.xpath("//input[@id='username']");
-    static By inputPassword    = LOCATORS.getBy(name, "PASSWORD_INPUT");//By.xpath("//input[@id='password']");
-    static By buttonLogin      = LOCATORS.getBy(name, "LOGIN_BUTTON");//By.xpath("//input[@id='Login']");
+    static By inputUsername    = LOCATORS.getBy(COMPONENT_NAME, "LOGIN_INPUT"); // By.xpath("//input[@id='username']");
+    static By inputPassword    = LOCATORS.getBy(COMPONENT_NAME, "PASSWORD_INPUT");//By.xpath("//input[@id='password']");
+    static By buttonLogin      = LOCATORS.getBy(COMPONENT_NAME, "LOGIN_BUTTON");//By.xpath("//input[@id='Login']");
 
     private static LoginComponent instance = null;
     public static LoginComponent  getInstance() {
@@ -37,6 +38,18 @@ public class LoginComponent extends BasePageComponent {
             findElement(inputPassword).sendKeys(domain);
         findElement(buttonLogin).click();
         waitForPageToLoad();
+    }
+
+
+
+
+    public void clickButtonRegistration(){
+        clickOnElement(LOCATORS.getBy(COMPONENT_NAME, "REGISTRATION_BUTTON"));
+    }
+
+
+    public void OpenLoginPage(){
+        open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
     }
 
     public boolean checkSomething(){return true;};

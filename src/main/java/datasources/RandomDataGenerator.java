@@ -1,5 +1,6 @@
 package datasources;
 
+import entities.Field;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bouncycastle.util.Strings;
 import org.slf4j.Logger;
@@ -92,11 +93,16 @@ public class RandomDataGenerator {
      * @return
      */
     public static String getRandomField(String parameters) {
-        return getRandomField(parameters, RandomDataGenerator.DEFAULT_SEPARATOR);
+        return getRandomField(parameters, DEFAULT_SEPARATOR);
     }
     public static String getRandomField(String parameters, String parameterDelimiter) {
 
-        String result = "";
+
+        if(!parameters.contains(">")) {
+            return parameters;
+        }
+        else
+            parameters=parameters.replace(">","");
 
         String DEEP_PAST_DATE_LABEL = "deep_past_date";
         String CURRENT_DATE_LABEL = "current_date";
@@ -108,12 +114,8 @@ public class RandomDataGenerator {
         String DROPDOWNS = "dropdown";
         String CHECKBOX="randomCheckBox";
 
-        String template;
-        if (parameters.equals("")){
-            template = DEFAULT_TEMPLATE;
-        } else {
-            template = parameters;
-        }
+
+
 
         if (parameters.toLowerCase().contains(DROPDOWNS)) {
 
@@ -185,10 +187,7 @@ public class RandomDataGenerator {
             return String.format("WI_notSpecified_%s", getRandomStringByTemplate(DEFAULT_TEMPLATE));
         }
 
-        // string generation
-        result = getRandomStringByTemplate(template);
-
-        return result;
+        return getRandomStringByTemplate(parameters);
     }
 
 
@@ -236,5 +235,4 @@ public class RandomDataGenerator {
         }
         return resultString;
     }
-
 }
