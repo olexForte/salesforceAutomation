@@ -15,17 +15,17 @@ public class Field {
 
     /**
      * constructor for copy field
+     *
      * @param field
      * @return new field with values like in entered field
      */
     public Field(Field field) {
-        fieldLabel= field.getFieldLabel();
-        value =field.getValue();
-        apiName =field.getApiName();
-        maxCount =field.getMaxCount();
-        minCount=field.getMinCount();
-        fieldType=field.fieldType;
-        //why don`t work setter
+        fieldLabel = field.getFieldLabel();
+        value = field.getValue();
+        apiName = field.getApiName();
+        maxCount = field.getMaxCount();
+        minCount = field.getMinCount();
+        fieldType = field.fieldType;
     }
 
     public String getFieldLabel() {
@@ -106,6 +106,7 @@ public class Field {
 
     /**
      * get field that have max length limit
+     *
      * @param fields all fields
      * @return List<Field> fields with max length limit
      */
@@ -117,8 +118,10 @@ public class Field {
 
         return fieldWithMaxLimit;
     }
+
     /**
      * get field that have min length limit or is required
+     *
      * @param fields all fields
      * @return List<Field> fields with min length limit or required
      */
@@ -133,22 +136,23 @@ public class Field {
 
     /**
      * create random value with count for field with length of field
+     *
      * @param field
      * @param countOfField
      * @return
      */
     //TODO add more types
-    static public Field createRandomValueForFieldWithCount(Field field,int countOfField){
+    static public Field createRandomValueForFieldWithCount(Field field, int countOfField) {
         Field result = new Field(field);
-        if(countOfField==0)
+        if (countOfField == 0)
             result.setValue("");
-        else if(field.fieldType==Field.type.NUMBER)
-            result.setValue(RandomDataGenerator.getRandomField(">"+countOfField+"d"));
-        else if(field.fieldType==Field.type.STRING)
-            result.setValue(RandomDataGenerator.getRandomField(">"+countOfField+"s"));
-        else if(field.fieldType==Field.type.EMAIL)
+        else if (field.fieldType == Field.type.NUMBER)
+            result.setValue(RandomDataGenerator.getRandomField(">" + countOfField + "d"));
+        else if (field.fieldType == Field.type.STRING)
+            result.setValue(RandomDataGenerator.getRandomField(">" + countOfField + "s"));
+        else if (field.fieldType == Field.type.EMAIL)
             result.setValue(RandomDataGenerator.getRandomField(">email"));
-        else if(field.fieldType==Field.type.DROPDOWN)
+        else if (field.fieldType == Field.type.DROPDOWN)
             result.setValue(RandomDataGenerator.getRandomField(field.getValue()));
 
         return result;

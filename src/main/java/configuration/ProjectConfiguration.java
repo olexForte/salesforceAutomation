@@ -123,6 +123,14 @@ public class ProjectConfiguration {
         threadProperties.get().remove(fieldName);
     }
 
+    public static String getLocalThreadConfigProperty(String fieldName){
+        if(threadProperties.get()!=null)
+       return threadProperties.get().getProperty(fieldName);
+
+       return null;
+    }
+
+
     /**
      * True if using IE
      * @return

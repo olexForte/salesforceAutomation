@@ -1,13 +1,13 @@
 package utils;
 
 import components.salesforce.common.HeaderComponent;
+import configuration.DataRepository;
 import configuration.ProjectConfiguration;
+import entities.User;
+import entities.UserPull;
 import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 import components.BasePageComponent;
 import components.salesforce.common.LoginComponent;
 import web.DriverProvider;
@@ -26,6 +26,7 @@ public class BaseUITest extends BaseTest{
 
         //init threadlocal driver
         try {
+            UserPull.toObjects(dataRepository.getContentFromFile("UserPull.json"));
             reporter.info("Driver creation");
             if (BasePageComponent.driver.get() == null){
                 BasePageComponent.driver.set(DriverProvider.getDriver(reporter.TEST_NAME.get()));
@@ -37,10 +38,6 @@ public class BaseUITest extends BaseTest{
             reporter.closeReporter();
             Assert.fail();
         }
-
-       // LogIn();
-        //BasePage.driver().manage().window().maximize();
-
     }
 
     /**
@@ -51,17 +48,26 @@ public class BaseUITest extends BaseTest{
         loginComponent
                 .loginAs(ProjectConfiguration.getConfigProperty("DefaultUserName"),
                         ProjectConfiguration.getConfigProperty("DefaultUserPassword"));
-
     }
 
 
-    public void logIn(boolean forced){
-        if ( ProjectConfiguration.getConfigProperty("LOGGED_IN_DRIVER") == null || forced) {
-            logInApplication();
-            ProjectConfiguration.setLocalThreadConfigProperty("LOGGED_IN_DRIVER", BasePageComponent.driver().toString());
+    public void logIn(boolean force,String... permission){
+
+        try{
+            User user = force != true ? UserPull.getAnyUser(permission[0]) : UserPull.getUser(permission[0]);
+            loginComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
+            loginComponent.loginAs(user.username,user.password);
         }
-        else //here
-            BasePageComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
+        catch (Exception ex){
+
+        }
+
+//        if ( ProjectConfiguration.getConfigProperty("LOGGED_IN_DRIVER") == null || force) {
+//            logInApplication();
+//            ProjectConfiguration.setLocalThreadConfigProperty("LOGGED_IN_DRIVER", BasePageComponent.driver().toString());
+//        }
+//        else //here
+//            BasePageComponent.open(ProjectConfiguration.getConfigProperty("ClientEnvironmentURL"));
     }
 
     /**

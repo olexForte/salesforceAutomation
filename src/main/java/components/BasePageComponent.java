@@ -152,9 +152,10 @@ public class BasePageComponent {
     public static String getElementText(By by, int... timeout) {
         String result = "";
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
-        for (int attemptNumber = 0; attemptNumber < timeoutForFindElement; attemptNumber++) {
+        int attemptNumber = 0;
+        do{
             try {
-                WebElement elem = findElement(by, 1);
+                WebElement elem = findElement(by, 0);
                 if (elem == null)
                     continue;
                 result = elem.getText();
@@ -163,12 +164,13 @@ public class BasePageComponent {
                     result = elem.getAttribute("value"); //TODO add type validation
             } catch (Exception e) {
                 LOGGER.warn("getElementText " + by.toString() + " " + e.getMessage());
-                result = "";
             }
             if (!result.equals(""))
                 break;
+            if (timeoutForFindElement!=0)
             sleepFor(1000);
-        }
+        }while(attemptNumber++<timeoutForFindElement);
+
         return result;
     }
 
@@ -213,18 +215,23 @@ public class BasePageComponent {
      */
     public static boolean isElementDisplayed(By by, int... timeout) {
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
-        for (int attemptNumber = 0; attemptNumber < timeoutForFindElement; attemptNumber++) {
+        int iterator =0;
+        do{
             try {
                 if (driver().findElement(by).isDisplayed() == true) ;
                 return true;
             } catch (Exception e) {
-                if (attemptNumber >= timeoutForFindElement) {
-                    reporter.fail("isElementDisplayed Error", e);
-                    throw e;
+                if(timeoutForFindElement!=0){
+                    sleepFor(1000);
+                    continue;
                 }
+
+                reporter.fail("isElementDisplayed Error", e);
+                throw e;
+
             }
-            sleepFor(1000);
-        }
+        }while(iterator++<timeoutForFindElement);
+
         return false;
     }
 
@@ -333,7 +340,8 @@ public class BasePageComponent {
         String errorMessage = "javascript error: Cannot read property 'defaultView' of undefined";
         int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
         waitForPageToLoad();
-        for (int attemptNumber = 0; attemptNumber < timeoutForFindElement; attemptNumber++) {
+        int attemptNumber = 0;
+        do{
             try {
                 findElement(element, 1).click();
                 LOGGER.info("Clicked");
@@ -358,9 +366,13 @@ public class BasePageComponent {
                     reporter.fail("Failure clicking on element", e);
                     throw e;
                 }
+                if(timeoutForFindElement!=0)
                 sleepFor(1000);
             }
         }
+        while(attemptNumber++<timeoutForFindElement);
+
+
         waitForPageToLoad();
     }
 
@@ -600,17 +612,19 @@ public class BasePageComponent {
      * @return void
      */
     static void waitForAlert(WebDriver driver, int timeout) {
-        int i = 0;
-        while (i++ < timeout) {
+        int i=0;
+        do{
             try {
                 Alert alert = driver.switchTo().alert();
                 break;
             } catch (NoAlertPresentException e)  // wait for second
             {
-                sleepFor(1);
+                if(timeout!=0)
+                sleepFor(1000);
+
                 continue;
             }
-        }
+        }while(i++<timeout);
     }
 
     /*
@@ -671,10 +685,10 @@ public class BasePageComponent {
      * Get link from button that opening page in new tab
      *
      * @param by      By
-     * @param timeout int
      * @return String link new page
      */
-    public static String getLinkByClickFromNewTab(By by, int... timeout) {
+    //TODO add timeout
+    public static String getLinkByClickFromNewTab(By by) {
         try {
             String link;
             String oldTab = driver().getWindowHandle();
@@ -710,10 +724,10 @@ public class BasePageComponent {
      * (can be problem, when button go to page that to do redirect)
      *
      * @param by      By
-     * @param timeout int
      * @return String link new page
      */
-    public static String getLinkByClickFromElement(By by, int... timeout) {
+    //TODO add timeout
+    public static String getLinkByClickFromElement(By by) {
         try {
             String currentPage = driver().getCurrentUrl();
             clickOnElement(by);
@@ -729,50 +743,42 @@ public class BasePageComponent {
 
 
     public String fillDataField(Map.Entry<String, String> field, InputTypes it, int... timeout) {
-        String result = null;
         String processedValue = "";
+        int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+        int iterator=0;
+        do{
+            // checkbox
+            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, field.getKey()),0)) {
+                processedValue = RandomDataGenerator.getRandomField(field.getValue());
 
-        // checkbox
-        if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, field.getKey()), timeout)) {
-            processedValue = RandomDataGenerator.getRandomField(field.getValue());
+                if (Boolean.parseBoolean(processedValue) != findElement(By.xpath(it.getCheckbox().replace(it.KEY_WORD, field.getKey()))).isSelected())
+                    clickOnElement(By.xpath(it.getCheckbox().replace(it.KEY_WORD, field.getKey())));
 
-            if (Boolean.parseBoolean(processedValue) != findElement(By.xpath(it.getCheckbox().replace(it.KEY_WORD, field.getKey()))).isSelected())
-                findElement(By.xpath(it.getCheckbox().replace(it.KEY_WORD, field.getKey()))).click();
+                return processedValue;
+            }
+            //input
+            if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, field.getKey()),0)) {
+                processedValue = RandomDataGenerator.getRandomField(field.getValue());
+                setText(By.xpath(it.getInput().replace(it.KEY_WORD, field.getKey())), processedValue);
+                return processedValue;
+            }
+            // select
+            // option
+            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, field.getKey()),0)) {
+                clickOnElement(By.xpath(it.getParentSelect().replace(it.KEY_WORD, field.getKey())));
+                processedValue = RandomDataGenerator.getRandomField(field.getValue());
+                if (processedValue.matches("#\\d+")) { // TODO test and validate on multiple selects
+                    int index = Integer.parseInt(processedValue.replace("#", ""));
+                    findElements(By.xpath(it.getSelectOption())).get(index).click();
+                } else
+                    clickOnElement(By.xpath(it.getSelectOption().replace(it.KEY_WORD, processedValue)));
 
-            return processedValue;
-        }
-
-
-        //input
-        if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, field.getKey()), 1)) {
-            processedValue = RandomDataGenerator.getRandomField(field.getValue());
-            setText(By.xpath(it.getInput().replace(it.KEY_WORD, field.getKey())), processedValue, timeout);
-            return processedValue;
-        }
-
-        // select
-        // option
-        if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, field.getKey()), 1)) {
-            clickOnElement(By.xpath(it.getParentSelect().replace(it.KEY_WORD, field.getKey())), timeout);
-            processedValue = RandomDataGenerator.getRandomField(field.getValue());
-            if (processedValue.matches("#\\d+")) { // TODO test and validate on multiple selects
-                int index = Integer.parseInt(processedValue.replace("#", ""));
-                findElements(By.xpath(it.getSelectOption())).get(index).click();
-            } else
-                clickOnElement(By.xpath(it.getSelectOption().replace(it.KEY_WORD, processedValue)), timeout);
-
-            return processedValue;
-        }
-
-        if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, field.getKey()), 1)) {
-            processedValue = RandomDataGenerator.getRandomField(field.getValue());
-            getAttribute(By.xpath(it.getCheckbox()), it.getCheckboxValue().replace(it.KEY_WORD, processedValue));
-            clickOnElement(By.xpath(it.getCheckboxValue().replace(it.KEY_WORD, processedValue)), timeout);
-
-            return processedValue;
-        }
-
-        return result;
+                return processedValue;
+            }
+            if(timeoutForFindElement!=0)
+                sleepFor(1000);
+        }while(iterator++<timeoutForFindElement);
+        return processedValue;
     }
 
 
@@ -832,39 +838,44 @@ public class BasePageComponent {
 
     public String getDataField(String fieldLabel, InputTypes it, int... timeout) {
         String value;
+        int timeoutForFindElement = timeout.length < 1 ? DEFAULT_TIMEOUT : timeout[0];
+        int iterator=0;
+        do{
+            if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, fieldLabel), 0)) {
+                if (findElement(it.getCheckbox().replace(it.KEY_WORD, fieldLabel)).isSelected())
+                    value = "true";
+                else if (findElement(it.getCheckbox().replace(it.KEY_WORD, fieldLabel)).isEnabled())
+                    value = "false";
+                else {
+                    value = "error get checkbox";
+                    LOGGER.info("error get value from checkbox from " + it.getCheckbox().replace(it.KEY_WORD, fieldLabel));
+                }
 
-        if (isElementDisplayedIgnoreException(it.getCheckbox().replace(it.KEY_WORD, fieldLabel), timeout)) {
-            if (findElement(it.getCheckbox().replace(it.KEY_WORD, fieldLabel)).isSelected())
-                value = "true";
-            else if (findElement(it.getCheckbox().replace(it.KEY_WORD, fieldLabel)).isEnabled())
-                value = "false";
-            else {
-                value = "error get checkbox";
-                LOGGER.info("error get value from checkbox from " + it.getCheckbox().replace(it.KEY_WORD, fieldLabel));
+
+                return value;
             }
 
+            //input
+            if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, fieldLabel), 0)) {
+                value = getElementText(By.xpath(it.getInput().replace(it.KEY_WORD, fieldLabel)));
+                return value;
+            }
 
-            return value;
-        }
-
-        //input
-        if (isElementDisplayedIgnoreException(it.getInput().replace(it.KEY_WORD, fieldLabel), 1)) {
-            value = getElementText(By.xpath(it.getInput().replace(it.KEY_WORD, fieldLabel)));
-            return value;
-        }
-
-        // select
-        if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, fieldLabel), 1)) {
-            reporter.info("element was fount");
-            sleepFor(1);
-            value = getElementText(By.xpath(it.getParentSelect().replace(it.KEY_WORD, fieldLabel)));
+            // select
+            if (isElementDisplayedIgnoreException(it.getParentSelect().replace(it.KEY_WORD, fieldLabel), 0)) {
+                reporter.info("element was fount");
+                sleepFor(1);
+                value = getElementText(By.xpath(it.getParentSelect().replace(it.KEY_WORD, fieldLabel)));
 //                if (false) { // TODO test and validate on multiple selects
 //                    int index = Integer.parseInt(processedValue.replace("#", ""));
 //                    findElements(By.xpath(it.getSelectOption())).get(index).click();
 //                }
-            return value;
-        }
-        return "Field was not found";
+                return value;
+            }
+            if(timeoutForFindElement!=0)
+                sleepFor(1000);
+        }while(iterator++<timeoutForFindElement);
+        return null;
     }
 
 }

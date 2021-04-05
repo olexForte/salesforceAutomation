@@ -22,49 +22,53 @@ public class RegistrationTest extends BaseUITest {
     /**
      * Try create account with valid values (positive test)
      */
-    @Test(testName = "PositiveRegistrationTest")
+    @Test(testName = "PositiveRegistrationTest",priority = 1)
     public void PositiveRegistrationTest() {
-        HashMap<String,String> params = dataRepository.getParametersForTest("RegistrationTest");
+
+        logIn(true);
+
+        HashMap<String, String> params = dataRepository.getParametersForTest("RegistrationTest");
         //get fields for registration
         List<Field> ListOfFields = new ArrayList<>(Arrays.asList(Field.toObjects(dataRepository.getContentFromFile("RegistrationFieldTest.json"))));
 
         registrationComponent.open(params.get("REGISTRATION_PAGE"));
 
         //check if can create account
-        Assert.assertTrue(registrationComponent.createAccount(ListOfFields),"Account was not created");
+        Assert.assertTrue(registrationComponent.createAccount(ListOfFields), "Account was not created");
     }
 
     /**
      * Test field with max length
      */
-//    @Test(testName = "FieldMaxSizeTest") //group
-//    public void FieldMaxSizeTest() {
-//        HashMap<String,String> params = dataRepository.getParametersForTest("RegistrationTest");
-//        //get fields for registration
-//        List<Field> ListOfFields = new ArrayList<>(Arrays.asList(Field.toObjects(dataRepository.getContentFromFile("RegistrationFieldTest.json"))));
-//
-//        registrationComponent.open(params.get("REGISTRATION_PAGE"));
-//
-//        //get fields with not correct max length validation
-//        String notValidField = registrationComponent.checkFieldLimitWithOverMaxSize(ListOfFields).toString();
-//
-//        Assert.assertEquals("[]",notValidField,"Not valid max size of field "+notValidField);
-//    }
-//    /**
-//     * Test field with min/required length
-//     */
-//    @Test(testName = "FieldMinSizeTest") //group
-//    public void FieldMinSizeTest() {
-//        HashMap<String,String> params = dataRepository.getParametersForTest("RegistrationTest");
-//        //get fields for registration
-//        List<Field> ListOfFields = new ArrayList<>(Arrays.asList(Field.toObjects(dataRepository.getContentFromFile("RegistrationFieldTest.json"))));
-//
-//
-//        registrationComponent.open(params.get("REGISTRATION_PAGE"));
-//        //get fields with not correct min length
-//        String notValidField = registrationComponent.checkFieldLimitWithLessMinSize(ListOfFields).toString();
-//
-//        Assert.assertEquals("[]",notValidField,"Not valid min size of field "+notValidField);
-//    }
+    @Test(testName = "FieldMaxSizeTest",priority = 2) //group
+    public void FieldMaxSizeTest() {
+        HashMap<String, String> params = dataRepository.getParametersForTest("RegistrationTest");
+        //get fields for registration
+        List<Field> ListOfFields = new ArrayList<>(Arrays.asList(Field.toObjects(dataRepository.getContentFromFile("RegistrationFieldTest.json"))));
+
+        registrationComponent.open(params.get("REGISTRATION_PAGE"));
+
+        //get fields with not correct max length validation
+        String notValidField = registrationComponent.checkFieldLimitWithOverMaxSize(ListOfFields).toString();
+
+        Assert.assertEquals("[]", notValidField, "Not valid max size of field " + notValidField);
+    }
+
+    /**
+     * Test field with min/required length
+     */
+    @Test(testName = "FieldMinSizeTest",priority = 3) //group
+    public void FieldMinSizeTest() {
+        HashMap<String, String> params = dataRepository.getParametersForTest("RegistrationTest");
+        //get fields for registration
+        List<Field> ListOfFields = new ArrayList<>(Arrays.asList(Field.toObjects(dataRepository.getContentFromFile("RegistrationFieldTest.json"))));
+
+
+        registrationComponent.open(params.get("REGISTRATION_PAGE"));
+        //get fields with not correct min length
+        String notValidField = registrationComponent.checkFieldLimitWithLessMinSize(ListOfFields).toString();
+
+        Assert.assertEquals("[]", notValidField, "Not valid min size of field " + notValidField);
+    }
 
 }
